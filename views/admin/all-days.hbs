@@ -1,0 +1,67 @@
+<style>
+
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Manage Days</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item active">Day Management</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <a href="/admin/add-day" class="btn btn-dark mb-4 ">+ Add Day</a>
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+
+                        {{!-- <a href="/admin/remove-all-users"
+                            onclick="return confirm('Are You Sure to Remove All Users ?')"
+                            class="btn btn-danger mb-1 mt-3">Remove All Users</a> --}}
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Day</th>
+                                    <th>Status</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Added Date</th>
+                                    <th>Manage</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each days}}
+                                <tr>
+                                    <td>#0{{incremented @index}}</td>
+                                    <td>{{this.day}}</td>
+                                    <td>{{this.status}}</td>
+                                    <td>{{this.date}}</td>
+                                    <td><a href="/admin/delete-day/{{this._id}}" class="btn btn-danger"
+                                            onclick="return confirm('Are You Sure to Delete {{this.day}} ?')"><i
+                                                class="bi bi-trash3"></i></a>
+
+                                        <a href="" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

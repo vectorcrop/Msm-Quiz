@@ -1,0 +1,7 @@
+{{#if user}}
+<a href="#" class="btn btn-secondary ms-3">{{user.Fname}}</a>
+<a href="/signout" class="btn btn-outline-secondary ms-3">Sign Out</a>
+{{else}}
+<a href="/signup" class="btn btn-secondary ms-3">Sign Up</a>
+<a href="/signin" class="btn btn-outline-secondary ms-3">Sign In</a>
+{{/if}}

@@ -1,0 +1,36 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+
+                    {{!-- <a href="/admin/remove-all-users"
+                        onclick="return confirm('Are You Sure to Remove All Users ?')"
+                        class="btn btn-danger mb-1 mt-3">Remove All Users</a> --}}
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable table-bordered table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>SELECT A DAY</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each days}}
+                            <tr>
+                                <td><a href="/prd-view/{{this.hello}}"> {{this.day}}</a></td>
+
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

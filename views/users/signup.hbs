@@ -1,0 +1,145 @@
+<main class="overflow-hidden">
+    <div class="container">
+        <style>
+            form select {
+                border: solid 2px rgb(34, 33, 33);
+                background-color: rgb(255, 255, 255);
+                box-shadow: 3.286px 6.181px 0px 0px rgba(20, 21, 21, 0.004);
+                width: 100%;
+                height: 100%;
+                z-index: 100;
+                position: relative;
+                font-size: 17px;
+                color: rgb(20, 21, 21);
+            }
+        </style>
+        <div class="row">
+            <h5 class="text">
+                <img src="assets1/images/text.png" alt="Text" />sponsored by MSM Kozhikode North
+            </h5>
+            <h2 class="main-heading">
+                Join The Ramadan Quiz
+                <img src="assets1/images/stars.png" alt="star" />March 2024<img src="assets1/images/stars.png"
+                    alt="star" />
+            </h2>
+            <form action="/signup" method="POST" id="stepForm">
+                {{#if signInErr}}
+                <div class="alert alert-danger" role="alert">
+                    <p class="error alert-heading">{{signInErr}}</p>
+                </div>
+                {{/if}}
+                <input type="hidden" name="date" id="datetime">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="inputField">
+                            <input type="text" name="Fname" placeholder="Your First Name" required />
+                            <div class="black"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="inputField">
+                            <input type="text" name="Lname" placeholder="Your Last Name" />
+                            <div class="black"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                {{!-- <div class="inputField">
+                    <input type="email" name="Email" placeholder="Your Email" required />
+                    <div class="black"></div>
+                </div> --}}
+                <div class="inputField">
+                    <input type="number" name="Mobile" placeholder="Your Mobile Number" required />
+                    <div class="black"></div>
+                </div>
+
+
+                <div class="inputField">
+                    <input type="text" name="Email" placeholder="Username" required />
+                    <div class="black"></div>
+                </div>
+                <div class="inputField">
+                    <input type="password" name="Password" placeholder="Password" required />
+                    <div class="black"></div>
+                </div>
+
+                <div class="inputField">
+                    <select name="type" required>
+                        <option disabled selected value="">Select Your Type</option>
+                        <option value="junior">Junior</option>
+                        <option value="senior">Senior</option>
+                    </select>
+                    <div class="black"></div>
+                </div>
+
+                <div class="inputField">
+                    <select name="zone" required>
+                        <option disabled selected value="">Select Your Zone</option>
+                        <option value="Koyilandi">Koyilandi</option>
+                        <option value="Balussery">Balussery</option>
+                        <option value="Perambra">Perambra</option>
+                        <option value="Kuttiyadi">Kuttiyadi</option>
+                    </select>
+                    <div class="black"></div>
+                </div>
+
+                <div class="submitButton">
+                    <button type="submit">Register</button>
+                    <div class="black"></div>
+                </div>
+                <div class="submitButton mt-3">
+                    <a href="/signin" class="btn btn-dark w-100 p-3 text-bold">Already have an account? Login now</a>
+                </div>
+            </form>
+            <div class="desc">
+                <div class="date">
+                    monday
+                    <br />
+                    <span>dec 25<sup>th</sup></span>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet, consecttetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
+                    ipsum suspendtisse
+                </p>
+            </div>
+            <div class="location">
+                <div class="line"></div>
+                <h1>party location</h1>
+                <p>123 Street Name, City Name, State, Country, 12345</p>
+                <div class="socialIcons">
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i>
+                        <div class="black"></div>
+                    </a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i>
+                        <div class="black"></div>
+                    </a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i>
+                        <div class="black"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+    <div class="firework"></div>
+</main>
+
+
+<script>
+    // Get current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = ((now.getHours() + 11) % 12 + 1).toString().padStart(2, '0'); // Convert to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+    // Set default value to current date and time in 12-hour format with AM/PM
+    const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    document.getElementById('datetime').value = defaultDateTime;
+</script>

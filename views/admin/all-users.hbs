@@ -1,0 +1,124 @@
+{{!-- <section>
+    <div class="container mt-5">
+        <div>
+            <a href="/admin/remove-all-users" onclick="return confirm('Are You Sure to Remove All Users ?')"
+                class="btn btn-danger float-end mb-1">Remove All Users</a>
+        </div>
+        <div class="table-responsive-md mt-2">
+            <table class="table responsive">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr class="align-middle">
+                        <th scope="row">{{incremented @index}}</th>
+                        <td>{{this.Name}}</td>
+                        <td>{{this.Email}}</td>
+                        <td><a href="/admin/remove-user/{{this._id}}" class="btn btn-danger"
+                                onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')">Remove</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section> --}}
+
+<style>
+    .datatable-container {
+        max-height: 400px;
+        overflow-y: hidden;
+    }
+
+    #datatable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #datatable th,
+    #datatable td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    #datatable th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Manage Users</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                <li class="breadcrumb-item active">User Management</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <a href="/admin/remove-all-users" onclick="return confirm('Are You Sure to Remove All Users ?')"
+                            class="btn btn-danger mb-1 mt-3">Remove All Users</a>
+                        <!-- Table with stripped rows -->
+                        <table class="table datatable table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Username</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Phone Number</th>
+                                    <th>User Type</th>
+                                    <th>Zone</th>
+                                    <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
+                                    {{!-- <th>Password</th> --}}
+                                    <th>Manage</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each users}}
+                                <tr>
+                                    <td>#0{{incremented @index}}</td>
+                                    <td>{{this.Uname}}</td>
+                                    <td>{{this.Fname}}</td>
+                                    <td>{{this.Lname}}</td>
+                                    <td>{{this.Mobile}}</td>
+                                    <td>{{this.type}}</td>
+                                    <td>{{this.zone}}</td>
+                                    <td>{{this.date}}</td>
+                                    {{!-- <td>{{this.Password}}</td> --}}
+                                    <td><a href="/admin/remove-user/{{this._id}}" class="btn btn-danger"
+                                            onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
+                                                class="bi bi-trash3"></i></a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

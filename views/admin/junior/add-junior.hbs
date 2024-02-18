@@ -1,0 +1,490 @@
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Question For Juniors</h5>
+
+                        <!-- General Form Elements -->
+                        <form action="/admin/junior/add-junior" enctype="multipart/form-data" method="POST">
+                            <input type="hidden" name="date" id="datetime">
+                            <input type="hidden" name="hello" id="hello">
+
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Day</label>
+                                <div class="col-sm-10">
+                                    <select class="form-select" name="day" aria-label="Default select example" required>
+                                        <option disabled selected>Select Day</option>
+                                        {{#each days}}
+                                        <option value="{{this.day}}">{{this.day}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <!-- Default Accordion -->
+                            <div class="accordion" id="accordionExample">
+
+                                <!---------------QUESTION 1-------------------->
+                                <div class="accordion-item bg-dark">
+                                    <h2 class="accordion-header bg-dark" id="headingOne">
+                                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#q1" aria-expanded="false"
+                                            aria-controls="q1">
+                                            Question 1
+                                        </button>
+                                    </h2>
+                                    <div id="q1" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample" style="">
+                                        <div class="accordion-body  " style="    background-color: antiquewhite;
+">
+                                            <div class="row mb-3">
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Question</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="question1"
+                                                        style="height: 100px" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p><b>Options</b></p>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">A)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="a1" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">B)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="b1" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">C)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="c1" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">D)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="d1" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label">Correct Answer</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" name="canswer1"
+                                                        aria-label="Default select example" required>
+                                                        <option disabled selected>Select Correct Answer</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------------------>
+
+
+                                <!---------------QUESTION 2-------------------->
+                                <div class="accordion-item bg-dark mt-2">
+                                    <h2 class="accordion-header bg-dark" id="headingOne">
+                                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#q2" aria-expanded="false"
+                                            aria-controls="q2">
+                                            Question 2
+                                        </button>
+                                    </h2>
+                                    <div id="q2" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample" style="">
+                                        <div class="accordion-body  " style="    background-color: antiquewhite;
+">
+                                            <div class="row mb-3">
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Question</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="question2"
+                                                        style="height: 100px" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p><b>Options</b></p>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">A)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="a2" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">B)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="b2" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">C)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="c2" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">D)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="d2" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label">Correct Answer</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" name="canswer2"
+                                                        aria-label="Default select example" required>
+                                                        <option disabled selected>Select Correct Answer</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------------------>
+
+
+                                <!---------------QUESTION 3-------------------->
+                                <div class="accordion-item bg-dark mt-2">
+                                    <h2 class="accordion-header bg-dark" id="headingOne">
+                                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#q3" aria-expanded="false"
+                                            aria-controls="q3">
+                                            Question 3
+                                        </button>
+                                    </h2>
+                                    <div id="q3" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample" style="">
+                                        <div class="accordion-body  " style="    background-color: antiquewhite;
+">
+                                            <div class="row mb-3">
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Question</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="question3"
+                                                        style="height: 100px" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p><b>Options</b></p>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">A)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="a3" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">B)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="b3" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">C)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="c3" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">D)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="d3" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label">Correct Answer</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" name="canswer3"
+                                                        aria-label="Default select example" required>
+                                                        <option disabled selected>Select Correct Answer</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------------------>
+
+
+                                <!---------------QUESTION 4-------------------->
+                                <div class="accordion-item bg-dark mt-2">
+                                    <h2 class="accordion-header bg-dark" id="headingOne">
+                                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#q4" aria-expanded="false"
+                                            aria-controls="q4">
+                                            Question 4
+                                        </button>
+                                    </h2>
+                                    <div id="q4" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample" style="">
+                                        <div class="accordion-body  " style="    background-color: antiquewhite;
+">
+                                            <div class="row mb-3">
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Question</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="question4"
+                                                        style="height: 100px" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p><b>Options</b></p>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">A)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="a4" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">B)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="b4" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">C)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="c4" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">D)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="d4" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label">Correct Answer</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" name="canswer4"
+                                                        aria-label="Default select example" required>
+                                                        <option disabled selected>Select Correct Answer</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------------------>
+
+
+                                <!---------------QUESTION 5-------------------->
+                                <div class="accordion-item bg-dark mt-2">
+                                    <h2 class="accordion-header bg-dark" id="headingOne">
+                                        <button class="accordion-button collapsed bg-dark text-white" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#q5" aria-expanded="false"
+                                            aria-controls="q5">
+                                            Question 5
+                                        </button>
+                                    </h2>
+                                    <div id="q5" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample" style="">
+                                        <div class="accordion-body  " style="    background-color: antiquewhite;
+">
+                                            <div class="row mb-3">
+                                                <label for="inputPassword"
+                                                    class="col-sm-2 col-form-label">Question</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="question5"
+                                                        style="height: 100px" required></textarea>
+                                                </div>
+                                            </div>
+
+                                            <p><b>Options</b></p>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">A)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="a5" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">B)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="b5" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">C)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="c5" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="inputText" class="col-sm-2 col-form-label">D)</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="d5" class="form-control">
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label">Correct Answer</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-select" name="canswer5"
+                                                        aria-label="Default select example" required>
+                                                        <option disabled selected>Select Correct Answer</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!------------------------------------>
+
+
+
+                            </div><!-- End Default Accordion Example -->
+
+
+
+                            <hr>
+
+
+                            <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-2 col-form-label">Image</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" name="Image" type="file" id="formFile" required>
+                                </div>
+                            </div>
+
+                            <hr>
+
+
+                            <fieldset class="row mb-3">
+                                <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="gridRadios1"
+                                            value="enabled">
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Display
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="gridRadios2"
+                                            value="disabled" checked="">
+                                        <label class="form-check-label" for="gridRadios2">
+                                            Hide
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <hr>
+                            <br>
+                            <button type="submit" class="btn btn-primary w-100">Add Question</button>
+                        </form><!-- End General Form Elements -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        generateRandomString();
+    });
+
+    function generateRandomString() {
+        // Define the set of characters you want to include
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        // Generate a random 4-letter string
+        let randomString = '';
+        for (let i = 0; i < 4; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            randomString += characters.charAt(randomIndex);
+        }
+
+        // Set the value of the input field
+        document.getElementById('hello').value = randomString;
+
+        // Log the generated string to the console (optional)
+        console.log('Generated String:', randomString);
+    }
+</script>
+
+
+<script>
+    // Get current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = ((now.getHours() + 11) % 12 + 1).toString().padStart(2, '0'); // Convert to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+    // Set default value to current date and time in MM/DD/YYYY format
+    const defaultDateTime = `${month}/${day}/${year}T${hours}:${minutes}`;
+    document.getElementById('datetime').value = defaultDateTime;
+</script>

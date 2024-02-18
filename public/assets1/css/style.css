@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --primary-color: rgb(55, 97, 69);
+}
+
+body {
+  width: 100%;
+  height: auto;
+  font-family: 'Urbanist';
+}
+main {
+  width: 100%;
+  min-height: 100vh;
+  background-image: url(../images/bg.png);
+  background-size: cover;
+  text-align: center;
+  background-color: rgb(242, 226, 193);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 80px 0;
+}
+.text img {
+  margin-right: 5px;
+}
+.text {
+  font-size: 17px;
+  color: rgb(20, 21, 21);
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.main-heading {
+  font-size: 64px;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  width: 75%;
+}
+.main-heading img {
+  margin: 0 10px;
+}
+form .inputField {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin-bottom: 15px;
+  width: 100%;
+  height: 63px;
+}
+form input {
+  border: solid 2px rgb(34, 33, 33);
+  background-color: rgb(255, 255, 255);
+  box-shadow: 3.286px 6.181px 0px 0px rgba(20, 21, 21, 0.004);
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  position: relative;
+  font-size: 17px;
+  color: rgb(20, 21, 21);
+}
+::placeholder {
+  color: rgb(20, 21, 21);
+  font-weight: bold;
+  padding-left: 22px;
+}
+form:focus-within input:focus + .black {
+  top: 0;
+  left: 0;
+}
+input:focus {
+  outline: none;
+}
+.black {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  transition: 0.3s ease;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(20, 21, 21);
+  z-index: 0;
+}
+.submitButton {
+  width: 100%;
+  height: 67px;
+  position: relative;
+  margin-top: 40px;
+}
+.submitButton button {
+  border: solid 2px rgb(34, 33, 33);
+  background-color: rgb(55, 97, 69);
+  box-shadow: 3.286px 6.181px 0px 0px rgba(20, 21, 21, 0.004);
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 10;
+}
+.submitButton:hover .black {
+  top: 0;
+  left: 0;
+}
+.desc {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  margin-top: 70px;
+}
+.desc .date {
+  font-size: 28px;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: 1;
+  width: 100%;
+  text-align: end;
+}
+.desc span {
+  font-size: 65px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgb(55, 97, 69);
+}
+.desc span sup {
+  font-size: 40px;
+}
+.desc p {
+  font-size: 17px;
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+  text-align: start;
+  margin-left: 40px;
+}
+.location {
+  margin-top: 50px;
+}
+.location .line {
+  margin: 30px auto;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary-color);
+  width: 80%;
+}
+.location h1 {
+  font-size: 40px;
+  color: var(--primary-color);
+  text-align: center;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+.location p {
+  font-size: 23px;
+  color: rgb(127, 127, 127);
+  text-align: center;
+  text-align: center;
+}
+.socialIcons {
+  display: flex;
+  width: 100%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+.socialIcons a {
+  text-decoration: none;
+  position: relative;
+  width: 35px;
+  height: 35px;
+  margin: 0 10px;
+}
+.socialIcons i {
+  border: solid 2px rgb(34, 33, 33);
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 3.286px 6.181px 0px 0px rgba(20, 21, 21, 0.004);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  font-size: 17px;
+  color: rgb(34, 33, 33);
+  position: relative;
+  z-index: 100;
+}
+.socialIcons a .black {
+  border-radius: 50%;
+  z-index: 0;
+  top: 4px;
+  left: 4px;
+}
+.socialIcons a:hover .black {
+  top: 0;
+  left: 0;
+}
+
+main.thankyou {
+  background-image: url(../images/thankyou.jpg);
+  background-size: cover;
+}
+
+.thakyou-heading {
+  font-size: 124px;
+  color: var(--primary-color);
+  font-weight: 800;
+  text-align: center;
+}
+.thankyou p {
+  font-size: 35px;
+  color: var(--primary-color);
+  font-weight: bold;
+  text-align: center;
+}
+
+.bar {
+  background-color: var(--primary-color);
+  width: 100%;
+  height: 103px;
+  border-radius: 50px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+.bar .socialIcons {
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(36, 80, 51);
+  width: 45%;
+  height: 100%;
+  border-radius: inherit;
+}
+.contact {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  align-items: center;
+  width: 55%;
+  height: 100%;
+}
+.contact a {
+  width: 52px;
+  height: 52px;
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+.contact a i {
+  border: solid 2px rgb(34, 33, 33);
+  border-radius: 50%;
+  background-color: rgb(245, 249, 250);
+  box-shadow: 1.878px 3.532px 0px 0px rgba(190, 224, 65, 0.004);
+  font-size: 26px;
+  width: 100%;
+  color: rgb(34, 33, 33);
+  height: 100%;
+  display: grid;
+  place-content: center;
+  position: relative;
+  z-index: 10;
+}
+.contact a .black {
+  background-color: rgb(190, 224, 65);
+  border-radius: 50%;
+}
+.contact article {
+  margin-left: 22px;
+}
+.contact article * {
+  text-align: start;
+  margin-bottom: 0;
+}
+.contact article p {
+  font-size: 15px;
+  color: rgb(190, 224, 65);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.contact article h4 {
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  font-weight: 900;
+}
