@@ -17,15 +17,30 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <h1>Ongoing Quiz </h1>
                             {{#each days}}
+                            {{#eq this.status "display"}}
                             <tr>
-                                <td><a href="/prd-view/{{this.hello}}"> {{this.day}}</a></td>
+                                <td><a href="/prd-view/{{this.hello}}" class="btn btn-success"> {{this.day}}</a></td>
 
                             </tr>
+                            {{/eq}}
                             {{/each}}
+
 
                         </tbody>
                     </table>
+                    <h1>Completed Quiz </h1>
+                           
+                            {{#loopUntilStatus days "display"}}
+                                <DIV><a href="/prd-view/{{this.hello}}" class="disabled "> {{this.day}}</a></DIV>
+                               
+                            {{/loopUntilStatus}}
+                            
+                     <h1>upcomming</h1>
+                          {{#loopFromIndex days (getIndexForDisplay days)}}
+                            <div><a href="/prd-view/{{this.hello}}" class="disabled">{{this.day}}</a></div>
+                        {{/loopFromIndex}}   
                     <!-- End Table with stripped rows -->
 
                 </div>

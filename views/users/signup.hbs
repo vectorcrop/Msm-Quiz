@@ -22,46 +22,46 @@
                 <img src="assets1/images/stars.png" alt="star" />March 2024<img src="assets1/images/stars.png"
                     alt="star" />
             </h2>
-            <form action="/signup" method="POST" id="stepForm">
-                {{#if signInErr}}
+            <form action="/signup" method="POST" id="stepForm" onsubmit="return validateForm()">
+                {{#if signUpErr}}
                 <div class="alert alert-danger" role="alert">
-                    <p class="error alert-heading">{{signInErr}}</p>
+                    <p class="error alert-heading">{{signUpErr}}</p>
                 </div>
                 {{/if}}
+                <div class="alert alert-danger" id="alert-mobile" role="alert" style="display: none;">
+                    <p class="error alert-heading">Please enter a valid mobile number.</p>
+                </div>
                 <input type="hidden" name="date" id="datetime">
 
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="inputField">
-                            <input type="text" name="Fname" placeholder="Your First Name" required />
+                            <input type="text" id="firstName" name="Fname" placeholder="Your First Name" required />
                             <div class="black"></div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="inputField">
-                            <input type="text" name="Lname" placeholder="Your Last Name" />
+                            <input type="text" id="lastName" name="Lname" placeholder="Your Last Name" required/>
                             <div class="black"></div>
                         </div>
                     </div>
                 </div>
 
 
-                {{!-- <div class="inputField">
-                    <input type="email" name="Email" placeholder="Your Email" required />
-                    <div class="black"></div>
-                </div> --}}
+                
                 <div class="inputField">
-                    <input type="number" name="Mobile" placeholder="Your Mobile Number" required />
+                    <input type="number" id="mobile" name="Mobile" placeholder="Your Mobile Number" required />
                     <div class="black"></div>
                 </div>
 
 
                 <div class="inputField">
-                    <input type="text" name="Email" placeholder="Username" required />
+                    <input type="text" id="username" name="Username" placeholder="Username" readonly />
                     <div class="black"></div>
                 </div>
                 <div class="inputField">
-                    <input type="password" name="Password" placeholder="Password" required />
+                    <input type="password" id="password" name="Password" placeholder="Password" style="font-size: 24px; font-weight: bold;" readonly />
                     <div class="black"></div>
                 </div>
 
@@ -142,4 +142,55 @@
     // Set default value to current date and time in 12-hour format with AM/PM
     const defaultDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
     document.getElementById('datetime').value = defaultDateTime;
+</script>
+<script>
+    // Get references to the input fields
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const usernameInput = document.getElementById('username');
+    const mobileInput = document.getElementById('mobile');
+    const passwordInput = document.getElementById('password');
+
+        function validateForm() {
+        const mobileNumber = mobileInput.value.trim();
+        const mobilePattern = /^\d{10}$/;
+
+        // Check if the mobile number matches the pattern
+        if (!mobilePattern.test(mobileNumber)) {
+            // If not valid, show an alert message
+            const errorAlert = document.querySelector('#alert-mobile');
+            errorAlert.style.display = 'block';
+
+             setTimeout(function() {
+                errorAlert.style.display = 'none';
+            }, 3500);
+            // Prevent form submission
+            return false;
+        }
+        return true;
+    }
+
+
+    // Function to update the username field
+    function updateUsername() {
+        const firstName = firstNameInput.value.trim();
+        const lastName = lastNameInput.value.trim();
+
+        const username = (firstName + lastName).toLowerCase();
+        //const username = (firstName +"-"+ lastName).toLowerCase();
+        usernameInput.value = username;
+    }
+    function updatePassword(){
+         const mobile = mobileInput.value.trim();
+        passwordInput.value = mobile;
+    }
+
+    // Add event listeners for input changes in the first and last name fields
+    firstNameInput.addEventListener('input', updateUsername);
+    lastNameInput.addEventListener('input', updateUsername);
+    mobileInput.addEventListener('input', updatePassword);
+
+    // Initial call to update the username field when the page loads
+    updateUsername();
+    updatePassword();
 </script>

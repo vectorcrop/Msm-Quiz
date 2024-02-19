@@ -49,15 +49,23 @@ router.get("/signup", function (req, res) {
   } else {
     res.render("users/signup", {
       admin: false, layout: "empty",
+      signUpErr: req.session.signUpErr
     });
+    req.session.signUpErr = null;
   }
 });
 
 router.post("/signup", function (req, res) {
   userHelper.doSignup(req.body).then((response) => {
-    req.session.signedIn = true;
-    req.session.user = response;
-    res.redirect("/");
+    if (response.status) {
+      req.session.signedIn = true;
+      req.session.user = response;
+      res.redirect("/");
+    } else {
+      req.session.signUpErr = "Username is already taken. Please choose a different username by changing your name details.";
+      res.redirect("/signup");
+    }
+    
   });
 });
 

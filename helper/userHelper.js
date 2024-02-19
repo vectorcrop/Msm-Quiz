@@ -2,12 +2,7 @@ var db = require("../config/connection");
 var collections = require("../config/collections");
 const bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
-// const Razorpay = require("razorpay");
 
-// var instance = new Razorpay({
-//   key_id: "rzp_test_8NokNgt8cA3Hdv",
-//   key_secret: "xPzG53EXxT8PKr34qT7CTFm9",
-// });
 
 module.exports = {
 
@@ -34,16 +29,41 @@ module.exports = {
     });
   },
 
-  doSignup: (userData) => {
-    return new Promise(async (resolve, reject) => {
-      userData.Password = await bcrypt.hash(userData.Password, 10);
-      db.get()
-        .collection(collections.USERS_COLLECTION)
-        .insertOne(userData)
-        .then((data) => {
-          resolve(data.ops[0]);
-        });
-    });
+  // doSignup: (userData) => {
+  //   return new Promise(async (resolve, reject) => {
+  //     userData.Password = await bcrypt.hash(userData.Password, 10);
+  //     db.get()
+  //       .collection(collections.USERS_COLLECTION)
+  //       .insertOne(userData)
+  //       .then((data) => {
+  //         resolve(data.ops[0]);
+  //       });
+  //   });
+  // },
+  doSignup: async (userData) => {
+      try {
+          // Check if the username already exists
+          userData.Username = userData.Username.toLowerCase();
+          const existingUser = await db.get().collection(collections.USERS_COLLECTION).findOne({ Username: userData.Username });
+          if (existingUser) {
+            console.log('Username already exists');
+             return({ status: false });
+          }else{
+            
+            userData.Password = await bcrypt.hash(userData.Password, 10);
+
+            // Insert user data
+            const data = await db.get().collection(collections.USERS_COLLECTION).insertOne(userData);
+            data.ops[0].status=true;
+            console.log("nooooooooo***********",data.ops[0])
+            return data.ops[0];
+          }
+
+          // Hash the password
+         
+      } catch (error) {
+          throw error;
+      }
   },
 
   doSignin: (userData) => {
@@ -52,7 +72,7 @@ module.exports = {
       let user = await db
         .get()
         .collection(collections.USERS_COLLECTION)
-        .findOne({ Email: userData.Email });
+        .findOne({ Username: userData.Username });
       if (user) {
         bcrypt.compare(userData.Password, user.Password).then((status) => {
           if (status) {

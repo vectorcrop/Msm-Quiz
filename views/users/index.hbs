@@ -1,6 +1,12 @@
 <div class="container">
     <br><br><br>
-    <center>Welcome<br>
-        <a href="/home" class="btn btn-dark">Enter to Quiz</a>
+    <center>Welcome <strong>{{user.Username}} ({{user.type}}) </strong><br>
+       
+        {{#eq user.type "senior"}}
+                <a href="/homme" class="btn btn-dark">Enter to Quiz route</a>
+        {{/eq}}
+        {{#eq user.type "junior"}}
+                <a href="/home" class="btn btn-dark">Enter to Quiz route</a>
+        {{/eq}}
     </center>
 </div>

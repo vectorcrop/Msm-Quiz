@@ -27,7 +27,55 @@ app.engine(
         index++;
         return index;
       },
+      eq:function (a, b, options) {
+        return a === b ? options.fn(this) : options.inverse(this);
+      },
+      loopUntilStatus:function (items, targetStatus, options) {
+        for (let i = 0; i < items.length; i++) {
+          const currentItem = items[i]; 
+          // Check if the current item has the target status
+          if (currentItem.status === targetStatus) {
+              // If the target status is found, break out of the loop
+              break;
+          }
+          const result = options.fn(currentItem);
+          // Return the result if it exists
+          if (result) {
+              return result;
+          }
+      }
+      },
+      getIndexForDisplay:function(items) {
+        for (let i = 0; i < items.length; i++) {
+            const currentItem = items[i];
+            if (currentItem.status === "display") {
+                // Return the index of the current item
+                return i;
+            }
+        }
     },
+    slice: function(array, start, end) {
+      if (!Array.isArray(array)) {
+          return [];
+      }
+  
+      return array.slice(start, end);
+  },
+    loopFromIndex: function(array, startIndex, options) {
+        let result = '';
+        startIndex=startIndex+1;
+    
+        if (!Array.isArray(array) || startIndex < 0 || startIndex >= array.length) {
+            return result;
+        }
+    
+        for (let i = startIndex; i < array.length; i++) {
+            result += options.fn(array[i]);
+        }
+    
+        return result;
+    }
+   },
   })
 );
 app.use(logger("dev"));
