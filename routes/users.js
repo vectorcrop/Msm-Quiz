@@ -33,13 +33,38 @@ router.get("/home", verifySignedIn, function (req, res, next) {
 });
 
 
-router.get("/prd-view/:hello", async function (req, res, next) {
+router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
   let user = req.session.user;
-  let jday = req.params.name;
-  await userHelper.getJuniorsByDay(jday).then(async (juniors) => {
-    res.render("users/prd-view", { admin: false, user, juniors });
+  let type=user.type;
+  let id= user._id;
+  let jday = req.params.hello;
+  if(user.type =="senior"){
+    console.log("SEENNNN**********")
+    res.render("users/qd-view", { admin: false, user});
+  
+  }else{
+    await userHelper.getJuniorsByDay(jday).then(async (juniors) => {
+      console.log("JUNNN**********",juniors)
+      res.render("users/qd-view", { admin: false, user, juniors,type,id });
+    })
+  }
+});
 
+
+router.post('/qd-view/:qid',async function(req, res) {
+  
+  await userHelper.setAnswer(req.params.qid,req.session.user.type,req.session.user._id,req.body).then((resp)=>{
+    var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
+    res.json({ redirectUrl: newUrl ,totalScore:resp.totalScore,score:resp.score });
   })
+  
+});
+
+router.get("/rs-view/:ts/:s", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  let tScore=req.params.ts;
+  let score=req.params.s;
+    res.render("users/rs-view", { admin: false,user,tScore,score });
 });
 
 

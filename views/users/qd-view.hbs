@@ -1,0 +1,66 @@
+<br><br>
+<br>
+<br>
+<center>
+
+    {{#each juniors.[0].questions}}
+    <h2>{{this.key}}. {{this.question}}</h2>
+   <button class="btn btn-outline-dark answer {{this.key}}" data-answer="A" data-key="{{this.key}}">{{this.a}}</button><br>
+    <button class="btn btn-outline-dark answer {{this.key}}" data-answer="B" data-key="{{this.key}}">{{this.b}}</button><br>
+    <button class="btn btn-outline-dark answer {{this.key}}" data-answer="C" data-key="{{this.key}}">{{this.c}}</button><br>
+    <button class="btn btn-outline-dark answer {{this.key}}" data-answer="D" data-key="{{this.key}}">{{this.d}}</button>
+    {{/each}}
+      <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
+    <button id="submitBtn" class="btn btn-primary">Submit Answers</button>
+</center>
+
+
+
+<script>
+    $(document).ready(function() {
+    let answers = [];
+    
+    $('.answer').click(function() {
+        const qKey = $(this).data('key')
+        const slAns = $(this).data('answer');
+        
+        // Disable all answer buttons for the clicked question
+        $(`.${qKey}`).not(this).prop('disabled', true);
+        $(this).css('background-color', 'yellow');
+
+        
+        // Push selected answer to the answers array
+        answers.push({ qKey, slAns });
+         $(this).prop('disabled', true);
+
+        
+    });
+    
+    $('#submitBtn').click(function() {
+        // Send answers to the server (you can customize this part)
+        let ss=document.getElementById('ssno').value;
+        let qw=window.location.href.split('/').pop();
+        //console.log('Answers:', answers);
+        $.ajax({
+        url: `/qd-view/${ss}`, // Change this to your server endpoint
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ answers: answers , qw:qw }),
+        success: function(response) {
+            console.log('Server response:', response);
+            answers = [];
+            // Check if the server response contains the new URL
+            if (response && response.redirectUrl) {
+                window.location.href = response.redirectUrl;
+            } else {
+                console.error('Server response does not contain a redirect URL.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });       
+    });
+});
+
+</script>

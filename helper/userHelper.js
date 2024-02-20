@@ -11,13 +11,67 @@ module.exports = {
       let juniors = await db
         .get()
         .collection(collections.JUNIOR_COLLECTION)
-        .find({ day: jday })
+        .find({ hello: jday })
         .toArray();
       resolve(juniors);
     });
   },
+  getSeniorByDay: (jday) => {
+    return new Promise(async (resolve, reject) => {
+      let juniors = await db
+        .get()
+        .collection(collections.JUNIOR_COLLECTION)
+        .find({ hello: jday })
+        .toArray();
+      resolve(juniors);
+    });
+  },
+  setAnswer:(qid,type,uid,ans)=>{
+    return new Promise(async (resolve, reject)=>{
+      var score = 0;
+      if(type=="junior"){
+        var correctAnswers= await db.get().collection(collections.JUNIOR_COLLECTION).aggregate([
+        { $match: { _id: objectId(qid)  } },
+          {
+            $project: {
+              _id: 0, // Exclude _id field if not needed
+              canswer: "$questions.canswer" // Include only canswer field from each questions array
+            }
+          }
+        ]).toArray()
 
+        for (let i = 0; i < correctAnswers[0].canswer.length; i++) {
+            if (ans.answers[i].slAns === correctAnswers[0].canswer[i]) {
+                score++;
+            }
+        }
+      }else{
+       var correctAnswers=0;
+      }
+      await db.get().collection(collections.USERS_COLLECTION).findOneAndUpdate(
+        {_id:  objectId(uid)},
+        {
+          $push: { answers: ans.answers,score:score }, // Push each submitted answer to the answers array
+          $inc: { totalScore: score } // Increment the score by the calculated score
+        },
+        {  returnNewDocument: true,
+          returnDocument: "after" }
+      )
+      .then(updatedUser => {
+        console.log(updatedUser,"must change from 9")
+      
+        // Send the response with updated user data and aggregate score
+        resolve({ updatedUser: updatedUser, totalScore: updatedUser.value.totalScore,score:score });
+      })
+      .catch(error => {
+        console.error('Error saving answers and score:', error);
+        // Handle error response
+        resolve({ error: 'An error occurred while saving answers and score.' });
+      });
 
+    })
+
+  },
   getAllProducts: () => {
     return new Promise(async (resolve, reject) => {
       let products = await db
@@ -51,6 +105,9 @@ module.exports = {
           }else{
             
             userData.Password = await bcrypt.hash(userData.Password, 10);
+            userData.answers =[],
+            userData.totalScore=0,
+            userData.score=[]
 
             // Insert user data
             const data = await db.get().collection(collections.USERS_COLLECTION).insertOne(userData);
