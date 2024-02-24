@@ -69,10 +69,10 @@ module.exports = {
           },
           {
             $set: {
-              Name: dayDetails.Name,
-              Category: dayDetails.Category,
-              Price: dayDetails.Price,
-              Description: dayDetails.Description,
+              // date: dayDetails.date,
+              // hello: dayDetails.hello,
+              day: dayDetails.day,
+              status: dayDetails.status,
             },
           }
         )
@@ -80,6 +80,29 @@ module.exports = {
           resolve();
         });
     });
+  },
+  updateDayStatus:(day,status)=>{
+    if (status=="display"){
+      status="enabled"
+    }
+    return new Promise((resolve, reject) => {
+      db.get()
+      .collection(collections.JUNIOR_COLLECTION)
+      .updateOne(
+        {
+          day: day
+        },
+        {
+          $set: {
+            status: status,
+          },
+        }
+      )
+      .then((response) => {
+        resolve();
+      });
+
+    })
   },
 
 

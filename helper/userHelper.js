@@ -58,10 +58,9 @@ module.exports = {
           returnDocument: "after" }
       )
       .then(updatedUser => {
-        console.log(updatedUser,"must change from 9")
       
         // Send the response with updated user data and aggregate score
-        resolve({ updatedUser: updatedUser, totalScore: updatedUser.value.totalScore,score:score });
+        resolve({ totalScore: updatedUser.value.totalScore,score:score });
       })
       .catch(error => {
         console.error('Error saving answers and score:', error);

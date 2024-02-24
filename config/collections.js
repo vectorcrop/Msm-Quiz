@@ -5,6 +5,7 @@ module.exports = {
     CART_COLLECTION: 'cart',
     ORDER_COLLECTION: 'order',
     JUNIOR_COLLECTION: "junior",
+    SENIOR_COLLECTION: "senior",
     DAY_COLLECTION: "day",
 
 

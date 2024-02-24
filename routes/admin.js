@@ -52,17 +52,16 @@ router.get("/edit-day/:id", verifySignedIn, async function (req, res) {
 });
 
 ///////EDIT day/////////////////////                                         
-router.post("/edit-day/:id", verifySignedIn, function (req, res) {
+router.post("/edit-day/:id", verifySignedIn, async function (req, res) {
   let dayId = req.params.id;
-  adminHelper.updateday(dayId, req.body).then(() => {
-    if (req.files) {
-      let image = req.files.Image;
-      if (image) {
-        image.mv("./public/images/day-images/" + dayId + ".png");
-      }
-    }
+  let day=req.body.day;
+  let status=req.body.status;
+ await adminHelper.updateday(dayId, req.body).then(() => {
+  adminHelper.updateDayStatus(day,status).then(()=>{
     res.redirect("/admin/all-days");
+  })
   });
+  
 });
 
 ///////DELETE day/////////////////////                                         
@@ -98,7 +97,27 @@ router.get("/add-junior", verifySignedIn, async function (req, res) {
 
 ///////ADD junior/////////////////////                                         
 router.post("/add-junior", function (req, res) {
-  adminHelper.addjunior(req.body, (id) => {
+  const qObj={};
+  const data=req.body;
+  const questions = [];
+for (let i = 1; i <= 5; i++) {
+  const questionObj = {
+    key:i,
+    question: data[`question${i}`],
+    a: data[`a${i}`],
+    b: data[`b${i}`],
+    c: data[`c${i}`],
+    d: data[`d${i}`],
+    canswer: data[`canswer${i}`]
+  };
+  questions.push(questionObj);
+  qObj.date=data.date;
+  qObj.hello=data.hello;
+  qObj.day=data.day;
+  qObj.status=data.status;
+  qObj.questions=questions;
+}
+  adminHelper.addjunior(qObj, (id) => {
     let image = req.files.Image;
     image.mv("./public/images/junior-images/" + id + ".png", (err, done) => {
       if (!err) {
