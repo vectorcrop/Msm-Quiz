@@ -11,7 +11,7 @@ module.exports = {
       let juniors = await db
         .get()
         .collection(collections.JUNIOR_COLLECTION)
-        .find({ hello: jday })
+        .find({ d_day: jday })
         .toArray();
       resolve(juniors);
     });

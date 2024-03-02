@@ -38,6 +38,7 @@ router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
   let type=user.type;
   let id= user._id;
   let jday = req.params.hello;
+  console.log("JUNNN**********",jday,type,id)
   if(user.type =="senior"){
     console.log("SEENNNN**********")
     res.render("users/qd-view", { admin: false, user});

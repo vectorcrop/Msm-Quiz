@@ -43,6 +43,19 @@ module.exports = {
     });
   },
 
+  getdaybyday: (day) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.DAY_COLLECTION)
+        .findOne({        
+          day: day
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
   ///////DELETE day/////////////////////                                            
   deleteday: (dayId) => {
     return new Promise((resolve, reject) => {

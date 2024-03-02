@@ -96,10 +96,12 @@ router.get("/add-junior", verifySignedIn, async function (req, res) {
 });
 
 ///////ADD junior/////////////////////                                         
-router.post("/add-junior", function (req, res) {
+router.post("/add-junior", async function (req, res) {
   const qObj={};
   const data=req.body;
   const questions = [];
+  const d_day=await adminHelper.getdaybyday(data.day).then(res=>res.hello);
+
 for (let i = 1; i <= 5; i++) {
   const questionObj = {
     key:i,
@@ -114,6 +116,7 @@ for (let i = 1; i <= 5; i++) {
   qObj.date=data.date;
   qObj.hello=data.hello;
   qObj.day=data.day;
+  qObj.d_day= d_day;
   qObj.status=data.status;
   qObj.questions=questions;
 }
