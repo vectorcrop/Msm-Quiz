@@ -15,9 +15,8 @@ const verifySignedIn = (req, res, next) => {
 /* GET admins listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let administator = req.session.admin;
-  adminHelper.getAllProducts().then((products) => {
-    res.render("admin/home", { admin: true, layout: "admin", products, administator });
-  });
+ 
+    res.render("admin/home", { admin: true, layout: "admin", administator });
 });
 
 
@@ -153,7 +152,7 @@ router.post("/edit-junior/:id", verifySignedIn, function (req, res) {
         image.mv("./public/images/junior-images/" + juniorId + ".png");
       }
     }
-    res.redirect("/admin/junior/all-juniors");
+    res.redirect("/admin/all-juniors");
   });
 });
 
@@ -169,15 +168,107 @@ router.get("/delete-junior/:id", verifySignedIn, function (req, res) {
 ///////DELETE ALL junior/////////////////////                                         
 router.get("/delete-all-juniors", verifySignedIn, function (req, res) {
   adminHelper.deleteAlljuniors().then(() => {
-    res.redirect("/admin/junior/all-juniors");
+    res.redirect("/admin/all-juniors");
+  });
+});
+
+/////************************************ */
+///////ALL seniors/////////////////////                                         
+router.get("/all-seniors", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllseniors().then((juniors) => {
+    res.render("admin/senior/all-seniors", { admin: true, layout: "admin", juniors, administator });
+  });
+});
+
+///////ADD senior/////////////////////                                         
+router.get("/add-senior", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let dayId = req.params.id;
+  let days = await adminHelper.getAlldays(dayId);
+  res.render("admin/senior/add-senior", { admin: true, layout: "admin", administator, days });
+});
+
+///////ADD senior/////////////////////                                         
+router.post("/add-senior", async function (req, res) {
+  const qObj={};
+  const data=req.body;
+  const questions = [];
+  const d_day=await adminHelper.getdaybyday(data.day).then(res=>res.hello);
+
+for (let i = 1; i <= 5; i++) {
+  const questionObj = {
+    key:i,
+    question: data[`question${i}`],
+    a: data[`a${i}`],
+    b: data[`b${i}`],
+    c: data[`c${i}`],
+    d: data[`d${i}`],
+    canswer: data[`canswer${i}`]
+  };
+  questions.push(questionObj);
+  qObj.date=data.date;
+  qObj.hello=data.hello;
+  qObj.day=data.day;
+  qObj.d_day= d_day;
+  qObj.status=data.status;
+  qObj.questions=questions;
+}
+  adminHelper.addjunior(qObj, (id) => {
+    let image = req.files.Image;
+    image.mv("./public/images/junior-images/" + id + ".png", (err, done) => {
+      if (!err) {
+        res.redirect("/admin/all-seniors");
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+///////EDIT senior/////////////////////                                         
+router.get("/edit-senior/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let juniorId = req.params.id;
+  let junior = await adminHelper.getseniorDetails(juniorId);
+  let dayId = req.params.id;
+  let days = await adminHelper.getAlldays(dayId);
+  console.log(junior);
+  res.render("admin/senior/edit-senior", { admin: true, layout: "admin", junior, administator, days });
+});
+
+///////EDIT sen/////////////////////                                         
+router.post("/edit-senior/:id", verifySignedIn, function (req, res) {
+  let juniorId = req.params.id;
+  adminHelper.updatesenior(juniorId, req.body).then(() => {
+    if (req.files) {
+      let image = req.files.Image;
+      if (image) {
+        image.mv("./public/images/junior-images/" + juniorId + ".png");
+      }
+    }
+    res.redirect("/admin/all-seniors");
+  });
+});
+
+///////DELETE senior/////////////////////                                         
+router.get("/delete-senior/:id", verifySignedIn, function (req, res) {
+  let juniorId = req.params.id;
+  adminHelper.deletesenior(juniorId).then((response) => {
+    fs.unlinkSync("./public/images/junior-images/" + juniorId + ".png");
+    res.redirect("/admin/all-seniors");
+  });
+});
+
+///////DELETE ALL senior/////////////////////                                         
+router.get("/delete-all-seniors", verifySignedIn, function (req, res) {
+  adminHelper.deleteAlljuniors().then(() => {
+    res.redirect("/admin/all-seniors");
   });
 });
 
 
-
-
-
-
+////******************************************  */
 router.get("/all-products", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
   adminHelper.getAllProducts().then((products) => {
