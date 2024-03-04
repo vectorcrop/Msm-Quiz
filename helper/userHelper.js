@@ -40,11 +40,18 @@ module.exports = {
           }
         ]).toArray()
 
-        for (let i = 0; i < correctAnswers[0].canswer.length; i++) {
-            if (ans.answers[i].slAns === correctAnswers[0].canswer[i]) {
-                score++;
-            }
-        }
+        ans.answers.forEach(function(answer) {
+          // Find the index in correctAnswers[0].canswer based on qKey
+          const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+          // Check if the index is within the range of correctAnswers[0].canswer
+          if (index >= 0 && index < correctAnswers[0].canswer.length) {
+              // Compare the answer with the corresponding index in correctAnswers[0].canswer
+              if (answer.slAns === correctAnswers[0].canswer[index]) {
+                  score++;
+              }
+          }
+      });
+      
       }else{
        var correctAnswers=0;
       }
