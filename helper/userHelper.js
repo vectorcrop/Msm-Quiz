@@ -2,6 +2,8 @@ var db = require("../config/connection");
 var collections = require("../config/collections");
 const bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
+const { server } = require("../app");
+const io = require('socket.io')(server); 
 
 
 module.exports = {

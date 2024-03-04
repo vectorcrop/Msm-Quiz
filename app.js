@@ -1,6 +1,7 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
+const http = require("http");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var hbs = require("express-handlebars");
@@ -10,6 +11,13 @@ var fileUpload = require("express-fileupload");
 var db = require("./config/connection");
 var session = require("express-session");
 var app = express();
+const connectSocket = require("./socket/socket.io");
+
+// Socket Config
+var server = http.createServer(app);
+
+// Socket Connection
+const io = connectSocket(server);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -93,6 +101,12 @@ app.use("/", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/junior", adminRouter);
 
+// socket add in req.io middleware
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -109,4 +123,4 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+module.exports = { app, server };
