@@ -38,24 +38,138 @@ router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
   let type=user.type;
   let id= user._id;
   let jday = req.params.hello;
-  console.log("JUNNN**********",jday,type,id)
-  if(user.type =="senior"){
-    await userHelper.getSeniorByDay(jday).then(async (juniors) => {
-      console.log("SEEEEN**********",juniors)
-      res.render("users/qd-view", { admin: false, user, juniors,type,id });
-    })
+  let dayStatus= await adminHelper.getdaybyhello(jday);
+  let iscompleted =await userHelper.checkIsCompleted(id,jday);
+  // console.log("JUNNN**********",jday,type,id)
+  if(iscompleted){
+    const htmlContent = `
+    <html>
+      <head>
+        <style>
+          * {
+            transition: all 0.6s;
+          }
+          html {
+            height: 100%;
+          }
+          body {
+            font-family: 'Lato', sans-serif;
+            color: #888;
+            margin: 0;
+          }
+          #main {
+            display: table;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+          }
+          .fof {
+            display: table-cell;
+            vertical-align: middle;
+          }
+          .fof h1 {
+            font-size: 50px;
+            display: inline-block;
+            padding-right: 12px;
+            animation: type .5s alternate infinite;
+          }
+          @keyframes type {
+            from {
+              box-shadow: inset -3px 0px 0px #888;
+            }
+            to {
+              box-shadow: inset -3px 0px 0px transparent;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="main">
+          <div class="fof">
+            <h1>Your response has already been submitted</h1>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
   
-  }else{
-    await userHelper.getJuniorsByDay(jday).then(async (juniors) => {
-      console.log("JUNNN**********",juniors)
-      res.render("users/qd-view", { admin: false, user, juniors,type,id });
-    })
+  res.send(htmlContent);
   }
+  if(dayStatus.status=="disabled"){
+    //want 404 page
+    const htmlContent = `
+    <html>
+      <head>
+        <style>
+          * {
+            transition: all 0.6s;
+          }
+          html {
+            height: 100%;
+          }
+          body {
+            font-family: 'Lato', sans-serif;
+            color: #888;
+            margin: 0;
+          }
+          #main {
+            display: table;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+          }
+          .fof {
+            display: table-cell;
+            vertical-align: middle;
+          }
+          .fof h1 {
+            font-size: 50px;
+            display: inline-block;
+            padding-right: 12px;
+            animation: type .5s alternate infinite;
+          }
+          @keyframes type {
+            from {
+              box-shadow: inset -3px 0px 0px #888;
+            }
+            to {
+              box-shadow: inset -3px 0px 0px transparent;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="main">
+          <div class="fof">
+            <h1>Error 404</h1>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+  
+  res.send(htmlContent);
+
+  }else{
+    if(user.type =="senior"){
+      await userHelper.getSeniorByDay(jday).then(async (juniors) => {
+        console.log("SEEEEN**********",juniors)
+        res.render("users/qd-view", { admin: false, user, juniors,type,id });
+      })
+    
+    }else{
+      await userHelper.getJuniorsByDay(jday).then(async (juniors) => {
+        console.log("JUNNN**********",juniors)
+        res.render("users/qd-view", { admin: false, user, juniors,type,id });
+      })
+    }
+  }
+  
 });
 
 
-router.post('/qd-view/:qid',async function(req, res) {
-  await userHelper.setAnswer(req.params.qid,req.session.user.type,req.session.user._id,req.body).then((resp)=>{
+router.post('/qd-view/:qid/:did',async function(req, res) {
+  await userHelper.setAnswer(req.params.qid,req.session.user.type,req.session.user._id,req.body,req.params.did).then((resp)=>{
     var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
     res.json({ redirectUrl: newUrl ,totalScore:resp.totalScore,score:resp.score });
   })

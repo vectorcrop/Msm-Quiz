@@ -63,6 +63,10 @@ router.post("/edit-day/:id", verifySignedIn, async function (req, res) {
   let dayId = req.params.id;
   let day=req.body.day;
   let status=req.body.status;
+  console.log(status,"edit---day")
+  if(status=="disabled"){
+    req.io.emit('hide');
+  }
  await adminHelper.updateday(dayId, req.body).then(() => {
   adminHelper.updateDayStatus(day,status).then(()=>{
     res.redirect("/admin/all-days");

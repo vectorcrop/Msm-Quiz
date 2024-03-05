@@ -8,6 +8,15 @@
 <br>
 <br>
 <center>
+
+    <!-- Modal -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p><strong>Time's Up!</strong> Please submit your answers.</p>
+    <button id="modalSubmitBtn">OK</button>
+  </div>
+</div>
  
     {{#each juniors.[0].questions}}
     <h2>{{this.key}}. {{this.question}}</h2>
@@ -21,7 +30,7 @@
       {{/each}}
       <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
     <button id="submitBtn" class="btn btn-primary">Submit Answers</button>
-    <button onclick="hideContent()">emit</button>
+    {{!-- <button onclick="hideContent()">emit</button> --}}
 </center>
 
 
@@ -87,7 +96,7 @@
         let qw = window.location.href.split('/').pop();
        console.log(answers)
       
-        fetch(`/qd-view/${ss}`, {
+        fetch(`/qd-view/${ss}/${qw}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -113,21 +122,24 @@
          }
     });
 </script>
-
 <script>
-        const socket = io();
+    const socket = io();
+    const modal = document.getElementById("myModal");
+   // const submitBtn = document.getElementById("submitBtn");
 
-        // Listen for 'hide' event from the server
-        socket.on('hide', () => {
+     socket.on('hide', () => {
             console.log(' socket.on hiideeeeeennnnnnnn')
-            alert('Content hidden!');
-            
-            // Redirect to the home page after showing the alert
-           // window.location.href = '/home'; // Replace '/home' with your home page URL
+             modal.style.display = "block";
         });
-         function hideContent() {
-             console.log('hiideeeeeennnnnnnnEEEEEEm')
-        // Emit 'hide' event to the server
-       socket.emit('hide');
+           
+    // When the user clicks the OK button in the modal, submit the form
+    const modalSubmitBtn = document.getElementById("modalSubmitBtn");
+    modalSubmitBtn.onclick = function() {
+        if(answers.length==0){
+                answers.push({qKey: '1', slAns: ''})
+                 console.log(answers)
+        }
+        submitBtn.click();
     }
-    </script>
+</script>
+

@@ -28,7 +28,7 @@ module.exports = {
       resolve(senior);
     });
   },
-  setAnswer:(qid,type,uid,ans)=>{
+  setAnswer:(qid,type,uid,ans,d_id)=>{
     return new Promise(async (resolve, reject)=>{
       var score = 0;
       if(type=="junior"){
@@ -80,8 +80,9 @@ module.exports = {
       await db.get().collection(collections.USERS_COLLECTION).findOneAndUpdate(
         {_id:  objectId(uid)},
         {
-          $push: { answers: ans.answers,score:score }, // Push each submitted answer to the answers array
-          $inc: { totalScore: score } // Increment the score by the calculated score
+          $push: { answers: ans.answers,score:score,completed:d_id}, // Push each submitted answer to the answers array
+          $inc: { totalScore: score } 
+          // Increment the score by the calculated score
         },
         {  returnNewDocument: true,
           returnDocument: "after" }
@@ -97,6 +98,19 @@ module.exports = {
         resolve({ error: 'An error occurred while saving answers and score.' });
       });
 
+    })
+
+  },
+  checkIsCompleted:(uid,d_id)=>{
+    return new Promise(async (resolve, reject) => {
+      const user = await db.get().collection(collections.USERS_COLLECTION).findOne({_id:objectId(uid)});
+      if (user && user.completed) {
+        // Check if the completed array includes the specified value
+        resolve(user.completed.includes(d_id))
+      } else {
+        // If completed array is undefined or user is not found, return false
+        resolve( false)
+      }
     })
 
   },
