@@ -3,6 +3,8 @@ var adminHelper = require("../helper/adminHelper");
 var fs = require("fs");
 const userHelper = require("../helper/userHelper");
 var router = express.Router();
+// const { server } = require("../app");
+// const io = require('socket.io')(server); 
 
 const verifySignedIn = (req, res, next) => {
   if (req.session.signedInAdmin) {
@@ -11,6 +13,12 @@ const verifySignedIn = (req, res, next) => {
     res.redirect("/admin/signin");
   }
 };
+
+router.get('/hide', (req, res) => {
+  // Emit 'hide' event to all connected clients
+  req.io.emit('hide');
+  res.send('Button clicked. Hiding content.');
+});
 
 /* GET admins listing. */
 router.get("/", verifySignedIn, function (req, res, next) {

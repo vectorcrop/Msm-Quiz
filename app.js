@@ -19,6 +19,12 @@ var server = http.createServer(app);
 // Socket Connection
 const io = connectSocket(server);
 
+// socket add in req.io middleware
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
@@ -101,11 +107,7 @@ app.use("/", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/junior", adminRouter);
 
-// socket add in req.io middleware
-app.use(function (req, res, next) {
-  req.io = io;
-  next();
-});
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

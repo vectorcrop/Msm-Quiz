@@ -21,6 +21,7 @@
       {{/each}}
       <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
     <button id="submitBtn" class="btn btn-primary">Submit Answers</button>
+    <button onclick="hideContent()">emit</button>
 </center>
 
 
@@ -113,3 +114,20 @@
     });
 </script>
 
+<script>
+        const socket = io();
+
+        // Listen for 'hide' event from the server
+        socket.on('hide', () => {
+            console.log(' socket.on hiideeeeeennnnnnnn')
+            alert('Content hidden!');
+            
+            // Redirect to the home page after showing the alert
+           // window.location.href = '/home'; // Replace '/home' with your home page URL
+        });
+         function hideContent() {
+             console.log('hiideeeeeennnnnnnnEEEEEEm')
+        // Emit 'hide' event to the server
+       socket.emit('hide');
+    }
+    </script>

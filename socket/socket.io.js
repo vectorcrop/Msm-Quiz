@@ -9,29 +9,16 @@ const connectSocket = (server) => {
   io = new Server(server);
 
   io.on("connection", (socket) => {
- 
-    //io by me
-     // Listen for new order events and broadcast them to connected clients
-  socket.on('new-order', () => {
-    console.log( "new order*************** is joined to room");
-    socket.broadcast.emit('order-added');
-  });
+    console.log(`connection****${socket.id}****connection*****connection** iOOOOOOOOOOOOOOOOOO*******`);
+    
+    // Listen for the 'hide' event from the client
+    // socket.on('hide', (data) => {
+    //   socket.broadcast.emit('hide');
+    //   console.log(`New message from : ${data}`);
+    //   console.log("hide*************** iOOOOOOOOOOOOOOOOOO*******");
+    // });
 
-    // Join a room in socket
-    socket.on("subscribe", (subscribeId) => {
-      socket.join(subscribeId); 
-      console.log(subscribeId + " is joined to room");
-    });
-
-    // Leave a room from socket
-    socket.on("unsubscribe", (subscribeId) => {
-      socket.leave(subscribeId);
-      console.log(subscribeId + " was leave from room");
-    });
-
-    socket.on("disconnect", () => {
-      console.log("user disconnected");
-    });
+    
   });
 
   return io;
