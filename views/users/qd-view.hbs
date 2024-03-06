@@ -1,66 +1,84 @@
 <style>
-    .clear{
+    .clear {
         display: none;
+    }
+
+    .btn {
+        text-align: left;
+        padding-left: 10px;
+        /* Adjust the value as needed */
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <br><br>
-<br>
-<br>
-<center>
+<br><br>
 
+<div class="container">
     <!-- Modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p><strong>Time's Up!</strong> Please submit your answers.</p>
-    <button id="modalSubmitBtn">OK</button>
-  </div>
-</div>
- 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p><strong>Time's Up!</strong> Please submit your answers.</p>
+            <button id="modalSubmitBtn">OK</button>
+        </div>
+    </div>
+
     {{#each juniors.[0].questions}}
-    <h2>{{this.key}}. {{this.question}}</h2>
-   <button  class="btn btn-outline-dark answer a{{this.key}}" data-answer="A" data-key="{{this.key}}">{{this.a}}</button><br>
-    <button class="btn btn-outline-dark answer a{{this.key}}" data-answer="B" data-key="{{this.key}}">{{this.b}}</button><br>
-    <button class="btn btn-outline-dark answer a{{this.key}}" data-answer="C" data-key="{{this.key}}">{{this.c}}</button><br>
-    <button class="btn btn-outline-dark answer a{{this.key}}" data-answer="D" data-key="{{this.key}}">{{this.d}}</button><br>
-    
-     <button class="btn btn-outline-dark clear b{{this.key}}" data-key="{{this.key}}">clear</button><br>
-      
-      {{/each}}
-      <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
-    <button id="submitBtn" class="btn btn-primary">Submit Answers</button>
+    <div class="card p-5 shadow mb-3">
+
+        <h3>{{this.key}}. {{this.question}}</h3><br>
+        <button class="btn btn-outline-dark btn-lg answer a{{this.key}}" data-answer="A" data-key="{{this.key}}">A)
+            {{this.a}}</button><br>
+        <button class="btn btn-outline-dark btn-lg answer a{{this.key}}" data-answer="B" data-key="{{this.key}}">B)
+            {{this.b}}</button><br>
+        <button class="btn btn-outline-dark btn-lg answer a{{this.key}}" data-answer="C" data-key="{{this.key}}">C)
+            {{this.c}}</button><br>
+        <button class="btn btn-outline-dark btn-lg answer a{{this.key}}" data-answer="D" data-key="{{this.key}}">D)
+            {{this.d}}</button><br>
+
+        <button class="btn w-25 text-center btn-danger clear b{{this.key}}" data-key="{{this.key}}">clear</button><br>
+    </div>
+
+    {{/each}}
+
+    <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
+    <button id="submitBtn" class="btn btn-lg btn-primary w-50 text-center" onclick="submitForm()">Submit
+        Answers</button>
+    <a href="/home" class="btn btn-lg btn-danger w-25 text-center">Back to home</a>
+
+    <br><br><br>
     {{!-- <button onclick="hideContent()">emit</button> --}}
-</center>
+</div>
+
 
 
 
 <script>
     let answers = [];
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         console.log("ready@@@")
         // Get all answer elements
         const answerElements = document.querySelectorAll('.answer');
-        answerElements.forEach(function(answerElement) {
-            answerElement.addEventListener('click', function() {
+        answerElements.forEach(function (answerElement) {
+            answerElement.addEventListener('click', function () {
                 const qKey = this.getAttribute('data-key');
                 const slAns = this.getAttribute('data-answer');
-                 const clrbtn = document.querySelector('.clear.b' + qKey);
-                console.log("answerElements t6his",clrbtn)
+                const clrbtn = document.querySelector('.clear.b' + qKey);
+                console.log("answerElements t6his", clrbtn)
 
 
                 // Disable all answer buttons for the clicked question
-                document.querySelectorAll('.a' + qKey).forEach(function(element) {
-                 
+                document.querySelectorAll('.a' + qKey).forEach(function (element) {
+
                     if (element !== answerElement) {
                         element.disabled = true;
                     }
                 });
 
-            
-                 clrbtn.style.display = 'block';
-                this.style.backgroundColor = 'yellow';
+
+                clrbtn.style.display = 'block';
+                this.style.backgroundColor = '#2ee89b';
 
                 // Push selected answer to the answers array
                 answers.push({ qKey: qKey, slAns: slAns });
@@ -70,18 +88,18 @@
 
         // Add event listener for clear buttons
         const clearButtons = document.querySelectorAll('.clear');
-        clearButtons.forEach(function(clearButton) {
-            clearButton.addEventListener('click', function() {
+        clearButtons.forEach(function (clearButton) {
+            clearButton.addEventListener('click', function () {
                 const qKey = this.getAttribute('data-key');
 
                 // Re-enable all answer buttons for the clicked question
-                document.querySelectorAll('.a' + qKey).forEach(function(element) {
+                document.querySelectorAll('.a' + qKey).forEach(function (element) {
                     element.disabled = false;
                     element.style.backgroundColor = ''; // Reset background color
                 });
 
                 // Remove the answer for this question from the answers array
-                answers = answers.filter(function(answer) {
+                answers = answers.filter(function (answer) {
                     return answer.qKey !== qKey;
                 });
             });
@@ -89,57 +107,74 @@
     });
 
     const submitBtn = document.getElementById('submitBtn');
-    submitBtn.addEventListener('click', function() {
+    submitBtn.addEventListener('click', function () {
         // Send answers to the server (you can customize this part)
-         if (answers.length >= 1 && answers.length <= 5) {
-        let ss = document.getElementById('ssno').value;
-        let qw = window.location.href.split('/').pop();
-       console.log(answers)
-      
-        fetch(`/qd-view/${ss}/${qw}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ answers: answers, qw: qw })
-        })
-        .then(response => response.json())
-        .then(function(response) {
-            console.log('Server response:', response);
-            answers = [];
-            // Check if the server response contains the new URL
-            if (response && response.redirectUrl) {
-                window.location.href = response.redirectUrl;
-            } else {
-                console.error('Server response does not contain a redirect URL.');
-            }
-        })
-        .catch(function(error) {
-            console.error('Error:', error);
-        });
-         }else{
+        if (answers.length >= 1 && answers.length <= 5) {
+            let ss = document.getElementById('ssno').value;
+            let qw = window.location.href.split('/').pop();
+            console.log(answers)
+
+            fetch(`/qd-view/${ss}/${qw}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ answers: answers, qw: qw })
+            })
+                .then(response => response.json())
+                .then(function (response) {
+                    console.log('Server response:', response);
+                    answers = [];
+                    // Check if the server response contains the new URL
+                    if (response && response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        console.error('Server response does not contain a redirect URL.');
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        } else {
             alert("Please select at least 1 answers ")
-         }
+        }
     });
 </script>
 <script>
     const socket = io();
     const modal = document.getElementById("myModal");
-   // const submitBtn = document.getElementById("submitBtn");
+    // const submitBtn = document.getElementById("submitBtn");
 
-     socket.on('hide', () => {
-            console.log(' socket.on hiideeeeeennnnnnnn')
-             modal.style.display = "block";
-        });
-           
+    socket.on('hide', () => {
+        console.log(' socket.on hiideeeeeennnnnnnn')
+        modal.style.display = "block";
+    });
+
     // When the user clicks the OK button in the modal, submit the form
     const modalSubmitBtn = document.getElementById("modalSubmitBtn");
-    modalSubmitBtn.onclick = function() {
-        if(answers.length==0){
-                answers.push({qKey: '1', slAns: ''})
-                 console.log(answers)
+    modalSubmitBtn.onclick = function () {
+        if (answers.length == 0) {
+            answers.push({ qKey: '1', slAns: '' })
+            console.log(answers)
         }
         submitBtn.click();
     }
 </script>
 
+<script>
+    function submitForm() {
+        // Check if any option is selected
+        var selectedOptions = $('.answer:checked');
+
+        if (selectedOptions.length === 0) {
+            // If no option is selected, show an alert
+            alert("You didn't select anything. Please choose at least one option.");
+        } else {
+            // If options are selected, proceed with form submission
+            // You can add the form submission logic here or redirect to another page
+            // For example, you can use AJAX to submit the form data to the server
+            // Replace the following line with your actual form submission logic
+            // $("#yourFormId").submit();
+        }
+    }
+</script>
