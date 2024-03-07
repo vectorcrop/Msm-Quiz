@@ -21,7 +21,7 @@ router.get("/", verifySignedIn, function (req, res, next) {
     // cartCount = userHelper.getCartCount(userId);
   }
 
-    res.render("users/index", { admin: false, user, });
+  res.render("users/index", { admin: false, user, });
 
 });
 
@@ -33,15 +33,24 @@ router.get("/home", verifySignedIn, function (req, res, next) {
 });
 
 
-router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
+router.get("/homme", verifySignedIn, function (req, res, next) {
   let user = req.session.user;
-  let type=user.type;
-  let id= user._id;
+  adminHelper.getAlldays().then((days) => {
+    res.render("users/homme", { admin: false, days, user });
+  });
+});
+
+
+
+router.get("/qd-view/:hello", verifySignedIn, async function (req, res, next) {
+  let user = req.session.user;
+  let type = user.type;
+  let id = user._id;
   let jday = req.params.hello;
-  let dayStatus= await adminHelper.getdaybyhello(jday);
-  let iscompleted =await userHelper.checkIsCompleted(id,jday);
+  let dayStatus = await adminHelper.getdaybyhello(jday);
+  let iscompleted = await userHelper.checkIsCompleted(id, jday);
   // console.log("JUNNN**********",jday,type,id)
-  if(iscompleted){
+  if (iscompleted) {
     const htmlContent = `
     <html>
       <head>
@@ -92,10 +101,10 @@ router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
       </body>
     </html>
   `;
-  
-  res.send(htmlContent);
+
+    res.send(htmlContent);
   }
-  if(dayStatus.status=="disabled"){
+  if (dayStatus.status == "disabled") {
     //want 404 page
     const htmlContent = `
     <html>
@@ -147,40 +156,40 @@ router.get("/qd-view/:hello",verifySignedIn, async function (req, res, next) {
       </body>
     </html>
   `;
-  
-  res.send(htmlContent);
 
-  }else{
-    if(user.type =="senior"){
+    res.send(htmlContent);
+
+  } else {
+    if (user.type == "senior") {
       await userHelper.getSeniorByDay(jday).then(async (juniors) => {
-        console.log("SEEEEN**********",juniors)
-        res.render("users/qd-view", { admin: false, user, juniors,type,id });
+        console.log("SEEEEN**********", juniors)
+        res.render("users/qd-view", { admin: false, user, juniors, type, id });
       })
-    
-    }else{
+
+    } else {
       await userHelper.getJuniorsByDay(jday).then(async (juniors) => {
-        console.log("JUNNN**********",juniors)
-        res.render("users/qd-view", { admin: false, user, juniors,type,id });
+        console.log("JUNNN**********", juniors)
+        res.render("users/qd-view", { admin: false, user, juniors, type, id });
       })
     }
   }
-  
+
 });
 
 
-router.post('/qd-view/:qid/:did',async function(req, res) {
-  await userHelper.setAnswer(req.params.qid,req.session.user.type,req.session.user._id,req.body,req.params.did).then((resp)=>{
+router.post('/qd-view/:qid/:did', async function (req, res) {
+  await userHelper.setAnswer(req.params.qid, req.session.user.type, req.session.user._id, req.body, req.params.did).then((resp) => {
     var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
-    res.json({ redirectUrl: newUrl ,totalScore:resp.totalScore,score:resp.score });
+    res.json({ redirectUrl: newUrl, totalScore: resp.totalScore, score: resp.score });
   })
-  
+
 });
 
 router.get("/rs-view/:ts/:s", verifySignedIn, function (req, res, next) {
   let user = req.session.user;
-  let tScore=req.params.ts;
-  let score=req.params.s;
-    res.render("users/rs-view", { admin: false,user,tScore,score });
+  let tScore = req.params.ts;
+  let score = req.params.s;
+  res.render("users/rs-view", { admin: false, user, tScore, score });
 });
 
 
@@ -206,7 +215,7 @@ router.post("/signup", function (req, res) {
       req.session.signUpErr = "Username is already taken. Please choose a different username by changing your name details.";
       res.redirect("/signup");
     }
-    
+
   });
 });
 
@@ -247,7 +256,7 @@ router.post("/search", verifySignedIn, async function (req, res) {
   let userId = req.session.user._id;
   //let cartCount = await userHelper.getCartCount(userId);
   //userHelper.searchProduct(req.body).then((response) => {
-    res.render("users/search-result", { admin: false, user, response });
+  res.render("users/search-result", { admin: false, user, response });
   //});
 });
 

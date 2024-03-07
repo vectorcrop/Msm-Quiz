@@ -141,12 +141,12 @@
 <!------------------------------------------------------------------------------>
 <!-- Login Wrapper Area -->
 <div class="login-wrapper d-flex align-items-center justify-content-center bg-white">
-    <div class="card p-4 shadow">
-        <div class="container p">
+    <div class="card p-2 shadow">
+        <div class="container">
             <div class="text-center px-4"><img class="login-intro-img" src="img/bg-img/36.png" alt=""></div>
             <!-- Register Form -->
             <div class="register-form mt-4">
-                <h6 class="mb-3 text-center">Register to Msm Ramadan Quiz 2024.</h6>
+                <h6 class="mb-3 text-center">Register to Msm Ramadan Quiz 2024.</h6><br>
                 {{#if signUpErr}}
                 <div class="alert alert-danger" role="alert">
                     <p class="error alert-heading">{{signUpErr}}</p>
@@ -155,28 +155,32 @@
                 <form action="/signup" method="POST" id="stepForm" onsubmit="return validateForm()">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="form-group text-start mb-1">
+                            <div class="form-group text-start mb-3">
+                                <label class="mb-2 text-dark">നിങ്ങളുടെ ആദ്യത്തെ പേര്</label>
                                 <input class="form-control" type="text" id="firstName" name="Fname"
-                                    placeholder="Your First Name" required>
+                                    placeholder="Your First Name" required oninput="convertToLowercase(this)">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group text-start mb-1">
+                            <div class="form-group text-start mb-0">
+                                <label class="mb-2 text-dark">നിങ്ങളുടെ അവസാനത്തെ പേര്</label>
                                 <input class="form-control" type="text" id="lastName" name="Lname"
-                                    placeholder="Your Last Name">
+                                    placeholder="Your Last Name" required oninput="convertToLowercase(this)">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group text-start mb-3">
+                    <div class="form-group text-start">
                         <input class="form-control" id="username" name="Username" type="hidden" placeholder="Username"
                             readonly>
                     </div>
                     <div class="form-group text-start mb-3">
+                        <label class="mb-2 text-dark">നിങ്ങളുടെ മൊബൈൽ നമ്പർ</label>
                         <input class="form-control" id="mobile" name="Mobile" type="number"
                             placeholder="Your Mobile Number" required>
                     </div>
 
                     <div class="form-group">
+                        <label class="mb-2 text-dark">നിങ്ങളുടെ സോൺ തിരഞ്ഞെടുക്കുക</label>
                         <select class="form-select" id="defaultSelect" name="zone" aria-label="Default select example"
                             required>
                             <option value="" disabled selected>Select Your Zone</option>
@@ -187,10 +191,25 @@
                     <div class="form-group">
                         <select class="form-select" name="type" aria-label="Default select example" required>
                             <option value="" disabled selected>Select Junior/Senior</option>
-                            <option value="junior">Junior</option>
-                            <option value="senior">Senior</option>
+                            <option value="junior">Junior (Below 15)</option>
+                            <option value="senior">Senior (Above 15)</option>
                         </select>
                     </div>
+                    <div class="form-group text-start mb-3">
+                        <label class="mb-2 text-dark">നിങ്ങളുടെ വിലാസം</label>
+                        <input class="form-control" id="Address" name="Address" type="text" placeholder="Your Address"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="districtSelect" class="form-label">നിങ്ങളുടെ ജില്ല</label>
+                        <select class="form-select" name="district" id="districtSelect"
+                            aria-label="Default select example" required>
+                            <option value="" disabled selected>നിങ്ങളുടെ ജില്ല</option>
+                        </select>
+                    </div>
+
+
 
                     <div class="form-group text-start mb-3 position-relative">
                         <input class="form-control" id="password" name="Password" type="hidden"
@@ -282,4 +301,35 @@
     // Initial call to update the username field when the page loads
     updateUsername();
     updatePassword();
+</script>
+
+<script>
+    function convertToLowercase(inputElement) {
+        var inputValue = inputElement.value;
+        inputElement.value = inputValue.toLowerCase();
+    }
+</script>
+
+<script>
+    // Sample array of districts in Kerala
+    var districtsInKerala = ["Thiruvananthapuram", "Kollam", "Pathanamthitta", "Alappuzha", "Kottayam", "Idukki", "Ernakulam", "Thrissur", "Palakkad", "Malappuram", "Kozhikode", "Wayanad", "Kannur", "Kasaragod"];
+
+    // Function to populate the district dropdown
+    function populateDistrictDropdown() {
+        var districtSelect = document.getElementById("districtSelect");
+
+        // Clear existing options
+        districtSelect.innerHTML = '<option value="" disabled selected>Select District</option>';
+
+        // Add options for each district
+        districtsInKerala.forEach(function (district) {
+            var option = document.createElement("option");
+            option.value = district.toLowerCase(); // Set the value to lowercase if needed
+            option.text = district;
+            districtSelect.add(option);
+        });
+    }
+
+    // Call the function to populate the dropdown
+    populateDistrictDropdown();
 </script>
