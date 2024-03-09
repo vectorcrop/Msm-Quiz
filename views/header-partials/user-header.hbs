@@ -2,6 +2,9 @@
 <div id="preloader">
     <div class="spinner-grow text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
 </div>
+
+
+
 <!-- Internet Connection Status -->
 <!-- # This code for showing internet connection status -->
 <div class="internet-connection-status" id="internetStatus"></div>
@@ -40,11 +43,11 @@
             <div class="sidenav-profile bg-gradient">
                 <div class="sidenav-style1"></div>
                 <!-- User Thumbnail -->
-                <div class="user-profile"><img src="img/bg-img/2.jpg" alt=""></div>
+                <div class="user-profile"><img src="/images/user.png" alt=""></div>
                 <!-- User Info -->
                 {{#if user}}
                 <div class="user-info">
-                    <h6 class="user-name mb-0">{{user.Fname}} {{user.Lname}} {{user.type}}</h6>
+                    <h6 class="user-name mb-0">{{user.Fname}} {{user.Lname}} </h6>
                     <span>{{user.Mobile}}</span>
 
                 </div>
@@ -52,7 +55,10 @@
             </div>
             <!-- Sidenav Nav -->
             <ul class="sidenav-nav ps-0">
-                <li><a href="/index"><i class="bi bi-house-door"></i>Home</a></li>
+                <li><a href="/"><i class="bi bi-house-door"></i>Home</a></li>
+                <li><a href="/profile"><i class="bi bi-people"></i>My Profile</a></li>
+                <li><a href="/contact"><i class="bi bi-phone"></i>Contact Us</a></li>
+
                 {{!-- <li><a href="elements.html"><i class="bi bi-folder2-open"></i>Elements<span
                             class="badge bg-danger rounded-pill ms-2">220+</span></a></li>
                 <li><a href="pages.html"><i class="bi bi-collection"></i>Pages<span
@@ -81,7 +87,7 @@
                         class="bi bi-twitter"></i></a><a href="#"><i class="bi bi-linkedin"></i></a></div>
             <!-- Copyright Info -->
             <div class="copyright-info">
-                <p>2024 &copy; Made by<a href="#"> VectorCrop</a></p>
+                <h6 class="text-dark">2024 &copy; Made by<a href="https://www.vectorcrop.com"> VectorCrop</a></h6>
             </div>
         </div>
     </div>

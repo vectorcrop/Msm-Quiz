@@ -1,5 +1,5 @@
 <style>
-    ul {
+    .ul2 {
         list-style: none;
         padding: 0;
         margin: 0;
@@ -9,7 +9,7 @@
     }
 
     @media only screen and (max-width: 600px) {
-        ul {
+        .ul2 {
             list-style: none;
             padding-left: -164px;
             margin: 0;
@@ -31,9 +31,9 @@
         position: relative;
         padding: 20px;
         border: 20px solid #0000;
-        background: linear-gradient(#e71e07 0 0) content-box,
+        background: linear-gradient(#061238 0 0) content-box,
             linear-gradient(var(--c, #fcd000) 0 0) padding-box,
-            linear-gradient(var(--d, 90deg), #0000 75%, #42b132 0) border-box;
+            linear-gradient(var(--d, 90deg), #0000 75%, #dc3545 0) border-box;
     }
 
 
@@ -49,7 +49,7 @@
         position: relative;
         padding: 20px;
         border: 20px solid #0000;
-        background: linear-gradient(#7a4f4a63 0 0) content-box, linear-gradient(var(--c, #fcd000) 0 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, #42b132 0) border-box;
+        background: linear-gradient(#7a4f4a63 0 0) content-box, linear-gradient(var(--c, #fcd000) 0 0) padding-box, linear-gradient(var(--d, 90deg), #0000 75%, #dc3545 0) border-box;
     }
 
     li:nth-child(even) {
@@ -171,9 +171,58 @@
         /* Change opacity to visually indicate a disabled state */
         /* You can add other styles to make it visually appear as disabled */
     }
+
+    /* Existing styles remain unchanged */
+
+    .header-area2 {
+        background-color: #dc3545;
+        width: 100%;
+        height: 50px;
+        margin-top: 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .coin-container {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        /* Adjust the margin as needed */
+    }
+
+    .coin-img {
+        width: 20px;
+        /* Adjust the width of the coin image */
+        margin-right: 5px;
+        /* Adjust the margin between the coin and the number */
+    }
+
+    .coin-number {
+        color: #fff;
+        font-size: 18px;
+        /* Adjust the font size of the coin number */
+        font-weight: bold;
+    }
 </style>
+<div class="header-area2">
+    <!-- Add your coin and number here -->
+    <div class="coin-container">
+        <img src="/images/coin.png" class="coin-img">
+        <span class="coin-number">{{#if user}} {{user.totalScore}} {{/if}}</span>
+
+    </div>
+
+</div>
+
+<br>
 <br><br><br>
-<ul class="timeline">
+<ul class="timeline ul2">
     {{#each days}}
     {{#eq this.status "display"}}
     <li class="li1"> <a class="a1" href="/qd-view/{{this.hello}}">

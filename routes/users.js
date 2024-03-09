@@ -25,12 +25,7 @@ router.get("/", verifySignedIn, function (req, res, next) {
 
 });
 
-router.get("/home", verifySignedIn, function (req, res, next) {
-  let user = req.session.user;
-  adminHelper.getAlldays().then((days) => {
-    res.render("users/home", { admin: false, days, user });
-  });
-});
+
 
 router.get("/profile", verifySignedIn, function (req, res, next) {
   let user = req.session.user;
@@ -93,11 +88,22 @@ router.get("/delete-all-forgots", verifySignedIn, function (req, res) {
   });
 });
 
+router.get("/donation", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  res.render("users/donation", { admin: false, user });
+});
 
 router.get("/homme", verifySignedIn, function (req, res, next) {
   let user = req.session.user;
   adminHelper.getAlldays().then((days) => {
-    res.render("users/homme", { admin: false, days, user });
+    res.render("users/homme", { admin: false, days, layout: "layout2", user });
+  });
+});
+
+router.get("/home", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  adminHelper.getAlldays().then((days) => {
+    res.render("users/home", { admin: false, days, layout: "layout2", user });
   });
 });
 

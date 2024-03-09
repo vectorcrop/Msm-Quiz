@@ -11,6 +11,60 @@
     </center>
 </div> --}}
 
+<style>
+    .bg-overlay::after {
+        position: absolute;
+        content: "";
+        background-color: #000000ab;
+        opacity: 0.75;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+    }
+</style>
+<style>
+    .donation-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .button1 {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        animation: glow 2s infinite;
+        /* Apply the glow animation */
+    }
+
+    @keyframes glow {
+        0% {
+            box-shadow: 0 0 10px #4CAF50;
+            /* Initial glow effect */
+        }
+
+        50% {
+            box-shadow: 0 0 20px #4CAF50, 0 0 30px #4CAF50;
+            /* Intermediate glow effect */
+        }
+
+        100% {
+            box-shadow: 0 0 10px #4CAF50;
+            /* Return to the initial glow effect */
+        }
+    }
+
+
+    .button1:hover {
+        background-color: #45a049;
+    }
+</style>
+
 <div class="toast  custom-toast-1 toast-success home-page-toast" role="alert" aria-live="assertive" aria-atomic="true"
     data-bs-delay="7000" data-bs-autohide="true">
     <div class="toast-body">
@@ -40,6 +94,9 @@
         aria-label="Close"></button>
 </div>
 
+<div class="donation-button">
+    <a href="/donation" class="button1">Donate Now</a>
+</div>
 
 
 <div class="tiny-slider-one-wrapper">
@@ -48,7 +105,7 @@
         <div class="mt-4">
             <br>
 
-            <div class="single-hero-slide bg-overlay" style="background-image: url('img/bg-img/31.jpg')">
+            <div class="single-hero-slide bg-overlay" style="background-image: url('/images/b1.jpg')">
                 <div class="h-100 d-flex align-items-center text-center">
                     <div class="container">
                         <h3 class="text-white mb-1">Welcome To Msm Kozhikode North<br> Ramadan Quiz 2024</h3>
@@ -113,11 +170,17 @@
     <div class="card card-bg-img bg-img bg-dark mb-3" style="background-image: url('img/bg-img/3.jpg')">
         <div class="card-body direction-rtl p-5">
             <h2 class="text-white">Read Instructions</h2>
-            <p class="mb-4 text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-                in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <hr>
+            <p class="mb-4 text-white">
+                السلام عليكم ورحمة الله وبركاتة, <br><br>
+                പ്രിയ്യമുള്ളവരേ......
+                ഒരു റമളാൻ കൂടി നമ്മിലേക്ക് വന്നണഞ്ഞിരിക്കുകയാണ് .ലോകത്തിന് മഹാവിസ്മയം തീർത്ത വിശുദ്ധ ഖുർആൻ അവതീർണമായ
+                മാസം.അതിന്റെ അമാനുഷികത ഇന്നും ലോകത്ത് ചോദ്യം ചെയ്യപ്പെടാതെ നിലനിൽക്കുന്നു ...
+                ആ ഖുർആനിനെ പഠിക്കാൻ മത്സര രൂപത്തിൽ ഒരു സുവർണാവസരം ലഭിച്ചാലോ.....❓ <br>
+
+                വരൂ സുഹൃത്തുക്കളെ MSM കോഴിക്കോട് നോർത്ത് സങ്കടിപ്പിക്കുന്ന ഖുർആൻ ക്വിസ്
+                ഒരു ദിനം 5 ആയത്തുകളിൽ നിന്നും 5 ചോദ്യങ്ങൾ മാത്രമുള്ള QUIZ മത്സരത്തിലെ വിജയികൾ ആവാം.
+                إن شاء الله</p>
             {{#eq user.type "senior"}}
             <a href="/homme" class="btn btn-danger w-100">Enter to Quiz</a>
             {{/eq}}
@@ -143,7 +206,7 @@
                     </a>
                 </div>
                 <div class="col-4">
-                    <a href="">
+                    <a href="/donation">
                         <div class="feature-card mx-auto text-center">
                             <div class="card mx-auto bg-dark"><i class="bi bi-wallet2 text-white"></i></i></div>
                             <p class="mb-0">Donate Us</p>
@@ -166,3 +229,20 @@
 
 <div class="pb-3"></div>
 </div>
+
+
+<script>
+    document.getElementById('donateButton').addEventListener('click', function () {
+        // Replace 'YOUR_GOOGLE_PAY_NUMBER' with the actual Google Pay number
+        var googlePayNumber = '9947154691';
+
+        // Replace 'YOUR_AMOUNT' with the default donation amount
+        var defaultAmount = '500';
+
+        // Create the Google Pay payment link
+        var googlePayLink = 'https://pay.google.com/pay?pn=' + googlePayNumber + '&mc=&tid=&cu=USD&tn=Donation&am=' + defaultAmount;
+
+        // Open a new window or tab with the Google Pay payment link
+        window.open(googlePayLink, '_blank');
+    });
+</script>
