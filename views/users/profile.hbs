@@ -1,0 +1,85 @@
+<div class="page-content-wrapper py-3">
+    <div class="container">
+        {{#if user}}
+        <!-- User Information-->
+        <div class="card user-info-card mb-3">
+            <div class="card-body d-flex align-items-center">
+                <div class="user-profile me-3"><img src="/images/user.png" alt="">
+
+                </div>
+                <div class="user-info">
+                    <div class="d-flex align-items-center">
+                        <p class="mb-1">Your Total Score</p>
+                    </div>
+                    <h5 class="mb-0"><span class="text-success"> {{user.totalScore}}</span>/150</h5>
+                </div>
+            </div>
+        </div>
+        <!-- User Meta Data-->
+
+
+        <div class="card user-data-card mb-3">
+            <div class="card-body">
+                <h5 class="mt-2 mb-2">Login Details</h5>
+                <form action="#">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="Username">Username</label>
+                        <input class="form-control" id="Username" value="{{user.Fname}}{{user.Lname}}" type="text"
+                            value="@designing-world" placeholder="First Name" readonly>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="email">Phone Number</label>
+                        <input class="form-control" id="email" type="text" value="{{user.Mobile}}" placeholder="Mobile"
+                            readonly="">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="card user-data-card">
+            <div class="card-body">
+                <form action="#">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="Username">First Name</label>
+                        <input class="form-control" id="Username" value="{{user.Fname}}" type="text"
+                            value="@designing-world" placeholder="First Name" readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="fullname">Last Name</label>
+                        <input class="form-control" id="fullname" type="text" value="{{user.Lname}}"
+                            placeholder="Last Name" readonly="">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="email">Phone Number</label>
+                        <input class="form-control" id="email" type="text" value="{{user.Mobile}}" placeholder="Mobile"
+                            readonly="">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="job">User Type</label>
+                        <input class="form-control" id="job" type="text" value="{{user.type}}" placeholder="User Type"
+                            readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="portfolio">Zone</label>
+                        <input class="form-control" id="portfolio" type="url" value="{{user.zone}}" placeholder="Zone"
+                            readonly>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="portfolio">District</label>
+                        <input class="form-control" id="portfolio" type="url" value="{{user.district}}"
+                            placeholder="District" readonly>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="bio">Address</label>
+                        <textarea class="form-control" id="bio" name="bio" cols="30" rows="10"
+                            placeholder="{{user.address}}">{{user.Address}}</textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>

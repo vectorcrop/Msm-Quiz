@@ -32,6 +32,67 @@ router.get("/home", verifySignedIn, function (req, res, next) {
   });
 });
 
+router.get("/profile", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  res.render("users/profile", { admin: false, user });
+});
+
+
+router.get("/done", function (req, res, next) {
+  res.render("users/done", { admin: false, layout: "empty" });
+});
+
+router.get("/forgot", function (req, res, next) {
+  res.render("users/forgot", { admin: false, layout: "empty" });
+});
+
+
+///////ADD forgot/////////////////////                                         
+router.post("/forgot", function (req, res) {
+  userHelper.addforgot(req.body, (id) => {
+    res.redirect("/done");
+  });
+});
+
+///////EDIT forgot/////////////////////                                         
+// router.get("/edit-forgot/:id", verifySignedIn, async function (req, res) {
+//   let user = req.session.user;
+//   let forgotId = req.params.id;
+//   let forgot = await adminHelper.getforgotDetails(forgotId);
+//   console.log(forgot);
+//   res.render("admin/forgot/edit-forgot", { admin: true, layout: "", forgot, user });
+// });
+
+///////EDIT forgot/////////////////////                                         
+// router.post("/edit-forgot/:id", verifySignedIn, function (req, res) {
+//   let forgotId = req.params.id;
+//   adminHelper.updateforgot(forgotId, req.body).then(() => {
+//     if (req.files) {
+//       let image = req.files.Image;
+//       if (image) {
+//         image.mv("./public/images/forgot-images/" + forgotId + ".png");
+//       }
+//     }
+//     res.redirect("/users/all-forgots");
+//   });
+// });
+
+///////DELETE forgot/////////////////////                                         
+router.get("/delete-forgot/:id", verifySignedIn, function (req, res) {
+  let forgotId = req.params.id;
+  adminHelper.deleteforgot(forgotId).then((response) => {
+    fs.unlinkSync("./public/images/forgot-images/" + forgotId + ".png");
+    res.redirect("/users/all-forgots");
+  });
+});
+
+///////DELETE ALL forgot/////////////////////                                         
+router.get("/delete-all-forgots", verifySignedIn, function (req, res) {
+  adminHelper.deleteAllforgots().then(() => {
+    res.redirect("/users/all-forgots");
+  });
+});
+
 
 router.get("/homme", verifySignedIn, function (req, res, next) {
   let user = req.session.user;

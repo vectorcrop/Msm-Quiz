@@ -5,6 +5,98 @@ const objectId = require("mongodb").ObjectID;
 
 module.exports = {
 
+  ///////ADD forgot/////////////////////                                         
+  addforgot: (forgot, callback) => {
+    console.log(forgot);
+    forgot.Price = parseInt(forgot.Price);
+    db.get()
+      .collection(collections.FORGOT_COLLECTION)
+      .insertOne(forgot)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL forgot/////////////////////                                            
+  getAllforgots: () => {
+    return new Promise(async (resolve, reject) => {
+      let forgots = await db
+        .get()
+        .collection(collections.FORGOT_COLLECTION)
+        .find()
+        .toArray();
+      resolve(forgots);
+    });
+  },
+
+  ///////ADD forgot DETAILS/////////////////////                                            
+  getforgotDetails: (forgotId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .findOne({
+          _id: objectId(forgotId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE forgot/////////////////////                                            
+  deleteforgot: (forgotId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .removeOne({
+          _id: objectId(forgotId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE forgot/////////////////////                                            
+  updateforgot: (forgotId, forgotDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(forgotId)
+          },
+          {
+            $set: {
+              Name: forgotDetails.Name,
+              Category: forgotDetails.Category,
+              Price: forgotDetails.Price,
+              Description: forgotDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL forgot/////////////////////                                            
+  deleteAllforgots: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
+
   ///////ADD day/////////////////////                                         
   addday: (day, callback) => {
     console.log(day);
@@ -47,7 +139,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.DAY_COLLECTION)
-        .findOne({        
+        .findOne({
           day: day
         })
         .then((response) => {
@@ -60,7 +152,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.DAY_COLLECTION)
-        .findOne({        
+        .findOne({
           hello: hello
         })
         .then((response) => {
@@ -107,26 +199,26 @@ module.exports = {
         });
     });
   },
-  updateDayStatus:(day,status)=>{
-    if (status=="display"){
-      status="enabled"
+  updateDayStatus: (day, status) => {
+    if (status == "display") {
+      status = "enabled"
     }
     return new Promise((resolve, reject) => {
       db.get()
-      .collection(collections.JUNIOR_COLLECTION)
-      .updateOne(
-        {
-          day: day
-        },
-        {
-          $set: {
-            status: status,
+        .collection(collections.JUNIOR_COLLECTION)
+        .updateOne(
+          {
+            day: day
           },
-        }
-      )
-      .then((response) => {
-        resolve();
-      });
+          {
+            $set: {
+              status: status,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
 
     })
   },
@@ -143,6 +235,10 @@ module.exports = {
         });
     });
   },
+
+
+
+
 
   ///////ADD junior/////////////////////                                         
   addjunior: (junior, callback) => {
@@ -167,15 +263,28 @@ module.exports = {
       resolve(juniors);
     });
   },
-  //sen
+
+  ///////ADD senior/////////////////////                                         
+  addsenior: (senior, callback) => {
+    console.log(senior);
+    db.get()
+      .collection(collections.SENIOR_COLLECTION)
+      .insertOne(senior)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  //senior
   getAllseniors: () => {
     return new Promise(async (resolve, reject) => {
-      let juniors = await db
+      let seniors = await db
         .get()
         .collection(collections.SENIOR_COLLECTION)
         .find()
         .toArray();
-      resolve(juniors);
+      resolve(seniors);
     });
   },
 
@@ -193,12 +302,12 @@ module.exports = {
     });
   },
   //sen
-  getseniorDetails: (juniorId) => {
+  getseniorDetails: (seniorId) => {
     return new Promise((resolve, reject) => {
       db.get()
         .collection(collections.SENIOR_COLLECTION)
         .findOne({
-          _id: objectId(juniorId)
+          _id: objectId(seniorId)
         })
         .then((response) => {
           resolve(response);
@@ -247,52 +356,52 @@ module.exports = {
           {
             $set: {
               day: juniorDetails.day,
-              questions:[
-                { 
-                  key:1,
+              questions: [
+                {
+                  key: 1,
                   question: juniorDetails.question1,
                   a: juniorDetails.a1,
                   b: juniorDetails.b1,
                   c: juniorDetails.c1,
                   d: juniorDetails.d1,
-                  canswer:juniorDetails.canswer1
+                  canswer: juniorDetails.canswer1
                 },
-                { 
-                  key:2,
+                {
+                  key: 2,
                   question: juniorDetails.question2,
                   a: juniorDetails.a2,
                   b: juniorDetails.b2,
                   c: juniorDetails.c2,
                   d: juniorDetails.d2,
-                  canswer:juniorDetails.canswer2
-                  
+                  canswer: juniorDetails.canswer2
+
                 },
-                { 
-                  key:3,
+                {
+                  key: 3,
                   question: juniorDetails.question3,
                   a: juniorDetails.a3,
                   b: juniorDetails.b3,
                   c: juniorDetails.c3,
                   d: juniorDetails.d3,
-                  canswer:juniorDetails.canswer3
+                  canswer: juniorDetails.canswer3
                 },
-                { 
-                  key:4,
+                {
+                  key: 4,
                   question: juniorDetails.question4,
                   a: juniorDetails.a4,
                   b: juniorDetails.b4,
                   c: juniorDetails.c4,
                   d: juniorDetails.d4,
-                  canswer:juniorDetails.canswer4
+                  canswer: juniorDetails.canswer4
                 },
-                { 
-                  key:5,
+                {
+                  key: 5,
                   question: juniorDetails.question5,
                   a: juniorDetails.a5,
                   b: juniorDetails.b5,
                   c: juniorDetails.c5,
                   d: juniorDetails.d5,
-                  canswer:juniorDetails.canswer5
+                  canswer: juniorDetails.canswer5
                 }
               ],
               status: juniorDetails.status,
@@ -304,75 +413,75 @@ module.exports = {
         });
     });
   },
-//sen
-updatesenior: (juniorId, juniorDetails) => {
-  return new Promise((resolve, reject) => {
-    db.get()
-      .collection(collections.SENIOR_COLLECTION)
-      .updateOne(
-        {
-          _id: objectId(juniorId)
-        },
-        {
-          $set: {
-            day: juniorDetails.day,
-            questions:[
-              { 
-                key:1,
-                question: juniorDetails.question1,
-                a: juniorDetails.a1,
-                b: juniorDetails.b1,
-                c: juniorDetails.c1,
-                d: juniorDetails.d1,
-                canswer:juniorDetails.canswer1
-              },
-              { 
-                key:2,
-                question: juniorDetails.question2,
-                a: juniorDetails.a2,
-                b: juniorDetails.b2,
-                c: juniorDetails.c2,
-                d: juniorDetails.d2,
-                canswer:juniorDetails.canswer2
-                
-              },
-              { 
-                key:3,
-                question: juniorDetails.question3,
-                a: juniorDetails.a3,
-                b: juniorDetails.b3,
-                c: juniorDetails.c3,
-                d: juniorDetails.d3,
-                canswer:juniorDetails.canswer3
-              },
-              { 
-                key:4,
-                question: juniorDetails.question4,
-                a: juniorDetails.a4,
-                b: juniorDetails.b4,
-                c: juniorDetails.c4,
-                d: juniorDetails.d4,
-                canswer:juniorDetails.canswer4
-              },
-              { 
-                key:5,
-                question: juniorDetails.question5,
-                a: juniorDetails.a5,
-                b: juniorDetails.b5,
-                c: juniorDetails.c5,
-                d: juniorDetails.d5,
-                canswer:juniorDetails.canswer5
-              }
-            ],
-            status: juniorDetails.status,
+  //sen
+  updatesenior: (seniorId, seniorDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.SENIOR_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(seniorId)
           },
-        }
-      )
-      .then((response) => {
-        resolve();
-      });
-  });
-},
+          {
+            $set: {
+              day: seniorDetails.day,
+              questions: [
+                {
+                  key: 1,
+                  question: seniorDetails.question1,
+                  a: seniorDetails.a1,
+                  b: seniorDetails.b1,
+                  c: seniorDetails.c1,
+                  d: seniorDetails.d1,
+                  canswer: seniorDetails.canswer1
+                },
+                {
+                  key: 2,
+                  question: seniorDetails.question2,
+                  a: seniorDetails.a2,
+                  b: seniorDetails.b2,
+                  c: seniorDetails.c2,
+                  d: seniorDetails.d2,
+                  canswer: seniorDetails.canswer2
+
+                },
+                {
+                  key: 3,
+                  question: seniorDetails.question3,
+                  a: seniorDetails.a3,
+                  b: seniorDetails.b3,
+                  c: seniorDetails.c3,
+                  d: seniorDetails.d3,
+                  canswer: seniorDetails.canswer3
+                },
+                {
+                  key: 4,
+                  question: seniorDetails.question4,
+                  a: seniorDetails.a4,
+                  b: seniorDetails.b4,
+                  c: seniorDetails.c4,
+                  d: seniorDetails.d4,
+                  canswer: seniorDetails.canswer4
+                },
+                {
+                  key: 5,
+                  question: seniorDetails.question5,
+                  a: seniorDetails.a5,
+                  b: seniorDetails.b5,
+                  c: seniorDetails.c5,
+                  d: seniorDetails.d5,
+                  canswer: seniorDetails.canswer5
+                }
+              ],
+              status: seniorDetails.status,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
 
   ///////DELETE ALL junior/////////////////////                                            
   deleteAlljuniors: () => {

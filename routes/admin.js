@@ -23,9 +23,85 @@ router.get('/hide', (req, res) => {
 /* GET admins listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let administator = req.session.admin;
- 
-    res.render("admin/home", { admin: true, layout: "admin", administator });
+
+  res.render("admin/home", { admin: true, layout: "admin", administator });
 });
+
+router.get("/marks", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllUsers().then((users) => {
+    res.render("admin/marks", { admin: true, layout: "admin", administator, users });
+  });
+});
+
+
+
+///////ALL forgot/////////////////////                                         
+router.get("/all-forgots", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllforgots().then((forgots) => {
+    res.render("admin/all-forgots", { admin: true, layout: "admin", forgots, administator });
+  });
+});
+
+///////ADD forgot/////////////////////                                         
+router.get("/add-forgot", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  res.render("admin/add-forgot", { admin: true, layout: "admin", administator });
+});
+
+///////ADD forgot/////////////////////                                         
+router.post("/add-forgot", function (req, res) {
+  adminHelper.addforgot(req.body, (id) => {
+    let image = req.files.Image;
+    image.mv("./public/images/forgot-images/" + id + ".png", (err, done) => {
+      if (!err) {
+        res.redirect("/admin/all-forgots");
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+///////EDIT forgot/////////////////////                                         
+router.get("/edit-forgot/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let forgotId = req.params.id;
+  let forgot = await adminHelper.getforgotDetails(forgotId);
+  console.log(forgot);
+  res.render("admin/edit-forgot", { admin: true, layout: "admin", forgot, administator });
+});
+
+///////EDIT forgot/////////////////////                                         
+router.post("/edit-forgot/:id", verifySignedIn, function (req, res) {
+  let forgotId = req.params.id;
+  adminHelper.updateforgot(forgotId, req.body).then(() => {
+    if (req.files) {
+      let image = req.files.Image;
+      if (image) {
+        image.mv("./public/images/forgot-images/" + forgotId + ".png");
+      }
+    }
+    res.redirect("/admin/all-forgots");
+  });
+});
+
+///////DELETE forgot/////////////////////                                         
+router.get("/delete-forgot/:id", verifySignedIn, function (req, res) {
+  let forgotId = req.params.id;
+  adminHelper.deleteforgot(forgotId).then((response) => {
+    res.redirect("/admin/all-forgots");
+  });
+});
+
+///////DELETE ALL forgot/////////////////////                                         
+router.get("/delete-all-forgots", verifySignedIn, function (req, res) {
+  adminHelper.deleteAllforgots().then(() => {
+    res.redirect("/admin/all-forgots");
+  });
+});
+
 
 
 ///////ALL day/////////////////////                                         
@@ -61,18 +137,18 @@ router.get("/edit-day/:id", verifySignedIn, async function (req, res) {
 ///////EDIT day/////////////////////                                         
 router.post("/edit-day/:id", verifySignedIn, async function (req, res) {
   let dayId = req.params.id;
-  let day=req.body.day;
-  let status=req.body.status;
-  console.log(status,"edit---day")
-  if(status=="disabled"){
+  let day = req.body.day;
+  let status = req.body.status;
+  console.log(status, "edit---day")
+  if (status == "disabled") {
     req.io.emit('hide');
   }
- await adminHelper.updateday(dayId, req.body).then(() => {
-  adminHelper.updateDayStatus(day,status).then(()=>{
-    res.redirect("/admin/all-days");
-  })
+  await adminHelper.updateday(dayId, req.body).then(() => {
+    adminHelper.updateDayStatus(day, status).then(() => {
+      res.redirect("/admin/all-days");
+    })
   });
-  
+
 });
 
 ///////DELETE day/////////////////////                                         
@@ -108,29 +184,29 @@ router.get("/add-junior", verifySignedIn, async function (req, res) {
 
 ///////ADD junior/////////////////////                                         
 router.post("/add-junior", async function (req, res) {
-  const qObj={};
-  const data=req.body;
+  const qObj = {};
+  const data = req.body;
   const questions = [];
-  const d_day=await adminHelper.getdaybyday(data.day).then(res=>res.hello);
+  const d_day = await adminHelper.getdaybyday(data.day).then(res => res.hello);
 
-for (let i = 1; i <= 5; i++) {
-  const questionObj = {
-    key:i,
-    question: data[`question${i}`],
-    a: data[`a${i}`],
-    b: data[`b${i}`],
-    c: data[`c${i}`],
-    d: data[`d${i}`],
-    canswer: data[`canswer${i}`]
-  };
-  questions.push(questionObj);
-  qObj.date=data.date;
-  qObj.hello=data.hello;
-  qObj.day=data.day;
-  qObj.d_day= d_day;
-  qObj.status=data.status;
-  qObj.questions=questions;
-}
+  for (let i = 1; i <= 5; i++) {
+    const questionObj = {
+      key: i,
+      question: data[`question${i}`],
+      a: data[`a${i}`],
+      b: data[`b${i}`],
+      c: data[`c${i}`],
+      d: data[`d${i}`],
+      canswer: data[`canswer${i}`]
+    };
+    questions.push(questionObj);
+    qObj.date = data.date;
+    qObj.hello = data.hello;
+    qObj.day = data.day;
+    qObj.d_day = d_day;
+    qObj.status = data.status;
+    qObj.questions = questions;
+  }
   adminHelper.addjunior(qObj, (id) => {
     let image = req.files.Image;
     image.mv("./public/images/junior-images/" + id + ".png", (err, done) => {
@@ -188,8 +264,8 @@ router.get("/delete-all-juniors", verifySignedIn, function (req, res) {
 ///////ALL seniors/////////////////////                                         
 router.get("/all-seniors", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
-  adminHelper.getAllseniors().then((juniors) => {
-    res.render("admin/senior/all-seniors", { admin: true, layout: "admin", juniors, administator });
+  adminHelper.getAllseniors().then((seniors) => {
+    res.render("admin/senior/all-seniors", { admin: true, layout: "admin", seniors, administator });
   });
 });
 
@@ -203,32 +279,32 @@ router.get("/add-senior", verifySignedIn, async function (req, res) {
 
 ///////ADD senior/////////////////////                                         
 router.post("/add-senior", async function (req, res) {
-  const qObj={};
-  const data=req.body;
+  const qObj = {};
+  const data = req.body;
   const questions = [];
-  const d_day=await adminHelper.getdaybyday(data.day).then(res=>res.hello);
+  const d_day = await adminHelper.getdaybyday(data.day).then(res => res.hello);
 
-for (let i = 1; i <= 5; i++) {
-  const questionObj = {
-    key:i,
-    question: data[`question${i}`],
-    a: data[`a${i}`],
-    b: data[`b${i}`],
-    c: data[`c${i}`],
-    d: data[`d${i}`],
-    canswer: data[`canswer${i}`]
-  };
-  questions.push(questionObj);
-  qObj.date=data.date;
-  qObj.hello=data.hello;
-  qObj.day=data.day;
-  qObj.d_day= d_day;
-  qObj.status=data.status;
-  qObj.questions=questions;
-}
-  adminHelper.addjunior(qObj, (id) => {
+  for (let i = 1; i <= 5; i++) {
+    const questionObj = {
+      key: i,
+      question: data[`question${i}`],
+      a: data[`a${i}`],
+      b: data[`b${i}`],
+      c: data[`c${i}`],
+      d: data[`d${i}`],
+      canswer: data[`canswer${i}`]
+    };
+    questions.push(questionObj);
+    qObj.date = data.date;
+    qObj.hello = data.hello;
+    qObj.day = data.day;
+    qObj.d_day = d_day;
+    qObj.status = data.status;
+    qObj.questions = questions;
+  }
+  adminHelper.addsenior(qObj, (id) => {
     let image = req.files.Image;
-    image.mv("./public/images/junior-images/" + id + ".png", (err, done) => {
+    image.mv("./public/images/senior-images/" + id + ".png", (err, done) => {
       if (!err) {
         res.redirect("/admin/all-seniors");
       } else {
@@ -241,22 +317,22 @@ for (let i = 1; i <= 5; i++) {
 ///////EDIT senior/////////////////////                                         
 router.get("/edit-senior/:id", verifySignedIn, async function (req, res) {
   let administator = req.session.admin;
-  let juniorId = req.params.id;
-  let junior = await adminHelper.getseniorDetails(juniorId);
+  let seniorId = req.params.id;
+  let senior = await adminHelper.getseniorDetails(seniorId);
   let dayId = req.params.id;
   let days = await adminHelper.getAlldays(dayId);
-  console.log(junior);
-  res.render("admin/senior/edit-senior", { admin: true, layout: "admin", junior, administator, days });
+  console.log(senior);
+  res.render("admin/senior/edit-senior", { admin: true, layout: "admin", senior, administator, days });
 });
 
 ///////EDIT sen/////////////////////                                         
 router.post("/edit-senior/:id", verifySignedIn, function (req, res) {
-  let juniorId = req.params.id;
-  adminHelper.updatesenior(juniorId, req.body).then(() => {
+  let seniorId = req.params.id;
+  adminHelper.updatesenior(seniorId, req.body).then(() => {
     if (req.files) {
       let image = req.files.Image;
       if (image) {
-        image.mv("./public/images/junior-images/" + juniorId + ".png");
+        image.mv("./public/images/senior-images/" + seniorId + ".png");
       }
     }
     res.redirect("/admin/all-seniors");
@@ -265,9 +341,9 @@ router.post("/edit-senior/:id", verifySignedIn, function (req, res) {
 
 ///////DELETE senior/////////////////////                                         
 router.get("/delete-senior/:id", verifySignedIn, function (req, res) {
-  let juniorId = req.params.id;
-  adminHelper.deletesenior(juniorId).then((response) => {
-    fs.unlinkSync("./public/images/junior-images/" + juniorId + ".png");
+  let seniorId = req.params.id;
+  adminHelper.deletesenior(seniorId).then((response) => {
+    fs.unlinkSync("./public/images/junior-images/" + seniorId + ".png");
     res.redirect("/admin/all-seniors");
   });
 });

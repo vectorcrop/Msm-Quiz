@@ -8,6 +8,97 @@ const objectId = require("mongodb").ObjectID;
 
 module.exports = {
 
+  ///////ADD forgot/////////////////////                                         
+  addforgot: (forgot, callback) => {
+    console.log(forgot);
+    db.get()
+      .collection(collections.FORGOT_COLLECTION)
+      .insertOne(forgot)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL forgot/////////////////////                                            
+  getAllforgots: () => {
+    return new Promise(async (resolve, reject) => {
+      let forgots = await db
+        .get()
+        .collection(collections.FORGOT_COLLECTION)
+        .find()
+        .toArray();
+      resolve(forgots);
+    });
+  },
+
+  ///////ADD forgot DETAILS/////////////////////                                            
+  getforgotDetails: (forgotId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .findOne({
+          _id: objectId(forgotId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE forgot/////////////////////                                            
+  deleteforgot: (forgotId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .removeOne({
+          _id: objectId(forgotId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE forgot/////////////////////                                            
+  updateforgot: (forgotId, forgotDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(forgotId)
+          },
+          {
+            $set: {
+              Name: forgotDetails.Name,
+              Category: forgotDetails.Category,
+              Price: forgotDetails.Price,
+              Description: forgotDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL forgot/////////////////////                                            
+  deleteAllforgots: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FORGOT_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
+
   getJuniorsByDay: (jday) => {
     return new Promise(async (resolve, reject) => {
       let juniors = await db
@@ -28,12 +119,12 @@ module.exports = {
       resolve(senior);
     });
   },
-  setAnswer:(qid,type,uid,ans,d_id)=>{
-    return new Promise(async (resolve, reject)=>{
+  setAnswer: (qid, type, uid, ans, d_id) => {
+    return new Promise(async (resolve, reject) => {
       var score = 0;
-      if(type=="junior"){
-        var correctAnswers= await db.get().collection(collections.JUNIOR_COLLECTION).aggregate([
-        { $match: { _id: objectId(qid)  } },
+      if (type == "junior") {
+        var correctAnswers = await db.get().collection(collections.JUNIOR_COLLECTION).aggregate([
+          { $match: { _id: objectId(qid) } },
           {
             $project: {
               _id: 0, // Exclude _id field if not needed
@@ -42,74 +133,76 @@ module.exports = {
           }
         ]).toArray()
 
-        ans.answers.forEach(function(answer) {
+        ans.answers.forEach(function (answer) {
           // Find the index in correctAnswers[0].canswer based on qKey
           const index = answer.qKey - 1; // Adjusting qKey to zero-based index
           // Check if the index is within the range of correctAnswers[0].canswer
           if (index >= 0 && index < correctAnswers[0].canswer.length) {
-              // Compare the answer with the corresponding index in correctAnswers[0].canswer
-              if (answer.slAns === correctAnswers[0].canswer[index]) {
-                  score++;
-              }
+            // Compare the answer with the corresponding index in correctAnswers[0].canswer
+            if (answer.slAns === correctAnswers[0].canswer[index]) {
+              score++;
+            }
           }
-      });
+        });
 
-      }else{
-        var correctAnswers= await db.get().collection(collections.SENIOR_COLLECTION).aggregate([
-          { $match: { _id: objectId(qid)  } },
-            {
-              $project: {
-                _id: 0, // Exclude _id field if not needed
-                canswer: "$questions.canswer" // Include only canswer field from each questions array
-              }
+      } else {
+        var correctAnswers = await db.get().collection(collections.SENIOR_COLLECTION).aggregate([
+          { $match: { _id: objectId(qid) } },
+          {
+            $project: {
+              _id: 0, // Exclude _id field if not needed
+              canswer: "$questions.canswer" // Include only canswer field from each questions array
             }
-          ]).toArray()
-  
-          ans.answers.forEach(function(answer) {
-            // Find the index in correctAnswers[0].canswer based on qKey
-            const index = answer.qKey - 1; // Adjusting qKey to zero-based index
-            // Check if the index is within the range of correctAnswers[0].canswer
-            if (index >= 0 && index < correctAnswers[0].canswer.length) {
-                // Compare the answer with the corresponding index in correctAnswers[0].canswer
-                if (answer.slAns === correctAnswers[0].canswer[index]) {
-                    score++;
-                }
+          }
+        ]).toArray()
+
+        ans.answers.forEach(function (answer) {
+          // Find the index in correctAnswers[0].canswer based on qKey
+          const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+          // Check if the index is within the range of correctAnswers[0].canswer
+          if (index >= 0 && index < correctAnswers[0].canswer.length) {
+            // Compare the answer with the corresponding index in correctAnswers[0].canswer
+            if (answer.slAns === correctAnswers[0].canswer[index]) {
+              score++;
             }
+          }
         });
       }
       await db.get().collection(collections.USERS_COLLECTION).findOneAndUpdate(
-        {_id:  objectId(uid)},
+        { _id: objectId(uid) },
         {
-          $push: { answers: ans.answers,score:score,completed:d_id}, // Push each submitted answer to the answers array
-          $inc: { totalScore: score } 
+          $push: { answers: ans.answers, score: score, completed: d_id }, // Push each submitted answer to the answers array
+          $inc: { totalScore: score }
           // Increment the score by the calculated score
         },
-        {  returnNewDocument: true,
-          returnDocument: "after" }
+        {
+          returnNewDocument: true,
+          returnDocument: "after"
+        }
       )
-      .then(updatedUser => {
-      
-        // Send the response with updated user data and aggregate score
-        resolve({ totalScore: updatedUser.value.totalScore,score:score });
-      })
-      .catch(error => {
-        console.error('Error saving answers and score:', error);
-        // Handle error response
-        resolve({ error: 'An error occurred while saving answers and score.' });
-      });
+        .then(updatedUser => {
+
+          // Send the response with updated user data and aggregate score
+          resolve({ totalScore: updatedUser.value.totalScore, score: score });
+        })
+        .catch(error => {
+          console.error('Error saving answers and score:', error);
+          // Handle error response
+          resolve({ error: 'An error occurred while saving answers and score.' });
+        });
 
     })
 
   },
-  checkIsCompleted:(uid,d_id)=>{
+  checkIsCompleted: (uid, d_id) => {
     return new Promise(async (resolve, reject) => {
-      const user = await db.get().collection(collections.USERS_COLLECTION).findOne({_id:objectId(uid)});
+      const user = await db.get().collection(collections.USERS_COLLECTION).findOne({ _id: objectId(uid) });
       if (user && user.completed) {
         // Check if the completed array includes the specified value
         resolve(user.completed.includes(d_id))
       } else {
         // If completed array is undefined or user is not found, return false
-        resolve( false)
+        resolve(false)
       }
     })
 
@@ -127,32 +220,32 @@ module.exports = {
   //   });
   // },
   doSignup: async (userData) => {
-      try {
-          // Check if the username already exists
-          userData.Username = userData.Username.toLowerCase();
-          const existingUser = await db.get().collection(collections.USERS_COLLECTION).findOne({ Username: userData.Username });
-          if (existingUser) {
-            console.log('Username already exists');
-             return({ status: false });
-          }else{
-            
-            userData.Password = await bcrypt.hash(userData.Password, 10);
-            userData.answers =[],
-            userData.totalScore=0,
-            userData.score=[]
+    try {
+      // Check if the username already exists
+      userData.Username = userData.Username.toLowerCase();
+      const existingUser = await db.get().collection(collections.USERS_COLLECTION).findOne({ Username: userData.Username });
+      if (existingUser) {
+        console.log('Username already exists');
+        return ({ status: false });
+      } else {
 
-            // Insert user data
-            const data = await db.get().collection(collections.USERS_COLLECTION).insertOne(userData);
-            data.ops[0].status=true;
-            console.log("nooooooooo***********",data.ops[0])
-            return data.ops[0];
-          }
+        userData.Password = await bcrypt.hash(userData.Password, 10);
+        userData.answers = [],
+          userData.totalScore = 0,
+          userData.score = []
 
-          // Hash the password
-         
-      } catch (error) {
-          throw error;
+        // Insert user data
+        const data = await db.get().collection(collections.USERS_COLLECTION).insertOne(userData);
+        data.ops[0].status = true;
+        console.log("nooooooooo***********", data.ops[0])
+        return data.ops[0];
       }
+
+      // Hash the password
+
+    } catch (error) {
+      throw error;
+    }
   },
 
   doSignin: (userData) => {

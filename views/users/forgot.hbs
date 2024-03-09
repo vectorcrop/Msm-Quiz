@@ -1,0 +1,92 @@
+<style>
+    .login-wrapper {
+        background-image: url('images/img/1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+</style>
+
+
+
+<div class="login-wrapper d-flex align-items-center justify-content-center bg-white">
+    <div class="card p-3 shadow">
+        <div class="container-lg">
+            <div class="text-center px-4"><img class="login-intro-img" src="img/bg-img/36.png" alt=""></div>
+            <!-- Register Form -->
+            <div class="register-form mt-4">
+                <h6 class="mb-3 text-center">Forgot Username or Password.</h6><br>
+
+                <form action="/forgot" method="POST" id="stepForm">
+                    <input type="hidden" name="date" id="datetime">
+
+                    {{#if signUpErr}}
+                    <div class="alert alert-danger" role="alert">
+                        <p class="error alert-heading">{{signUpErr}}</p>
+                    </div>
+                    {{/if}}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group text-start mb-3">
+                                <label class="mb-2 text-dark">നിങ്ങളുടെ ആദ്യത്തെ പേര്</label>
+                                <input class="form-control" type="text" id="firstName" name="Fname"
+                                    placeholder="Your First Name" required oninput="convertToLowercase(this)">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group text-start mb-0">
+                                <label class="mb-2 text-dark">നിങ്ങളുടെ അവസാനത്തെ പേര്</label>
+                                <input class="form-control" type="text" id="lastName" name="Lname"
+                                    placeholder="Your Last Name" required oninput="convertToLowercase(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-start mb-3 position-relative">
+                        <label class="mb-2 text-dark">നിങ്ങളുടെ മൊബൈൽ നമ്പർ</label>
+                        <input class="form-control" id="password" name="Password" type="text"
+                            placeholder="Enter Your Mobile Number" required>
+                        {{!-- <div class="position-absolute" id="password-visibility"><i class="bi bi-eye"></i><i
+                                class="bi bi-eye-slash"></i></div> --}}
+                    </div>
+                    <div class="mb-3" id="pswmeter"></div>
+                    {{!-- <div class="form-check mb-3">
+                        <input class="form-check-input" id="checkedCheckbox" type="checkbox" value="" checked>
+                        <label class="form-check-label text-muted fw-normal" for="checkedCheckbox">I agree with the
+                            terms &amp;
+                            policy.</label>
+                    </div> --}}
+
+                    <button class="btn btn-primary mb-2 w-100" type="submit">Submit</button>
+                    <a href="/signin" class="btn btn-dark w-100" type="submit">Back to Signin</a>
+
+                </form>
+            </div>
+            <!-- Login Meta -->
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function convertToLowercase(inputElement) {
+        var inputValue = inputElement.value;
+        inputElement.value = inputValue.toLowerCase();
+    }
+</script>
+
+<script>
+    // Get current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = ((now.getHours() + 11) % 12 + 1).toString().padStart(2, '0'); // Convert to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+    // Set default value to current date and time in MM/DD/YYYY format
+    const defaultDateTime = `${month}/${day}/${year}T${hours}:${minutes}`;
+    document.getElementById('datetime').value = defaultDateTime;
+</script>
