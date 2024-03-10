@@ -290,6 +290,7 @@ router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/");
   } else {
+    console.log("serverrr err",req.session.signInErr)
     res.render("users/signin", {
       admin: false,
       layout: "empty",
