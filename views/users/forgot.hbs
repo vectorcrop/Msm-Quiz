@@ -136,8 +136,6 @@
         var encodedPhoneNumber = encodeURIComponent(predefinedPhoneNumber);
 
         // Open the user's WhatsApp with the pre-filled message and phone number
-        window.location.href = "https://api.whatsapp.com/send?phone=" + predefinedPhoneNumber + "?text=" + encodedMessage;
+        window.location.href = "whatsapp://send?phone=" + encodedPhoneNumber + "&text=" + encodedMessage;
     }
-
-
 </script>
