@@ -1,70 +1,4 @@
-{{!-- <main class="overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <h5 class="text">
-                <img src="assets1/images/text.png" alt="Text" />sponsored by MSM Kozhikode North
-            </h5>
-            <h2 class="main-heading">
-                Join The Ramadan Quiz
-                <img src="assets1/images/stars.png" alt="star" />March 2024<img src="assets1/images/stars.png"
-                    alt="star" />
-            </h2>
-            <form action="/signin" method="POST" id="stepForm">
-                {{#if signInErr}}
-                <div class="alert alert-danger" role="alert">
-                    <p class="error alert-heading">{{signInErr}}</p>
-                </div>
-                {{/if}}
-                <div class="inputField">
-                    <input type="text" name="Username" placeholder="Username" value="salavi" required />
-                    <div class="black"></div>
-                </div>
-                <div class="inputField">
-                    <input type="password" name="Password" placeholder="Password" value="7994465741" required />
-                    <div class="black"></div>
-                </div>
-                <div class="submitButton">
-                    <button type="submit">Login</button>
-                    <div class="black"></div>
-                </div>
-                <div class="submitButton mt-3">
-                    <a href="/signup" class="btn btn-dark w-100 p-3 text-bold">Create a new account</a>
-                </div>
-            </form>
-            <div class="desc">
-                <div class="date">
-                    monday
-                    <br />
-                    <span>dec 25<sup>th</sup></span>
-                </div>
-                <p>
-                    Lorem ipsum dolor sit amet, consecttetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-                    ipsum suspendtisse
-                </p>
-            </div>
-            <div class="location">
-                <div class="line"></div>
-                <h1>party location</h1>
-                <p>123 Street Name, City Name, State, Country, 12345</p>
-                <div class="socialIcons">
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i>
-                        <div class="black"></div>
-                    </a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i>
-                        <div class="black"></div>
-                    </a>
-                    <a href="#"><i class="fa-brands fa-facebook"></i>
-                        <div class="black"></div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="firework"></div>
-    <div class="firework"></div>
-    <div class="firework"></div>
-</main> --}}
+
 
 <style>
     .login-wrapper {
@@ -86,7 +20,7 @@
                 <h6 class="mb-3 text-center">Login to Msm Ramadan Quiz 2024.</h6><br>
 
                 <form action="/signin" method="POST" id="stepForm">
-                    {{#if signUpErr}}
+                    {{#if signInErr}}
                     <div class="alert alert-danger" role="alert">
                         <p class="error alert-heading">{{signUpErr}}</p>
                     </div>
