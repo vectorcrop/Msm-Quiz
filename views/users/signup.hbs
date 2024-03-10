@@ -153,6 +153,8 @@
                 </div>
                 {{/if}}
                 <form action="/signup" method="POST" id="stepForm" onsubmit="return validateForm()">
+                    <input type="hidden" name="date" id="datetime">
+
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group text-start mb-3">
@@ -184,8 +186,18 @@
                         <select class="form-select" id="defaultSelect" name="zone" aria-label="Default select example"
                             required>
                             <option value="" disabled selected>Select Your Zone</option>
-                            <option value="Balussery">Balussery</option>
+                            <option value="Nadappuram">Nadappuram</option>
+                            <option value="Vadakara">Vadakara</option>
+                            <option value="Payyoli">Payyoli</option>
+                            <option value="Koyilandy">Koyilandy</option>
+                            <option value="Meppayur">Meppayur</option>
+                            <option value="Perambra">Perambra</option>
                             <option value="Kuttiyadi">Kuttiyadi</option>
+                            <option value="Balussery">Balussery</option>
+                            <option value="Ponoor">Ponoor</option>
+                            <option value="Other">Other</option>
+
+
                         </select>
                     </div>
                     <div class="form-group">
@@ -312,7 +324,7 @@
 
 <script>
     // Sample array of districts in Kerala
-    var districtsInKerala = ["Thiruvananthapuram", "Kollam", "Pathanamthitta", "Alappuzha", "Kottayam", "Idukki", "Ernakulam", "Thrissur", "Palakkad", "Malappuram", "Kozhikode", "Wayanad", "Kannur", "Kasaragod"];
+    var districtsInKerala = ["Thiruvananthapuram", "Kollam", "Pathanamthitta", "Alappuzha", "Kottayam", "Idukki", "Ernakulam", "Thrissur", "Palakkad", "Malappuram(N)", "Malappuram(S)", "Kozhikode(N)", "Kozhikode(S)", "Wayanad", "Kannur", "Kasaragod"];
 
     // Function to populate the district dropdown
     function populateDistrictDropdown() {

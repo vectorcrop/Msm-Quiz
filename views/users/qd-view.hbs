@@ -42,12 +42,39 @@
     {{/each}}
 
     <input id="ssno" value="{{juniors.[0]._id}}" hidden><br>
+    <center>
+        <a href="" class="text-center" type="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Contact Quiz
+            Master</a>
+    </center>
+    <br>
     <button id="submitBtn" class="btn btn-lg btn-primary w-100 text-center mb-3" onclick="submitForm()">Submit
         Answers</button>
     <a href="/home" class="btn btn-lg btn-danger w-100 text-center">Back to home</a>
 
     <br><br><br>
     {{!-- <button onclick="hideContent()">emit</button> --}}
+</div>
+
+
+<!-- Static Backdrop Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="staticBackdropLabel">Static Backdrop</h6>
+                <button class="btn btn-close p-1 ms-auto" type="button" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">I will not close if you click outside me. Don't even try to press escape key.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-sm btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-sm btn-success" type="button">I Understood</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 

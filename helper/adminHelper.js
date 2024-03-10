@@ -112,14 +112,28 @@ module.exports = {
   ///////GET ALL day/////////////////////                                            
   getAlldays: () => {
     return new Promise(async (resolve, reject) => {
-      let days = await db
-        .get()
-        .collection(collections.DAY_COLLECTION)
-        .find()
-        .toArray();
-      resolve(days);
+      try {
+        let days = await db
+          .get()
+          .collection(collections.DAY_COLLECTION)
+          .find()
+          .toArray();
+
+        // Sort the days array based on the "day" property
+        days.sort((a, b) => {
+          // Assuming "day" is a string like "Day 1", "Day 2", etc.
+          const dayA = parseInt(a.day.split(" ")[1]);
+          const dayB = parseInt(b.day.split(" ")[1]);
+          return dayA - dayB;
+        });
+
+        resolve(days);
+      } catch (error) {
+        reject(error);
+      }
     });
   },
+
 
   ///////ADD day DETAILS/////////////////////                                            
   getdayDetails: (dayId) => {
@@ -626,14 +640,23 @@ module.exports = {
 
   getAllUsers: () => {
     return new Promise(async (resolve, reject) => {
-      let users = await db
-        .get()
-        .collection(collections.USERS_COLLECTION)
-        .find()
-        .toArray();
-      resolve(users);
+      try {
+        let users = await db
+          .get()
+          .collection(collections.USERS_COLLECTION)
+          .find()
+          .toArray();
+
+        // Sort the users array based on the "totalScore" property
+        users.sort((a, b) => b.totalScore - a.totalScore);
+
+        resolve(users);
+      } catch (error) {
+        reject(error);
+      }
     });
   },
+
 
   removeUser: (userId) => {
     return new Promise((resolve, reject) => {

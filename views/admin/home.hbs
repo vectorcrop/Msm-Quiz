@@ -8,11 +8,71 @@
                 <li class="breadcrumb-item active">Dashboard</li>
             </ol>
         </nav>
-         <div class="row">
-        <a href="/admin/hide">hhhhh</a>
-     </div>
+        {{!-- <div class="row">
+            <a href="/admin/hide">hhhhh</a>
+        </div> --}}
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <br>
+                            <h1>Forgot Password</h1>
+                            <br>
+
+                            {{!-- <a href="/admin/remove-all-users"
+                                onclick="return confirm('Are You Sure to Remove All Users ?')"
+                                class="btn btn-danger mb-1 mt-3">Remove All Requests</a> --}}
+                            <!-- Table with stripped rows -->
+                            <table class="table datatable table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        {{!-- <th>Password</th> --}}
+                                        <th>Manage</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each forgots}}
+                                    <tr>
+                                        <td>#0{{incremented @index}}</td>
+                                        <td>{{this.date}}</td>
+                                        <td>{{this.Fname}}</td>
+                                        <td>{{this.Lname}}</td>
+                                        <td>{{this.Password}}</td>
+                                        {{!-- <td>{{this.Password}}</td> --}}
+                                        <td><a href="/admin/delete-forgot/{{this._id}}" class="btn btn-success"
+                                                onclick="return confirm('Please Confirm The User {{this.Fname}} ?')"><i
+                                                    class="bi bi-check-lg"></i></a>
+                                            {{!-- <a
+                                                href="https://wa.me/`{{this.Password}}`?text=Assalamu Alikkum<br>">Send
+                                                Message on
+                                                WhatsApp</a> --}}
+
+
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </div><!-- End Page Title -->
-     
+
     {{!-- <section class="section dashboard">
         <div class="row">
 

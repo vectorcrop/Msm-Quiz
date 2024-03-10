@@ -44,11 +44,13 @@
                                     <td>{{this.day}}</td>
                                     <td>{{this.status}}</td>
                                     <td>{{this.date}}</td>
-                                    <td><a href="/admin/delete-day/{{this._id}}" class="btn btn-danger"
+                                    <td>
+                                        {{!-- <a href="/admin/delete-day/{{this._id}}" class="btn btn-danger"
                                             onclick="return confirm('Are You Sure to Delete {{this.day}} ?')"><i
-                                                class="bi bi-trash3"></i></a>
+                                                class="bi bi-trash3"></i></a> --}}
 
-                                        <a href="/admin/edit-day/{{this._id}}" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                                        <a href="/admin/edit-day/{{this._id}}" class="btn btn-primary"><i
+                                                class="bi bi-pen"></i></a>
                                     </td>
                                 </tr>
                                 {{/each}}

@@ -23,8 +23,9 @@ router.get('/hide', (req, res) => {
 /* GET admins listing. */
 router.get("/", verifySignedIn, function (req, res, next) {
   let administator = req.session.admin;
-
-  res.render("admin/home", { admin: true, layout: "admin", administator });
+  adminHelper.getAllforgots().then((forgots) => {
+    res.render("admin/home", { admin: true, layout: "admin", administator, forgots });
+  })
 });
 
 router.get("/marks", verifySignedIn, function (req, res) {
