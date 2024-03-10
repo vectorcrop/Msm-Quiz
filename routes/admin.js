@@ -208,17 +208,13 @@ router.post("/add-junior", async function (req, res) {
     qObj.status = data.status;
     qObj.questions = questions;
   }
+
   adminHelper.addjunior(qObj, (id) => {
-    let image = req.files.Image;
-    image.mv("./public/images/junior-images/" + id + ".png", (err, done) => {
-      if (!err) {
-        res.redirect("/admin/all-juniors");
-      } else {
-        console.log(err);
-      }
-    });
+    // Removed image uploading section
+    res.redirect("/admin/all-juniors");
   });
 });
+
 
 ///////EDIT junior/////////////////////                                         
 router.get("/edit-junior/:id", verifySignedIn, async function (req, res) {
@@ -235,21 +231,16 @@ router.get("/edit-junior/:id", verifySignedIn, async function (req, res) {
 router.post("/edit-junior/:id", verifySignedIn, function (req, res) {
   let juniorId = req.params.id;
   adminHelper.updatejunior(juniorId, req.body).then(() => {
-    if (req.files) {
-      let image = req.files.Image;
-      if (image) {
-        image.mv("./public/images/junior-images/" + juniorId + ".png");
-      }
-    }
+    // Removed image handling section
     res.redirect("/admin/all-juniors");
   });
 });
+
 
 ///////DELETE junior/////////////////////                                         
 router.get("/delete-junior/:id", verifySignedIn, function (req, res) {
   let juniorId = req.params.id;
   adminHelper.deletejunior(juniorId).then((response) => {
-    fs.unlinkSync("./public/images/junior-images/" + juniorId + ".png");
     res.redirect("/admin/all-juniors");
   });
 });
@@ -303,17 +294,13 @@ router.post("/add-senior", async function (req, res) {
     qObj.status = data.status;
     qObj.questions = questions;
   }
+
   adminHelper.addsenior(qObj, (id) => {
-    let image = req.files.Image;
-    image.mv("./public/images/senior-images/" + id + ".png", (err, done) => {
-      if (!err) {
-        res.redirect("/admin/all-seniors");
-      } else {
-        console.log(err);
-      }
-    });
+    // Removed image uploading section
+    res.redirect("/admin/all-seniors");
   });
 });
+
 
 ///////EDIT senior/////////////////////                                         
 router.get("/edit-senior/:id", verifySignedIn, async function (req, res) {
@@ -330,12 +317,7 @@ router.get("/edit-senior/:id", verifySignedIn, async function (req, res) {
 router.post("/edit-senior/:id", verifySignedIn, function (req, res) {
   let seniorId = req.params.id;
   adminHelper.updatesenior(seniorId, req.body).then(() => {
-    if (req.files) {
-      let image = req.files.Image;
-      if (image) {
-        image.mv("./public/images/senior-images/" + seniorId + ".png");
-      }
-    }
+    // Removed image handling section
     res.redirect("/admin/all-seniors");
   });
 });
@@ -344,7 +326,6 @@ router.post("/edit-senior/:id", verifySignedIn, function (req, res) {
 router.get("/delete-senior/:id", verifySignedIn, function (req, res) {
   let seniorId = req.params.id;
   adminHelper.deletesenior(seniorId).then((response) => {
-    fs.unlinkSync("./public/images/junior-images/" + seniorId + ".png");
     res.redirect("/admin/all-seniors");
   });
 });

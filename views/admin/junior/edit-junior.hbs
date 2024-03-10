@@ -9,8 +9,7 @@
                         <h5 class="card-title">Edit {{junior.day}}</h5>
 
                         <!-- General Form Elements -->
-                        <form action="/admin/edit-junior/{{junior._id}}" enctype="multipart/form-data"
-                            method="POST">
+                        <form action="/admin/edit-junior/{{junior._id}}" enctype="multipart/form-data" method="POST">
                             <input type="hidden" name="date" id="datetime">
 
                             <div class="row mb-3">
@@ -46,7 +45,8 @@
                                                     class="col-sm-2 col-form-label">Question</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" name="question1"
-                                                        style="height: 100px" required>{{junior.questions.[0].question}}</textarea>
+                                                        style="height: 100px"
+                                                        required>{{junior.questions.[0].question}}</textarea>
                                                 </div>
                                             </div>
 
@@ -90,7 +90,8 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-select" name="canswer1"
                                                         aria-label="Default select example" required>
-                                                        <option value="{{junior.questions.[0].canswer}}" selected>{{junior.questions.[0].canswer}}
+                                                        <option value="{{junior.questions.[0].canswer}}" selected>
+                                                            {{junior.questions.[0].canswer}}
                                                         </option>
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
@@ -124,7 +125,8 @@
                                                     class="col-sm-2 col-form-label">Question</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" name="question2"
-                                                        style="height: 100px" required>{{junior.questions.[1].question}}</textarea>
+                                                        style="height: 100px"
+                                                        required>{{junior.questions.[1].question}}</textarea>
                                                 </div>
                                             </div>
 
@@ -168,7 +170,8 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-select" name="canswer2"
                                                         aria-label="Default select example" required>
-                                                        <option value="{{junior.questions.[1].canswer}}" selected>{{junior.questions.[1].canswer}}
+                                                        <option value="{{junior.questions.[1].canswer}}" selected>
+                                                            {{junior.questions.[1].canswer}}
                                                         </option>
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
@@ -203,7 +206,8 @@
                                                     class="col-sm-2 col-form-label">Question</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" name="question3"
-                                                        style="height: 100px" required>{{junior.questions.[2].question}}</textarea>
+                                                        style="height: 100px"
+                                                        required>{{junior.questions.[2].question}}</textarea>
                                                 </div>
                                             </div>
 
@@ -247,7 +251,8 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-select" name="canswer3"
                                                         aria-label="Default select example" required>
-                                                        <option value="{{junior.questions.[2].canswer}}" selected>{{junior.questions.[2].canswer}}
+                                                        <option value="{{junior.questions.[2].canswer}}" selected>
+                                                            {{junior.questions.[2].canswer}}
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
                                                         <option value="C">C</option>
@@ -281,7 +286,8 @@
                                                     class="col-sm-2 col-form-label">Question</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" name="question4"
-                                                        style="height: 100px" required>{{junior.questions.[3].question}}</textarea>
+                                                        style="height: 100px"
+                                                        required>{{junior.questions.[3].question}}</textarea>
                                                 </div>
                                             </div>
 
@@ -325,7 +331,8 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-select" name="canswer4"
                                                         aria-label="Default select example" required>
-                                                        <option value="{{junior.questions.[3].canswer}}" selected>{{junior.questions.[3].canswer}}
+                                                        <option value="{{junior.questions.[3].canswer}}" selected>
+                                                            {{junior.questions.[3].canswer}}
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
                                                         <option value="C">C</option>
@@ -359,7 +366,8 @@
                                                     class="col-sm-2 col-form-label">Question</label>
                                                 <div class="col-sm-10">
                                                     <textarea class="form-control" name="question5"
-                                                        style="height: 100px" required>{{junior.questions.[4].question}}</textarea>
+                                                        style="height: 100px"
+                                                        required>{{junior.questions.[4].question}}</textarea>
                                                 </div>
                                             </div>
 
@@ -403,7 +411,8 @@
                                                 <div class="col-sm-10">
                                                     <select class="form-select" name="canswer5"
                                                         aria-label="Default select example" required>
-                                                        <option value="{{junior.questions.[4].canswer}}" selected>{{junior.questions.[4].canswer}}
+                                                        <option value="{{junior.questions.[4].canswer}}" selected>
+                                                            {{junior.questions.[4].canswer}}
                                                         <option value="A">A</option>
                                                         <option value="B">B</option>
                                                         <option value="C">C</option>
@@ -427,19 +436,19 @@
                             <hr>
 
 
-                            <div class="row mb-3">
+                            {{!-- <div class="row mb-3">
                                 <label for="inputNumber" class="col-sm-2 col-form-label">Image</label>
                                 <div class="col-sm-10">
                                     <img src="/images/junior-images/{{junior._id}}.png" alt=""
                                         style="width: 5rem; margin-bottom: 8px;" id="imgView">
                                     <input type="file" name="Image" class="form-control" onchange="viewImage(event)">
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <hr>
 
 
-                            <fieldset class="row mb-3">
+                            {{!-- <fieldset class="row mb-3">
                                 <legend class="col-form-label col-sm-2 pt-0">Status</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
@@ -458,7 +467,7 @@
                                     </div>
 
                                 </div>
-                            </fieldset>
+                            </fieldset> --}}
                             <hr>
                             <br>
                             <button type="submit" class="btn btn-primary w-25">Update</button>
