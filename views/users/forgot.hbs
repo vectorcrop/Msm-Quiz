@@ -17,7 +17,7 @@
             <div class="register-form mt-4">
                 <h6 class="mb-3 text-center">Forgot Username or Password.</h6><br>
 
-                <form action="/forgot" method="POST" id="stepForm">
+                <form action="/forgot" method="POST" id="whatsappForm">
                     <input type="hidden" name="date" id="datetime">
 
                     {{#if signUpErr}}
@@ -45,7 +45,7 @@
 
                     <div class="form-group text-start mb-3 position-relative">
                         <label class="mb-2 text-dark">നിങ്ങളുടെ മൊബൈൽ നമ്പർ</label>
-                        <input class="form-control" id="password" name="Password" type="text"
+                        <input class="form-control" id="mobile" name="Password" type="text"
                             placeholder="Enter Your Mobile Number" required>
                         {{!-- <div class="position-absolute" id="password-visibility"><i class="bi bi-eye"></i><i
                                 class="bi bi-eye-slash"></i></div> --}}
@@ -58,7 +58,7 @@
                             policy.</label>
                     </div> --}}
 
-                    <button class="btn btn-primary mb-2 w-100" type="submit">Submit</button>
+                    <button class="btn btn-primary mb-2 w-100" type="submit" onclick="submitForm()">Submit</button>
                     <a href="/signin" class="btn btn-dark w-100" type="submit">Back to Signin</a>
 
                 </form>
@@ -68,6 +68,33 @@
         </div>
     </div>
 </div>
+
+<style>
+    .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 40px;
+        right: 40px;
+        background-color: #25d366;
+        color: #FFF;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+    }
+
+    .my-float {
+        margin-top: 16px;
+    }
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<a href="https://api.whatsapp.com/send?phone=9158555799&text=Hi Assalamu Alikkum." class="float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>
 
 <script>
     function convertToLowercase(inputElement) {
@@ -89,4 +116,26 @@
     // Set default value to current date and time in MM/DD/YYYY format
     const defaultDateTime = `${month}/${day}/${year}T${hours}:${minutes}`;
     document.getElementById('datetime').value = defaultDateTime;
+</script>
+
+
+<script>
+    function submitForm() {
+        var Fname = document.getElementById('firstName').value;
+        var Lname = document.getElementById('lastName').value;
+        var phone = document.getElementById('mobile').value;
+
+        // Replace '1234567890' with your predefined phone number
+        var predefinedPhoneNumber = '9158555799';
+
+        // Construct a message
+        var message = "⭕️🛑⭕️🛑\nHii i forgot my username and phone number \n\nFirst Name: " + Fname + "\nLast Name: " + Lname + "\nPhone: " + phone;
+
+        // Encode the message and phone number for a WhatsApp URI
+        var encodedMessage = encodeURIComponent(message);
+        var encodedPhoneNumber = encodeURIComponent(predefinedPhoneNumber);
+
+        // Open the user's WhatsApp with the pre-filled message and phone number
+        window.location.href = "whatsapp://send?phone=" + encodedPhoneNumber + "&text=" + encodedMessage;
+    }
 </script>

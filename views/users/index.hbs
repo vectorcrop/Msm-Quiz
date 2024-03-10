@@ -86,9 +86,14 @@
                 Username : <b>{{user.Fname}}{{user.Lname}}</b><br>
                 Phone Number : <b>{{user.Mobile}}</b>
                 </ul>
-                {{/if}}
 
             </small>
+
+            <a class="btn btn-danger mt-2" target="_blank"
+                href="https://wa.me/{{user.Mobile}}?text=Hi {{user.Fname}}...%0AAssalamu%20Alikkum%0A%0AYour%20Username%3A%20{{user.Fname}}{{user.Lname}}%0AYour%20Phone%3A%20{{user.Mobile}}">Save
+                to Whatsapp</a>
+            {{/if}}
+
         </div>
     </div>
     <button class="btn btn-close btn-close-white position-absolute p-1" type="button" data-bs-dismiss="toast"
