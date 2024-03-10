@@ -208,8 +208,17 @@
                     </div>
                     <div class="form-group text-start mb-3">
                         <label class="mb-2 text-dark">നിങ്ങളുടെ മൊബൈൽ നമ്പർ</label>
-                        <input class="form-control" id="mobile" name="Mobile" type="number"
-                            placeholder="Your Mobile Number" required>
+                        <input class="form-control" id="mobile" name="Mobile" type="tel"
+                            placeholder="Your Mobile Number" pattern="[0-9]{10}"
+                            title="Please enter a 10-digit phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="districtSelect" class="form-label">നിങ്ങളുടെ ജില്ല</label>
+                        <select class="form-select" name="district" id="districtSelect"
+                            aria-label="Default select example" required>
+                            <option value="" disabled selected>നിങ്ങളുടെ ജില്ല</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -244,13 +253,7 @@
                             required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="districtSelect" class="form-label">നിങ്ങളുടെ ജില്ല</label>
-                        <select class="form-select" name="district" id="districtSelect"
-                            aria-label="Default select example" required>
-                            <option value="" disabled selected>നിങ്ങളുടെ ജില്ല</option>
-                        </select>
-                    </div>
+
 
 
 

@@ -25,7 +25,7 @@
                 <form action="/signin" method="POST" id="stepForm">
                     {{#if signInErr}}
                     <div class="alert alert-danger" role="alert">
-                        <p class="error alert-heading">{{signUpErr}}</p>
+                        <p class="error alert-heading">Incorrect Username or Phone Number</p>
                     </div>
                     {{/if}}
 
@@ -33,12 +33,13 @@
 
                         <label class="mb-2 text-dark">നിങ്ങളുടെ പൂർണ നാമം</label>
                         <input class="form-control" id="username" name="Username" type="text"
-                            placeholder="Your Full Name" required oninput="convertToLowercase(this)">
+                            placeholder="Your Full Name Without Space" required oninput="convertToLowercase(this)">
                     </div>
                     <div class="form-group text-start mb-3 position-relative">
                         <label class="mb-2 text-dark">നിങ്ങളുടെ മൊബൈൽ നമ്പർ</label>
-                        <input class="form-control" id="password" name="Password" type="text"
-                            placeholder="Enter Your Mobile Number" required>
+                        <input class="form-control" id="password" name="Password" type="tel"
+                            placeholder="Enter Your Mobile Number" pattern="[0-9]{10}"
+                            title="Please enter a 10-digit phone number" required>
                         {{!-- <div class="position-absolute" id="password-visibility"><i class="bi bi-eye"></i><i
                                 class="bi bi-eye-slash"></i></div> --}}
                     </div>
@@ -49,7 +50,7 @@
                             terms &amp;
                             policy.</label>
                     </div> --}}
-                    <p class="mt-3  text-center mb-3">Forgot Username and Password? <a class="stretched-link"
+                    <p class="mt-3  text-center mb-3">Forgot Username or Phone Number? <a class="stretched-link"
                             href="/forgot">Contact Us</a>
                     </p>
                     <button class="btn btn-primary w-100" type="submit">Sign In</button>
