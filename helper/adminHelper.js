@@ -637,6 +637,46 @@ module.exports = {
         });
     });
   },
+  getUsersByDay:(day)=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        let users = await db
+          .get()
+          .collection(collections.USERS_COLLECTION)
+          .find({completed:day})
+          .toArray();
+
+          let matchedUsers = [];
+          users.forEach((user) => {
+            const index = user.completed.findIndex(completedDay => completedDay === day);
+            if (index !== -1) {
+                matchedUsers.push({
+                    _id: user._id,
+                    score: user.score[index],
+                    Fname: user.Fname,
+                    Lname: user.Lname,
+                    type: user.type,
+                    zone: user.zone,
+                    Mobile: user.Mobile,
+                    matchedIndex: index
+                });
+            }
+        });
+        
+
+console.log("matchhhh",matchedUsers);
+
+
+        // Sort the users array based on the "totalScore" property
+        //matchedUsers.sort((a, b) => b.totalScore - a.totalScore);
+
+        resolve(matchedUsers);
+      } catch (error) {
+        reject(error);
+      }
+    });
+
+  },
 
   getAllUsers: () => {
     return new Promise(async (resolve, reject) => {

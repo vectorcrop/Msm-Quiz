@@ -35,6 +35,25 @@ router.get("/marks", verifySignedIn, function (req, res) {
   });
 });
 
+router.get("/daily-marks/:day", verifySignedIn,async function (req, res) {
+  let administator = req.session.admin;
+  let day=req.params.day;
+  let dayTitle = await adminHelper.getdaybyhello(day).then((data)=>data.day)
+  let days= await adminHelper.getAlldays();
+   adminHelper.getUsersByDay(day).then((users) => {
+    res.render("admin/daily-marks", { admin: true, layout: "admin",dayTitle, administator,days, users });
+  });
+});
+
+router.get("/daily-marks", verifySignedIn,async function (req, res) {
+  let administator = req.session.admin;
+  let day=req.query.day;
+  let dayTitle = await adminHelper.getdaybyhello(day).then((data)=>data.day)
+  let days= await adminHelper.getAlldays();
+  await adminHelper.getUsersByDay(day).then((users) => {
+    res.render("admin/daily-marks", { admin: true, layout: "admin",dayTitle, administator,days, users });
+  });
+});
 
 
 ///////ALL forgot/////////////////////                                         
