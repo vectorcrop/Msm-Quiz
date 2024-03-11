@@ -99,7 +99,11 @@
 <script>
     function convertToLowercase(inputElement) {
         var inputValue = inputElement.value;
-        inputElement.value = inputValue.toLowerCase();
+        // Convert to lowercase
+        inputValue = inputValue.toLowerCase();
+        // Remove whitespaces
+        inputValue = inputValue.replace(/\s/g, '');
+        inputElement.value = inputValue;
     }
 </script>
 
