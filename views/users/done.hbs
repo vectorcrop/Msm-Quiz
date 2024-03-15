@@ -1,3 +1,12 @@
+<script>
+    window.onload = function () {
+        history.replaceState(null, null, window.location.href);
+        window.onpopstate = function (event) {
+            history.replaceState(null, null, window.location.href);
+        };
+    };
+</script>
+
 <div class="container">
     <center>
         <br><br><br><br>

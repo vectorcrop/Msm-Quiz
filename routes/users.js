@@ -259,6 +259,16 @@ router.get("/rs-view/:ts/:s", verifySignedIn, function (req, res, next) {
   res.render("users/rs-view", { admin: false, user, tScore, score });
 });
 
+router.get("/3", function (req, res, next) {
+  let user = req.session.user;
+  res.render("users/rs-view3", { admin: false, user});
+});
+
+router.get("/2", function (req, res, next) {
+  let user = req.session.user;
+  res.render("users/rs-view2", { admin: false, user});
+});
+
 
 router.get("/signup", function (req, res) {
   if (req.session.signedIn) {

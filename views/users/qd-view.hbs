@@ -166,7 +166,8 @@
                     answers = [];
                     // Check if the server response contains the new URL
                     if (response && response.redirectUrl) {
-                        window.location.href = response.redirectUrl;
+                         window.close();
+                        window.open(response.redirectUrl, '_blank');
                     } else {
                         console.error('Server response does not contain a redirect URL.');
                     }

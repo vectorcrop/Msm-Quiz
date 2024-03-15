@@ -1,3 +1,13 @@
+<script>
+    window.onload = function () {
+        console.log("onlllooooooodddd",window.location.href)
+        history.replaceState(null, null, window.location.href);
+        window.onpopstate = function (event) {
+            history.replaceState(null, null, window.location.href);
+        };
+    };
+</script>
+
 <div class="content">
     <br><br><br><br><br>
     <section>
