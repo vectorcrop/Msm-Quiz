@@ -47,7 +47,7 @@
             Master</a>
     </center>
     <br>
-    <button id="submitBtn" class="btn btn-lg btn-primary w-100 text-center mb-3" onclick="submitForm()">Submit
+    <button id="submitBtn" class="btn btn-lg btn-primary w-100 text-center mb-3">Submit
         Answers</button>
     <a href="/home" class="btn btn-lg btn-danger w-100 text-center">Back to home</a>
 
@@ -166,7 +166,7 @@
                     answers = [];
                     // Check if the server response contains the new URL
                     if (response && response.redirectUrl) {
-                         window.close();
+                        window.close();
                         window.open(response.redirectUrl, '_blank');
                     } else {
                         console.error('Server response does not contain a redirect URL.');
