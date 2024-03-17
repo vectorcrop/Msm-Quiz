@@ -171,7 +171,8 @@ router.get("/qd-view/:hello", verifySignedIn, async function (req, res, next) {
 
     res.send(htmlContent);
   }
-  if (dayStatus.status == "disabled") {
+  console.log(dayStatus,"dayStatus")
+  if (dayStatus?.status == "disabled" || dayStatus== null) {
     //want 404 page
     const htmlContent = `
     <html>
@@ -243,12 +244,76 @@ router.get("/qd-view/:hello", verifySignedIn, async function (req, res, next) {
 
 });
 
+router.get('/retry',(req,res)=>{
+res.render("users/retry", { admin: false})
+})
 
-router.post('/qd-view/:qid/:did', async function (req, res) {
+router.post('/qd-view/:qid/:did',verifySignedIn, async function (req, res) {
+  let user = req.session.user;
+  let id = user._id;
+  let jday = req.params.did;
+  let iscompleted = await userHelper.checkIsCompleted(id, jday);
+
+  if (iscompleted) {
+    const htmlContent = `
+    <html>
+      <head>
+        <style>
+          * {
+            transition: all 0.6s;
+          }
+          html {
+            height: 100%;
+          }
+          body {
+            font-family: 'Lato', sans-serif;
+            color: #888;
+            margin: 0;
+          }
+          #main {
+            display: table;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+          }
+          .fof {
+            display: table-cell;
+            vertical-align: middle;
+          }
+          .fof h1 {
+            font-size: 50px;
+            display: inline-block;
+            padding-right: 12px;
+            animation: type .5s alternate infinite;
+          }
+          @keyframes type {
+            from {
+              box-shadow: inset -3px 0px 0px #888;
+            }
+            to {
+              box-shadow: inset -3px 0px 0px transparent;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="main">
+          <div class="fof">
+            <h1>Your response has already been submitted</h1>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+  var newUrl = `/retry`;
+  res.json({ redirectUrl: newUrl, totalScore: 0, score: 0 });
+   // res.send(htmlContent);
+  }else{
   await userHelper.setAnswer(req.params.qid, req.session.user.type, req.session.user._id, req.body, req.params.did).then((resp) => {
     var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
     res.json({ redirectUrl: newUrl, totalScore: resp.totalScore, score: resp.score });
   })
+}
 
 });
 
