@@ -133,17 +133,26 @@ module.exports = {
           }
         ]).toArray()
 
-        ans.answers.forEach(function (answer) {
-          // Find the index in correctAnswers[0].canswer based on qKey
-          const index = answer.qKey - 1; // Adjusting qKey to zero-based index
-          // Check if the index is within the range of correctAnswers[0].canswer
-          if (index >= 0 && index < correctAnswers[0].canswer.length) {
-            // Compare the answer with the corresponding index in correctAnswers[0].canswer
-            if (answer.slAns === correctAnswers[0].canswer[index]) {
-              score++;
-            }
-          }
-        });
+  
+                // Ensure ans.answers is always initialized as an array
+                if (Array.isArray(ans.answers)) {
+                    // Iterate over ans.answers only if it's an array
+                    ans.answers.forEach(function (answer) {
+                        // Find the index in correctAnswers[0].canswer based on qKey
+                        console.log("answer", answer)
+                        const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+                        // Check if the index is within the range of correctAnswers[0].canswer
+                        if (index >= 0 && index < correctAnswers[0].canswer.length) {
+                            // Compare the answer with the corresponding index in correctAnswers[0].canswer
+                            if (answer.slAns === correctAnswers[0].canswer[index]) {
+                                console.log("correct answer", answer)
+                                score++;
+                            }
+                        }
+                    });
+                } else {
+                    console.error('ans.answers is not an array.');
+                }
 
       } else {
         var correctAnswers = await db.get().collection(collections.SENIOR_COLLECTION).aggregate([
@@ -156,17 +165,27 @@ module.exports = {
           }
         ]).toArray()
 
-        ans.answers.forEach(function (answer) {
-          // Find the index in correctAnswers[0].canswer based on qKey
-          const index = answer.qKey - 1; // Adjusting qKey to zero-based index
-          // Check if the index is within the range of correctAnswers[0].canswer
-          if (index >= 0 && index < correctAnswers[0].canswer.length) {
-            // Compare the answer with the corresponding index in correctAnswers[0].canswer
-            if (answer.slAns === correctAnswers[0].canswer[index]) {
-              score++;
-            }
-          }
-        });
+        
+  
+                // Ensure ans.answers is always initialized as an array
+                if (Array.isArray(ans.answers)) {
+                  // Iterate over ans.answers only if it's an array
+                  ans.answers.forEach(function (answer) {
+                      // Find the index in correctAnswers[0].canswer based on qKey
+                      console.log("answer", answer)
+                      const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+                      // Check if the index is within the range of correctAnswers[0].canswer
+                      if (index >= 0 && index < correctAnswers[0].canswer.length) {
+                          // Compare the answer with the corresponding index in correctAnswers[0].canswer
+                          if (answer.slAns === correctAnswers[0].canswer[index]) {
+                              console.log("correct answer", answer)
+                              score++;
+                          }
+                      }
+                  });
+              } else {
+                  console.error('ans.answers is not an array.');
+              }
       }
       await db.get().collection(collections.USERS_COLLECTION).findOneAndUpdate(
         { _id: objectId(uid) },
