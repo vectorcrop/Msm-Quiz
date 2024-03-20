@@ -18,6 +18,7 @@ module.exports = {
       });
   },
 
+
   ///////GET ALL forgot/////////////////////                                            
   getAllforgots: () => {
     return new Promise(async (resolve, reject) => {
@@ -107,6 +108,22 @@ module.exports = {
         console.log(data);
         callback(data.ops[0]._id);
       });
+  },
+
+  incrementCounter:()=>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        let update = await db
+          .get()
+          .collection(collections.USERS_COLLECTION)
+          .updateMany({type:"senior"}, { $inc: { totalScore: 1 } })
+
+        resolve(update);
+      } catch (error) {
+        console.log(error,"frommm0000000000000000000")
+        reject(error);
+      }
+    });
   },
 
   ///////GET ALL day/////////////////////                                            

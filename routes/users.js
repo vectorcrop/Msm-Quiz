@@ -394,6 +394,8 @@ router.get("/signout", function (req, res) {
   res.redirect("/");
 });
 
+// s
+
 router.post("/search", verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let userId = req.session.user._id;
