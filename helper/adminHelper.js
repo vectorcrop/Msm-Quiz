@@ -411,6 +411,34 @@ module.exports = {
     });
   },
 
+  getAllSeniorsExceptLast: () => {
+    return new Promise(async (resolve, reject) => {
+      let seniors = await db
+        .get()
+        .collection(collections.SENIOR_COLLECTION)
+        .find()
+        .toArray();
+      
+      // Remove the last element from the seniors array
+      seniors.pop();
+  
+      resolve(seniors);
+    });
+  },
+  getAllJuniorExceptLast: () => {
+    return new Promise(async (resolve, reject) => {
+      let seniors = await db
+        .get()
+        .collection(collections.JUNIOR_COLLECTION)
+        .find()
+        .toArray();
+      
+      // Remove the last element from the seniors array
+      seniors.pop();
+  
+      resolve(seniors);
+    });
+  },
   ///////ADD junior DETAILS/////////////////////                                            
   getjuniorDetails: (juniorId) => {
     return new Promise((resolve, reject) => {
