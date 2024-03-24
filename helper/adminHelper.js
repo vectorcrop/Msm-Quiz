@@ -5,6 +5,96 @@ const objectId = require("mongodb").ObjectID;
 
 module.exports = {
 
+
+  ///////ADD key/////////////////////                                         
+  addkey: (key, callback) => {
+    console.log(key);
+    key.Price = parseInt(key.Price);
+    db.get()
+      .collection(collections.KEY_COLLECTION)
+      .insertOne(key)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL key/////////////////////                                            
+  getAllkeys: () => {
+    return new Promise(async (resolve, reject) => {
+      let keys = await db
+        .get()
+        .collection(collections.KEY_COLLECTION)
+        .find()
+        .toArray();
+      resolve(keys);
+    });
+  },
+
+  ///////ADD key DETAILS/////////////////////                                            
+  getkeyDetails: (keyId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.KEY_COLLECTION)
+        .findOne({
+          _id: objectId(keyId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE key/////////////////////                                            
+  deletekey: (keyId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.KEY_COLLECTION)
+        .removeOne({
+          _id: objectId(keyId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE key/////////////////////                                            
+  updatekey: (keyId, keyDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.KEY_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(keyId)
+          },
+          {
+            $set: {
+              day: keyDetails.day,
+              status: keyDetails.status,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL key/////////////////////                                            
+  deleteAllkeys: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.KEY_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
   ///////ADD forgot/////////////////////                                         
   addforgot: (forgot, callback) => {
     console.log(forgot);
@@ -110,17 +200,17 @@ module.exports = {
       });
   },
 
-  incrementCounter:()=>{
+  incrementCounter: () => {
     return new Promise(async (resolve, reject) => {
       try {
         let update = await db
           .get()
           .collection(collections.USERS_COLLECTION)
-          .updateMany({type:"senior"}, { $inc: { totalScore: 1 } })
+          .updateMany({ type: "senior" }, { $inc: { totalScore: 1 } })
 
         resolve(update);
       } catch (error) {
-        console.log(error,"frommm0000000000000000000")
+        console.log(error, "frommm0000000000000000000")
         reject(error);
       }
     });
@@ -222,6 +312,8 @@ module.exports = {
               // hello: dayDetails.hello,
               day: dayDetails.day,
               status: dayDetails.status,
+              key: dayDetails.key,
+
             },
           }
         )
@@ -654,34 +746,34 @@ module.exports = {
         });
     });
   },
-  getUsersByDay:(day)=>{
+  getUsersByDay: (day) => {
     return new Promise(async (resolve, reject) => {
       try {
         let users = await db
           .get()
           .collection(collections.USERS_COLLECTION)
-          .find({completed:day})
+          .find({ completed: day })
           .toArray();
 
-          let matchedUsers = [];
-          users.forEach((user) => {
-            const index = user.completed.findIndex(completedDay => completedDay === day);
-            if (index !== -1) {
-                matchedUsers.push({
-                    _id: user._id,
-                    score: user.score[index],
-                    Fname: user.Fname,
-                    Lname: user.Lname,
-                    type: user.type,
-                    zone: user.zone,
-                    Mobile: user.Mobile,
-                    matchedIndex: index
-                });
-            }
+        let matchedUsers = [];
+        users.forEach((user) => {
+          const index = user.completed.findIndex(completedDay => completedDay === day);
+          if (index !== -1) {
+            matchedUsers.push({
+              _id: user._id,
+              score: user.score[index],
+              Fname: user.Fname,
+              Lname: user.Lname,
+              type: user.type,
+              zone: user.zone,
+              Mobile: user.Mobile,
+              matchedIndex: index
+            });
+          }
         });
-        
 
-console.log("matchhhh",matchedUsers);
+
+        console.log("matchhhh", matchedUsers);
 
 
         // Sort the users array based on the "totalScore" property

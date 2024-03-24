@@ -25,6 +25,29 @@ router.get("/", verifySignedIn, function (req, res, next) {
 
 });
 
+router.get("/answers", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  res.render("users/answers", { admin: false, user });
+});
+
+
+router.get("/jn", verifySignedIn, async function (req, res) {
+  let user = req.session.user;
+  let dayId = req.params.id;
+  let keyId = req.params.id;
+  let juniorId = req.params.id;
+  let juniors = await adminHelper.getAlljuniors(juniorId);
+  let days = await adminHelper.getAlldays(dayId);
+  let keys = await adminHelper.getAllkeys(keyId);
+  res.render("users/jn", { admin: false, juniors, keys, user, days });
+});
+
+router.get("/sn", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  adminHelper.getAllseniors().then((seniors) => {
+    res.render("users/sn", { admin: false, seniors, user });
+  });
+});
 
 
 router.get("/profile", verifySignedIn, function (req, res, next) {
@@ -171,8 +194,8 @@ router.get("/qd-view/:hello", verifySignedIn, async function (req, res, next) {
 
     res.send(htmlContent);
   }
-  console.log(dayStatus,"dayStatus")
-  if (dayStatus?.status == "disabled" || dayStatus== null) {
+  console.log(dayStatus, "dayStatus")
+  if (dayStatus?.status == "disabled" || dayStatus == null) {
     //want 404 page
     const htmlContent = `
     <html>
@@ -244,11 +267,11 @@ router.get("/qd-view/:hello", verifySignedIn, async function (req, res, next) {
 
 });
 
-router.get('/retry',(req,res)=>{
-res.render("users/retry", { admin: false})
+router.get('/retry', (req, res) => {
+  res.render("users/retry", { admin: false })
 })
 
-router.post('/qd-view/:qid/:did',verifySignedIn, async function (req, res) {
+router.post('/qd-view/:qid/:did', verifySignedIn, async function (req, res) {
   let user = req.session.user;
   let id = user._id;
   let jday = req.params.did;
@@ -305,15 +328,15 @@ router.post('/qd-view/:qid/:did',verifySignedIn, async function (req, res) {
       </body>
     </html>
   `;
-  var newUrl = `/retry`;
-  res.json({ redirectUrl: newUrl, totalScore: 0, score: 0 });
-   // res.send(htmlContent);
-  }else{
-  await userHelper.setAnswer(req.params.qid, req.session.user.type, req.session.user._id, req.body, req.params.did).then((resp) => {
-    var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
-    res.json({ redirectUrl: newUrl, totalScore: resp.totalScore, score: resp.score });
-  })
-}
+    var newUrl = `/retry`;
+    res.json({ redirectUrl: newUrl, totalScore: 0, score: 0 });
+    // res.send(htmlContent);
+  } else {
+    await userHelper.setAnswer(req.params.qid, req.session.user.type, req.session.user._id, req.body, req.params.did).then((resp) => {
+      var newUrl = `/rs-view/${resp.totalScore}/${resp.score}`;
+      res.json({ redirectUrl: newUrl, totalScore: resp.totalScore, score: resp.score });
+    })
+  }
 
 });
 
@@ -326,12 +349,12 @@ router.get("/rs-view/:ts/:s", verifySignedIn, function (req, res, next) {
 
 router.get("/3", function (req, res, next) {
   let user = req.session.user;
-  res.render("users/rs-view3", { admin: false, user});
+  res.render("users/rs-view3", { admin: false, user });
 });
 
 router.get("/2", function (req, res, next) {
   let user = req.session.user;
-  res.render("users/rs-view2", { admin: false, user});
+  res.render("users/rs-view2", { admin: false, user });
 });
 
 
@@ -365,7 +388,7 @@ router.get("/signin", function (req, res) {
   if (req.session.signedIn) {
     res.redirect("/");
   } else {
-    console.log("serverrr err",req.session.signInErr)
+    console.log("serverrr err", req.session.signInErr)
     res.render("users/signin", {
       admin: false,
       layout: "empty",

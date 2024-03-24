@@ -8,6 +8,7 @@ module.exports = {
     SENIOR_COLLECTION: "senior",
     DAY_COLLECTION: "day",
     FORGOT_COLLECTION: "forgot",
+    KEY_COLLECTION: "key",
 
 
 

@@ -14,6 +14,60 @@ const verifySignedIn = (req, res, next) => {
   }
 };
 
+///////ALL key/////////////////////                                         
+router.get("/all-keys", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllkeys().then((keys) => {
+    res.render("admin/all-keys", { admin: true, layout: "admin", keys, administator });
+  });
+});
+
+///////ADD key/////////////////////                                         
+router.get("/add-key", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  res.render("admin/add-key", { admin: true, layout: "admin", administator });
+});
+
+///////ADD key/////////////////////                                         
+router.post("/add-key", function (req, res) {
+  adminHelper.addkey(req.body, (id) => {
+    res.redirect("/admin/all-keys");
+  });
+});
+
+///////EDIT key/////////////////////                                         
+router.get("/edit-key/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let keyId = req.params.id;
+  let key = await adminHelper.getkeyDetails(keyId);
+  console.log(key);
+  res.render("admin/edit-key", { admin: true, layout: "admin", key, administator });
+});
+
+///////EDIT key/////////////////////                                         
+router.post("/edit-key/:id", verifySignedIn, function (req, res) {
+  let keyId = req.params.id;
+  adminHelper.updatekey(keyId, req.body).then(() => {
+    res.redirect("/admin/all-keys");
+  });
+});
+
+///////DELETE key/////////////////////                                         
+router.get("/delete-key/:id", verifySignedIn, function (req, res) {
+  let keyId = req.params.id;
+  adminHelper.deletekey(keyId).then((response) => {
+    res.redirect("/admin/all-keys");
+  });
+});
+
+///////DELETE ALL key/////////////////////                                         
+router.get("/delete-all-keys", verifySignedIn, function (req, res) {
+  adminHelper.deleteAllkeys().then(() => {
+    res.redirect("/admin/all-keys");
+  });
+});
+
+
 router.get('/hide', (req, res) => {
   // Emit 'hide' event to all connected clients
   req.io.emit('hide');
@@ -35,23 +89,23 @@ router.get("/marks", verifySignedIn, function (req, res) {
   });
 });
 
-router.get("/daily-marks/:day", verifySignedIn,async function (req, res) {
+router.get("/daily-marks/:day", verifySignedIn, async function (req, res) {
   let administator = req.session.admin;
-  let day=req.params.day;
-  let dayTitle = await adminHelper.getdaybyhello(day).then((data)=>data.day)
-  let days= await adminHelper.getAlldays();
-   adminHelper.getUsersByDay(day).then((users) => {
-    res.render("admin/daily-marks", { admin: true, layout: "admin",dayTitle, administator,days, users });
+  let day = req.params.day;
+  let dayTitle = await adminHelper.getdaybyhello(day).then((data) => data.day)
+  let days = await adminHelper.getAlldays();
+  adminHelper.getUsersByDay(day).then((users) => {
+    res.render("admin/daily-marks", { admin: true, layout: "admin", dayTitle, administator, days, users });
   });
 });
 
-router.get("/daily-marks", verifySignedIn,async function (req, res) {
+router.get("/daily-marks", verifySignedIn, async function (req, res) {
   let administator = req.session.admin;
-  let day=req.query.day;
-  let dayTitle = await adminHelper.getdaybyhello(day).then((data)=>data.day)
-  let days= await adminHelper.getAlldays();
+  let day = req.query.day;
+  let dayTitle = await adminHelper.getdaybyhello(day).then((data) => data.day)
+  let days = await adminHelper.getAlldays();
   await adminHelper.getUsersByDay(day).then((users) => {
-    res.render("admin/daily-marks", { admin: true, layout: "admin",dayTitle, administator,days, users });
+    res.render("admin/daily-marks", { admin: true, layout: "admin", dayTitle, administator, days, users });
   });
 });
 

@@ -1,6 +1,6 @@
 <script>
     window.onload = function () {
-        console.log("onlllooooooodddd",window.location.href)
+        console.log("onlllooooooodddd", window.location.href)
         history.replaceState(null, null, window.location.href);
         window.onpopstate = function (event) {
             history.replaceState(null, null, window.location.href);
@@ -20,9 +20,12 @@
                 <h5 class="text-center">Your Today's Score : {{score}}</h5>
                 <hr>
                 <h5 class="mb-0 text-dark"><b>Your Total Score : {{tScore}}</b></h5>
+
             </div>
             <div class="text-center">
                 <a href="/" class="btn btn-primary mt-4 btn-lg"><i class="bi bi-arrow-left"></i> Back</a>
+                <a href="/answers" class="btn btn-info mt-4 btn-lg"> View Answer Keys</a>
+                <br>
             </div>
         </div>
     </section>
