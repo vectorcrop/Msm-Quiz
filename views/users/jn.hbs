@@ -30,10 +30,7 @@
 
     <div class="accordion" id="accordionPanelsStayOpenExample">
 
-
-        {{#each days}}
-
-        {{#eq this.key "display"}}
+ {{#each juniors}}
         <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -125,102 +122,6 @@
                 </div>
             </div>
         </div>
-
-        {{/eq}}
-        {{#eq this.key "disabled"}}
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#{{this.hello}}" aria-expanded="false" aria-controls="{{this.hello}}" disabled>
-                    {{this.day}}
-                </button>
-            </h2>
-            <div id="{{this.hello}}" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                data-bs-parent="#accordionExample" style="">
-                <div class="accordion-body">
-                    <h5 class="text-center mb-3"><b>Ramadan {{this.day}}</b></h5>
-                    <hr>
-
-                    <div class="card p-3 shadow">
-                        <h5><strong class="text-danger">Question 1 : </strong> {{this.questions.[0].question}}</h5>
-                        <hr>
-                        <p><b>Options</b></p>
-                        <h5>
-                            A) {{this.questions.[0].a}}<br>
-                            B) {{this.questions.[0].b}}<br>
-                            C) {{this.questions.[0].c}}<br>
-                            D) {{this.questions.[0].d}}<br>
-                        </h5>
-                        <hr>
-                        <h6><strong class="text-success">Corect Answer : </strong>{{this.questions.[0].canswer}} ✅</h6>
-                    </div><br>
-
-                    <div class="card p-3 shadow">
-                        <h5><strong class="text-danger">Question 2 : </strong> {{this.questions.[1].question}}</h5>
-                        <hr>
-                        <p><b>Options</b></p>
-                        <h5>
-                            A) {{this.questions.[1].a}}<br>
-                            B) {{this.questions.[1].b}}<br>
-                            C) {{this.questions.[1].c}}<br>
-                            D) {{this.questions.[1].d}}<br>
-
-                        </h5>
-                        <hr>
-                        <h6><strong class="text-success">Corect Answer : </strong>{{this.questions.[1].canswer}} ✅</h6>
-                    </div><br>
-
-                    <div class="card p-3 shadow">
-                        <h5><strong class="text-danger">Question 3 : </strong> {{this.questions.[2].question}}</h5>
-                        <hr>
-                        <p><b>Options</b></p>
-                        <h5>
-                            A) {{this.questions.[2].a}}<br>
-                            B) {{this.questions.[2].b}}<br>
-                            C) {{this.questions.[2].c}}<br>
-                            D) {{this.questions.[2].d}}<br>
-
-                        </h5>
-                        <hr>
-                        <h6><strong class="text-success">Corect Answer : </strong>{{this.questions.[2].canswer}} ✅</h6>
-                    </div><br>
-
-                    <div class="card p-3 shadow">
-                        <h5><strong class="text-danger">Question 4 : </strong> {{this.questions.[3].question}}</h5>
-                        <hr>
-                        <p><b>Options</b></p>
-                        <h5>
-                            A) {{this.questions.[3].a}}<br>
-                            B) {{this.questions.[3].b}}<br>
-                            C) {{this.questions.[3].c}}<br>
-                            D) {{this.questions.[3].d}}<br>
-
-                        </h5>
-                        <hr>
-                        <h6><strong class="text-success">Corect Answer : </strong>{{this.questions.[3].canswer}} ✅</h6>
-                    </div><br>
-
-                    <div class="card p-3 shadow">
-                        <h5><strong class="text-danger">Question 5 : </strong> {{this.questions.[4].question}}</h5>
-                        <hr>
-                        <p><b>Options</b></p>
-                        <h5>
-                            A) {{this.questions.[4].a}}<br>
-                            B) {{this.questions.[4].b}}<br>
-                            C) {{this.questions.[4].c}}<br>
-                            D) {{this.questions.[4].d}}<br>
-
-                        </h5>
-                        <hr>
-                        <h6><strong class="text-success">Corect Answer : </strong>{{this.questions.[4].canswer}} ✅</h6>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-
-        {{/eq}}
         {{/each}}
 
     </div>

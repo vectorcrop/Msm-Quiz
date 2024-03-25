@@ -40,6 +40,7 @@ router.get("/jn", verifySignedIn, async function (req, res) {
   let days = await adminHelper.getAlldays(dayId);
   let keys = await adminHelper.getAllkeys(keyId);
   adminHelper.getAllJuniorExceptLast().then((juniors) => {
+    console.log(juniors,"juniorsjuniorsjuniorsjuniors")
     res.render("users/jn", { admin: false, juniors, user,keys, days });
   });
 });
