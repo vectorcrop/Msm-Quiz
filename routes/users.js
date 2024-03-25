@@ -25,30 +25,27 @@ router.get("/", verifySignedIn, function (req, res, next) {
 
 });
 
-router.get("/answers", verifySignedIn, function (req, res, next) {
-  let user = req.session.user;
-  res.render("users/answers", { admin: false, user });
+router.get("/answers", function (req, res, next) {
+  res.render("users/answers", { admin: false });
 });
 
 
-router.get("/jn", verifySignedIn, async function (req, res) {
-  let user = req.session.user;
+router.get("/jn", async function (req, res) {
   let dayId = req.params.id;
   let keyId = req.params.id;
   let juniorId = req.params.id;
- // let juniors = await adminHelper.getAlljuniors(juniorId);
+  // let juniors = await adminHelper.getAlljuniors(juniorId);
   let days = await adminHelper.getAlldays(dayId);
   let keys = await adminHelper.getAllkeys(keyId);
   adminHelper.getAllJuniorExceptLast().then((juniors) => {
-    console.log(juniors,"juniorsjuniorsjuniorsjuniors")
-    res.render("users/jn", { admin: false, juniors, user,keys, days });
+    console.log(juniors, "juniorsjuniorsjuniorsjuniors")
+    res.render("users/jn", { admin: false, juniors, keys, days });
   });
 });
 
-router.get("/sn", verifySignedIn, function (req, res) {
-  let user = req.session.user;
+router.get("/sn", function (req, res) {
   adminHelper.getAllSeniorsExceptLast().then((seniors) => {
-    res.render("users/sn", { admin: false, seniors, user });
+    res.render("users/sn", { admin: false, seniors });
   });
 });
 
