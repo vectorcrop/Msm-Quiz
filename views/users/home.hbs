@@ -19,6 +19,23 @@
         }
     }
 
+    .li3 {
+        grid-column: span 2;
+        text-align: center;
+        border-radius: 65px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 25px;
+        line-height: 1.5em;
+        font-family: sans-serif;
+        position: relative;
+        padding: 20px;
+        border: 20px solid #00000000;
+        background: linear-gradient(#c90808 0 0) content-box,
+            linear-gradient(var(--c, #fcd000) 0 0) padding-box,
+            linear-gradient(var(--d, 90deg), #0000 75%, #dc3545 0) border-box;
+    }
+
     .li1 {
         grid-column: span 2;
         text-align: center;
@@ -237,4 +254,6 @@
     </li>
     {{/eq}}
     {{/each}}
+    <li class="li3"> <a class="a1" href="/feedback">
+            <time datetime="1985-09"></time>Your Feedbacks</a></li>
 </ul>

@@ -4,6 +4,96 @@ var bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
 
 module.exports = {
+  ///////ADD feedback/////////////////////                                         
+  addfeedback: (feedback, callback) => {
+    console.log(feedback);
+    feedback.Price = parseInt(feedback.Price);
+    db.get()
+      .collection(collections.FEEDBACK_COLLECTION)
+      .insertOne(feedback)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL feedback/////////////////////                                            
+  getAllfeedbacks: () => {
+    return new Promise(async (resolve, reject) => {
+      let feedbacks = await db
+        .get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .find()
+        .toArray();
+      resolve(feedbacks);
+    });
+  },
+
+  ///////ADD feedback DETAILS/////////////////////                                            
+  getfeedbackDetails: (feedbackId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .findOne({
+          _id: objectId(feedbackId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE feedback/////////////////////                                            
+  deletefeedback: (feedbackId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .removeOne({
+          _id: objectId(feedbackId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE feedback/////////////////////                                            
+  updatefeedback: (feedbackId, feedbackDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(feedbackId)
+          },
+          {
+            $set: {
+              Name: feedbackDetails.Name,
+              Category: feedbackDetails.Category,
+              Price: feedbackDetails.Price,
+              Description: feedbackDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL feedback/////////////////////                                            
+  deleteAllfeedbacks: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
 
 
   ///////ADD key/////////////////////                                         
@@ -418,10 +508,10 @@ module.exports = {
         .collection(collections.SENIOR_COLLECTION)
         .find()
         .toArray();
-      
+
       // Remove the last element from the seniors array
       seniors.pop();
-  
+
       resolve(seniors);
     });
   },
@@ -432,10 +522,10 @@ module.exports = {
         .collection(collections.JUNIOR_COLLECTION)
         .find()
         .toArray();
-      
+
       // Remove the last element from the seniors array
       seniors.pop();
-  
+
       resolve(seniors);
     });
   },

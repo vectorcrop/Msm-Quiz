@@ -9,6 +9,8 @@ module.exports = {
     DAY_COLLECTION: "day",
     FORGOT_COLLECTION: "forgot",
     KEY_COLLECTION: "key",
+    FEEDBACK_COLLECTION: "feedback",
+
 
 
 

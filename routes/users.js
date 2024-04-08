@@ -25,6 +25,34 @@ router.get("/", verifySignedIn, function (req, res, next) {
 
 });
 
+
+///////ALL feedback/////////////////////                                         
+router.get("/feedback", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("users/feedback", { admin: false, user });
+});
+
+router.get("/thanks", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("users/thanks", { admin: false, user });
+});
+
+///////ADD feedback/////////////////////                                         
+router.get("/add-feedback", verifySignedIn, function (req, res) {
+  let user = req.session.user;
+  res.render("users/feedback", { admin: false, user });
+});
+
+///////ADD feedback/////////////////////                                         
+router.post("/add-feedback", function (req, res) {
+  userHelper.addfeedback(req.body, (id) => {
+    res.redirect("/thanks");
+
+  });
+});
+
+
+
 router.get("/answers", function (req, res, next) {
   res.render("users/answers", { admin: false });
 });
@@ -122,6 +150,8 @@ router.get("/homme", verifySignedIn, function (req, res, next) {
     res.render("users/homme", { admin: false, days, layout: "layout2", user });
   });
 });
+
+
 
 router.get("/home", verifySignedIn, function (req, res, next) {
   let user = req.session.user;

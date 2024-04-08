@@ -14,6 +14,72 @@ const verifySignedIn = (req, res, next) => {
   }
 };
 
+///////ALL feedback/////////////////////                                         
+router.get("/all-feedbacks", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllfeedbacks().then((feedbacks) => {
+    res.render("admin/all-feedbacks", { admin: true, layout: "admin", feedbacks, administator });
+  });
+});
+
+///////ADD feedback/////////////////////                                         
+router.get("/add-feedback", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  res.render("admin/add-feedback", { admin: true, layout: "admin", administator });
+});
+
+///////ADD feedback/////////////////////                                         
+router.post("/add-feedback", function (req, res) {
+  adminHelper.addfeedback(req.body, (id) => {
+    let image = req.files.Image;
+    image.mv("./public/images/feedback-images/" + id + ".png", (err, done) => {
+      if (!err) {
+        res.redirect("/admin/all-feedbacks");
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+///////EDIT feedback/////////////////////                                         
+router.get("/edit-feedback/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let feedbackId = req.params.id;
+  let feedback = await adminHelper.getfeedbackDetails(feedbackId);
+  console.log(feedback);
+  res.render("admin/edit-feedback", { admin: true, layout: "admin", feedback, administator });
+});
+
+///////EDIT feedback/////////////////////                                         
+router.post("/edit-feedback/:id", verifySignedIn, function (req, res) {
+  let feedbackId = req.params.id;
+  adminHelper.updatefeedback(feedbackId, req.body).then(() => {
+    if (req.files) {
+      let image = req.files.Image;
+      if (image) {
+        image.mv("./public/images/feedback-images/" + feedbackId + ".png");
+      }
+    }
+    res.redirect("/admin/all-feedbacks");
+  });
+});
+
+///////DELETE feedback/////////////////////                                         
+router.get("/delete-feedback/:id", verifySignedIn, function (req, res) {
+  let feedbackId = req.params.id;
+  adminHelper.deletefeedback(feedbackId).then((response) => {
+    res.redirect("/admin/all-feedbacks");
+  });
+});
+
+///////DELETE ALL feedback/////////////////////                                         
+router.get("/delete-all-feedbacks", verifySignedIn, function (req, res) {
+  adminHelper.deleteAllfeedbacks().then(() => {
+    res.redirect("/admin/all-feedbacks");
+  });
+});
+
 ///////ALL key/////////////////////                                         
 router.get("/all-keys", verifySignedIn, function (req, res) {
   let administator = req.session.admin;

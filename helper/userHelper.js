@@ -8,6 +8,96 @@ const objectId = require("mongodb").ObjectID;
 
 module.exports = {
 
+  ///////ADD feedback/////////////////////                                         
+  addfeedback: (feedback, callback) => {
+    console.log(feedback);
+    db.get()
+      .collection(collections.FEEDBACK_COLLECTION)
+      .insertOne(feedback)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL feedback/////////////////////                                            
+  getAllfeedbacks: () => {
+    return new Promise(async (resolve, reject) => {
+      let feedbacks = await db
+        .get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .find()
+        .toArray();
+      resolve(feedbacks);
+    });
+  },
+
+  ///////ADD feedback DETAILS/////////////////////                                            
+  getfeedbackDetails: (feedbackId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .findOne({
+          _id: objectId(feedbackId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE feedback/////////////////////                                            
+  deletefeedback: (feedbackId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .removeOne({
+          _id: objectId(feedbackId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE feedback/////////////////////                                            
+  updatefeedback: (feedbackId, feedbackDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(feedbackId)
+          },
+          {
+            $set: {
+              Name: feedbackDetails.Name,
+              Category: feedbackDetails.Category,
+              Price: feedbackDetails.Price,
+              Description: feedbackDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL feedback/////////////////////                                            
+  deleteAllfeedbacks: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.FEEDBACK_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
   ///////ADD forgot/////////////////////                                         
   addforgot: (forgot, callback) => {
     console.log(forgot);
@@ -133,26 +223,26 @@ module.exports = {
           }
         ]).toArray()
 
-  
-                // Ensure ans.answers is always initialized as an array
-                if (Array.isArray(ans.answers)) {
-                    // Iterate over ans.answers only if it's an array
-                    ans.answers.forEach(function (answer) {
-                        // Find the index in correctAnswers[0].canswer based on qKey
-                        console.log("answer", answer)
-                        const index = answer.qKey - 1; // Adjusting qKey to zero-based index
-                        // Check if the index is within the range of correctAnswers[0].canswer
-                        if (index >= 0 && index < correctAnswers[0].canswer.length) {
-                            // Compare the answer with the corresponding index in correctAnswers[0].canswer
-                            if (answer.slAns === correctAnswers[0].canswer[index]) {
-                                console.log("correct answer", answer)
-                                score++;
-                            }
-                        }
-                    });
-                } else {
-                    console.error('ans.answers is not an array.');
-                }
+
+        // Ensure ans.answers is always initialized as an array
+        if (Array.isArray(ans.answers)) {
+          // Iterate over ans.answers only if it's an array
+          ans.answers.forEach(function (answer) {
+            // Find the index in correctAnswers[0].canswer based on qKey
+            console.log("answer", answer)
+            const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+            // Check if the index is within the range of correctAnswers[0].canswer
+            if (index >= 0 && index < correctAnswers[0].canswer.length) {
+              // Compare the answer with the corresponding index in correctAnswers[0].canswer
+              if (answer.slAns === correctAnswers[0].canswer[index]) {
+                console.log("correct answer", answer)
+                score++;
+              }
+            }
+          });
+        } else {
+          console.error('ans.answers is not an array.');
+        }
 
       } else {
         var correctAnswers = await db.get().collection(collections.SENIOR_COLLECTION).aggregate([
@@ -165,27 +255,27 @@ module.exports = {
           }
         ]).toArray()
 
-        
-  
-                // Ensure ans.answers is always initialized as an array
-                if (Array.isArray(ans.answers)) {
-                  // Iterate over ans.answers only if it's an array
-                  ans.answers.forEach(function (answer) {
-                      // Find the index in correctAnswers[0].canswer based on qKey
-                      console.log("answer", answer)
-                      const index = answer.qKey - 1; // Adjusting qKey to zero-based index
-                      // Check if the index is within the range of correctAnswers[0].canswer
-                      if (index >= 0 && index < correctAnswers[0].canswer.length) {
-                          // Compare the answer with the corresponding index in correctAnswers[0].canswer
-                          if (answer.slAns === correctAnswers[0].canswer[index]) {
-                              console.log("correct answer", answer)
-                              score++;
-                          }
-                      }
-                  });
-              } else {
-                  console.error('ans.answers is not an array.');
+
+
+        // Ensure ans.answers is always initialized as an array
+        if (Array.isArray(ans.answers)) {
+          // Iterate over ans.answers only if it's an array
+          ans.answers.forEach(function (answer) {
+            // Find the index in correctAnswers[0].canswer based on qKey
+            console.log("answer", answer)
+            const index = answer.qKey - 1; // Adjusting qKey to zero-based index
+            // Check if the index is within the range of correctAnswers[0].canswer
+            if (index >= 0 && index < correctAnswers[0].canswer.length) {
+              // Compare the answer with the corresponding index in correctAnswers[0].canswer
+              if (answer.slAns === correctAnswers[0].canswer[index]) {
+                console.log("correct answer", answer)
+                score++;
               }
+            }
+          });
+        } else {
+          console.error('ans.answers is not an array.');
+        }
       }
       await db.get().collection(collections.USERS_COLLECTION).findOneAndUpdate(
         { _id: objectId(uid) },
