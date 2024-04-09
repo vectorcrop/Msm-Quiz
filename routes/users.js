@@ -139,7 +139,7 @@ router.get("/delete-all-forgots", verifySignedIn, function (req, res) {
   });
 });
 
-router.get("/donation", verifySignedIn, function (req, res, next) {
+router.get("/donation", function (req, res, next) {
   let user = req.session.user;
   res.render("users/donation", { admin: false, user });
 });
