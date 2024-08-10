@@ -10,6 +10,8 @@ module.exports = {
     FORGOT_COLLECTION: "forgot",
     KEY_COLLECTION: "key",
     FEEDBACK_COLLECTION: "feedback",
+    HIGHSECREGISTRATION_COLLECTION: "highsecregistration",
+
 
 
 

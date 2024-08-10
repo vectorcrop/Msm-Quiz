@@ -13,16 +13,28 @@ const verifySignedIn = (req, res, next) => {
 };
 
 /* GET home page. */
-router.get("/", verifySignedIn, function (req, res, next) {
-  let user = req.session.user;
-  let cartCount = null;
-  if (user) {
-    let userId = req.session.user._id;
-    // cartCount = userHelper.getCartCount(userId);
-  }
+router.get("/", function (req, res, next) {
 
-  res.render("users/index", { admin: false, user, });
+  res.render("users/highsec-registration", { admin: false, layout: 'empty' });
+});
 
+
+/////// highsecregistration/////////////////////                                         
+router.get("/registered", function (req, res) {
+  res.render("users/registered", { admin: false, layout: 'empty' });
+});
+
+/////// highsecregistration/////////////////////                                         
+router.get("/highsec-registration", function (req, res) {
+  res.render("users/highsec-registration", { admin: false, layout: 'empty' });
+});
+
+/////// highsecregistration/////////////////////                                         
+router.post("/highsec-registration", function (req, res) {
+  adminHelper.addhighsecregistration(req.body, (id) => {
+    res.redirect("/registered");
+
+  });
 });
 
 

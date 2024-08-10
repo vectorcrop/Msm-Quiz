@@ -14,6 +14,74 @@ const verifySignedIn = (req, res, next) => {
   }
 };
 
+
+///////ALL highsecregistration/////////////////////                                         
+router.get("/all-students", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllhighsecregistrations().then((highsecregistrations) => {
+    res.render("admin/highsecregistration/all-students", { admin: true, layout: "admin", highsecregistrations, administator });
+  });
+});
+
+///////ADD highsecregistration/////////////////////                                         
+router.get("/add-student", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  res.render("admin/highsecregistration/add-student", { admin: true, layout: "admin", administator });
+});
+
+///////ADD highsecregistration/////////////////////                                         
+router.post("/add-student", function (req, res) {
+  adminHelper.addhighsecregistration(req.body, (id) => {
+    let image = req.files.Image;
+    image.mv("./public/images/highsecregistration-images/" + id + ".png", (err, done) => {
+      if (!err) {
+        res.redirect("/admin/highsecregistration/all-students");
+      } else {
+        console.log(err);
+      }
+    });
+  });
+});
+
+///////EDIT highsecregistration/////////////////////                                         
+router.get("/edit-student/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let highsecregistrationId = req.params.id;
+  let highsecregistration = await adminHelper.gethighsecregistrationDetails(highsecregistrationId);
+  console.log(highsecregistration);
+  res.render("admin/highsecregistration/edit-student", { admin: true, layout: "admin", highsecregistration, administator });
+});
+
+///////EDIT highsecregistration/////////////////////                                         
+router.post("/edit-student/:id", verifySignedIn, function (req, res) {
+  let highsecregistrationId = req.params.id;
+  adminHelper.updatehighsecregistration(highsecregistrationId, req.body).then(() => {
+    if (req.files) {
+      let image = req.files.Image;
+      if (image) {
+        image.mv("./public/images/highsecregistration-images/" + highsecregistrationId + ".png");
+      }
+    }
+    res.redirect("/admin/highsecregistration/all-students");
+  });
+});
+
+///////DELETE highsecregistration/////////////////////                                         
+router.get("/delete-student/:id", verifySignedIn, function (req, res) {
+  let highsecregistrationId = req.params.id;
+  adminHelper.deletehighsecregistration(highsecregistrationId).then((response) => {
+    res.redirect("/admin/highsecregistration/all-students");
+  });
+});
+
+///////DELETE ALL highsecregistration/////////////////////                                         
+router.get("/delete-all-students", verifySignedIn, function (req, res) {
+  adminHelper.deleteAllhighsecregistrations().then(() => {
+    res.redirect("/admin/highsecregistration/all-students");
+  });
+});
+
+
 ///////ALL feedback/////////////////////                                         
 router.get("/all-feedbacks", verifySignedIn, function (req, res) {
   let administator = req.session.admin;

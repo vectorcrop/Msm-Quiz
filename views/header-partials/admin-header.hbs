@@ -169,12 +169,13 @@
             <li class="nav-item dropdown pe-3">
                 {{#if administator}}
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="../adminassets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                    <img src="/images/msm.png" alt="Profile" class="rounded-circle">
                     <span class="d-none d-md-block dropdown-toggle ps-2">{{administator.Name}}</span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
+                        <img src="/images/msm.png" alt="Profile" width="30%" class="rounded-circle mb-2">
                         <h6>{{administator.Name}}</h6>
                         <span>{{administator.Email}}</span>
                     </li>
@@ -236,6 +237,13 @@
             <a class="nav-link " href="/admin">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/admin/highsecregistration/all-students">
+                <i class="bi bi-people"></i>
+                <span>HighSec 2024</span>
             </a>
         </li><!-- End Dashboard Nav -->
 

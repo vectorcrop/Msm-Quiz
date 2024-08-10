@@ -4,6 +4,101 @@ var bcrypt = require("bcrypt");
 const objectId = require("mongodb").ObjectID;
 
 module.exports = {
+
+
+  ///////ADD highsecregistration/////////////////////                                         
+  addhighsecregistration: (highsecregistration, callback) => {
+    console.log(highsecregistration);
+    db.get()
+      .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+      .insertOne(highsecregistration)
+      .then((data) => {
+        console.log(data);
+        callback(data.ops[0]._id);
+      });
+  },
+
+  ///////GET ALL highsecregistration/////////////////////                                            
+  getAllhighsecregistrations: () => {
+    return new Promise(async (resolve, reject) => {
+      let highsecregistrations = await db
+        .get()
+        .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+        .find()
+        .toArray();
+      resolve(highsecregistrations);
+    });
+  },
+
+  ///////ADD highsecregistration DETAILS/////////////////////                                            
+  gethighsecregistrationDetails: (highsecregistrationId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+        .findOne({
+          _id: objectId(highsecregistrationId)
+        })
+        .then((response) => {
+          resolve(response);
+        });
+    });
+  },
+
+  ///////DELETE highsecregistration/////////////////////                                            
+  deletehighsecregistration: (highsecregistrationId) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+        .removeOne({
+          _id: objectId(highsecregistrationId)
+        })
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        });
+    });
+  },
+
+  ///////UPDATE highsecregistration/////////////////////                                            
+  updatehighsecregistration: (highsecregistrationId, highsecregistrationDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+        .updateOne(
+          {
+            _id: objectId(highsecregistrationId)
+          },
+          {
+            $set: {
+              Name: highsecregistrationDetails.Name,
+              Category: highsecregistrationDetails.Category,
+              Price: highsecregistrationDetails.Price,
+              Description: highsecregistrationDetails.Description,
+            },
+          }
+        )
+        .then((response) => {
+          resolve();
+        });
+    });
+  },
+
+
+  ///////DELETE ALL highsecregistration/////////////////////                                            
+  deleteAllhighsecregistrations: () => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.HIGHSECREGISTRATION_COLLECTION)
+        .remove({})
+        .then(() => {
+          resolve();
+        });
+    });
+  },
+
+
+
+
   ///////ADD feedback/////////////////////                                         
   addfeedback: (feedback, callback) => {
     console.log(feedback);
