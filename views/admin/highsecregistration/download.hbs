@@ -1,0 +1,92 @@
+<style>
+    .sidebar {
+        display: none;
+    }
+
+    @media (min-width: 1200px) {
+
+        #main,
+        #footer {
+            margin-left: 0px;
+        }
+    }
+
+    @media print {
+        .sidebar {
+            display: none;
+            /* Hide sidebar in print */
+        }
+
+        #main,
+        #footer {
+            margin-left: 0;
+            /* Reset margin for print */
+        }
+
+        .table thead th,
+        .table tbody td {
+            visibility: visible !important;
+            /* Ensure all table data is visible */
+            display: table-cell !important;
+            /* Ensure table cells are correctly displayed */
+        }
+    }
+</style>
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="">
+                            <a href="/admin/all-students" class="btn btn-primary mb-1 mt-3 mb-3">Back</a>
+                            <button onclick="window.print()" class="btn btn-dark mb-1 mt-3 mb-3">Download</button>
+                        </div>
+
+                        <!-- Table with stripped rows -->
+                        <div class="table-responsive">
+
+                            <table class="table datatable table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Full Name</th>
+                                        <th>Class</th>
+                                        <th>Institute</th>
+                                        <th>Zone</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th data-type="date" data-format="YYYY/DD/MM">Registred Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each highsecregistrations}}
+                                    <tr>
+                                        <td>#0{{incremented @index}}</td>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.class}}</td>
+                                        <td>{{this.institute}}</td>
+                                        <td>{{this.zone}}</td>
+                                        <td>{{this.mobile}}</td>
+                                        <td>{{this.address}}</td>
+                                        <td>{{this.date}}</td>
+
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->

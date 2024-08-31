@@ -15,6 +15,13 @@ const verifySignedIn = (req, res, next) => {
 };
 
 
+router.get("/download", verifySignedIn, function (req, res) {
+  let administator = req.session.admin;
+  adminHelper.getAllhighsecregistrations().then((highsecregistrations) => {
+    res.render("admin/highsecregistration/download", { admin: true, layout: "admin", highsecregistrations, administator });
+  });
+});
+
 ///////ALL highsecregistration/////////////////////                                         
 router.get("/all-students", verifySignedIn, function (req, res) {
   let administator = req.session.admin;
@@ -22,6 +29,9 @@ router.get("/all-students", verifySignedIn, function (req, res) {
     res.render("admin/highsecregistration/all-students", { admin: true, layout: "admin", highsecregistrations, administator });
   });
 });
+
+
+
 
 ///////ADD highsecregistration/////////////////////                                         
 router.get("/add-student", verifySignedIn, function (req, res) {

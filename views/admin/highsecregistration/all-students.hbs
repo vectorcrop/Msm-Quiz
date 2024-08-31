@@ -71,51 +71,59 @@
 
                 <div class="card">
                     <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/admin/delete-all-students"
+                                onclick="return confirm('Are You Sure to Remove All Users ?')"
+                                class="btn btn-danger mb-1 mt-3 mb-3">Remove All Users</a>
 
-                        <a href="/admin/delete-all-students"
-                            onclick="return confirm('Are You Sure to Remove All Users ?')"
-                            class="btn btn-danger mb-1 mt-3 mb-3">Remove All Users</a>
+                            <a href="/admin/download" class="btn btn-dark mb-1 mt-3 mb-3">Download
+                                Data</a>
+                        </div>
+
                         <!-- Table with stripped rows -->
-                        <table class="table datatable table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Full Name</th>
-                                    <th>Class</th>
-                                    <th>Institute</th>
-                                    <th>Zone</th>
-                                    <th>Phone Number</th>
-                                    <th>Address</th>
-                                    <th data-type="date" data-format="YYYY/DD/MM">Registred Date</th>
-                                    <th>Manage</th>
+                        <div class="table-responsive">
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each highsecregistrations}}
-                                <tr>
-                                    <td>#0{{incremented @index}}</td>
-                                    <td>{{this.name}}</td>
-                                    <td>{{this.class}}</td>
-                                    <td>{{this.institute}}</td>
-                                    <td>{{this.zone}}</td>
-                                    <td>{{this.mobile}}</td>
-                                    <td>{{this.date}}</td>
-                                    <td>{{this.address}}</td>
-                                    <td><a href="/admin/delete-student/{{this._id}}" class="btn btn-danger mb-2"
-                                            onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
-                                                class="bi bi-trash3"></i></a>
+                            <table class="table datatable table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Full Name</th>
+                                        <th>Class</th>
+                                        <th>Institute</th>
+                                        <th>Zone</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th data-type="date" data-format="YYYY/DD/MM">Registred Date</th>
+                                        <th>Manage</th>
 
-                                        {{!-- <a class="btn btn-dark" target="_blank"
-                                            href="https://wa.me/{{this.Mobile}}?text=Hi {{this.Fname}}...%0AAssalamu%20Alikkum%0A%0AYour%20Username%3A%20{{this.Fname}}{{this.Lname}}%0AYour%20Phone%3A%20{{this.Mobile}}%0AAnd join this group for more details : %0A    https://chat.whatsapp.com/GdWDhKdPtfMBqBJmXMzFki"><i
-                                                class="bi bi-send"></i></a> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each highsecregistrations}}
+                                    <tr>
+                                        <td>#0{{incremented @index}}</td>
+                                        <td>{{this.name}}</td>
+                                        <td>{{this.class}}</td>
+                                        <td>{{this.institute}}</td>
+                                        <td>{{this.zone}}</td>
+                                        <td>{{this.mobile}}</td>
+                                        <td>{{this.address}}</td>
+                                        <td>{{this.date}}</td>
+                                        <td><a href="/admin/delete-student/{{this._id}}" class="btn btn-danger mb-2"
+                                                onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
+                                                    class="bi bi-trash3"></i></a>
 
-                                    </td>
-                                </tr>
-                                {{/each}}
+                                            {{!-- <a class="btn btn-dark" target="_blank"
+                                                href="https://wa.me/{{this.Mobile}}?text=Hi {{this.Fname}}...%0AAssalamu%20Alikkum%0A%0AYour%20Username%3A%20{{this.Fname}}{{this.Lname}}%0AYour%20Phone%3A%20{{this.Mobile}}%0AAnd join this group for more details : %0A    https://chat.whatsapp.com/GdWDhKdPtfMBqBJmXMzFki"><i
+                                                    class="bi bi-send"></i></a> --}}
 
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- End Table with stripped rows -->
 
                     </div>
