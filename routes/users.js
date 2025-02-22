@@ -13,9 +13,14 @@ const verifySignedIn = (req, res, next) => {
 };
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-
-  res.render("users/highsec-registration", { admin: false, layout: 'empty' });
+router.get("/", verifySignedIn, function (req, res, next) {
+  let user = req.session.user;
+  let cartCount = null;
+  if (user) {
+    let userId = req.session.user._id;
+    // cartCount = userHelper.getCartCount(userId);
+  }
+  res.render("users/index", { admin: false, user, });
 });
 
 
