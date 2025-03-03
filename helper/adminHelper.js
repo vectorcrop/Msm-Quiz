@@ -605,7 +605,7 @@ module.exports = {
         .toArray();
 
       // Remove the last element from the seniors array
-      seniors.pop();
+      // seniors.pop();
 
       resolve(seniors);
     });
@@ -619,7 +619,7 @@ module.exports = {
         .toArray();
 
       // Remove the last element from the seniors array
-      seniors.pop();
+      // seniors.pop();
 
       resolve(seniors);
     });
