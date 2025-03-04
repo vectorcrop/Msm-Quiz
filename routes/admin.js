@@ -159,11 +159,11 @@ router.get("/delete-all-feedbacks", verifySignedIn, function (req, res) {
 });
 
 ///////ALL key/////////////////////                                         
-router.get("/all-keys", verifySignedIn, function (req, res) {
+router.get("/all-keys", verifySignedIn, async function (req, res) {
   let administator = req.session.admin;
-  adminHelper.getAllkeys().then((keys) => {
-    res.render("admin/all-keys", { admin: true, layout: "admin", keys, administator });
-  });
+  let juniorkeys = await adminHelper.getAlljuniors();
+  let seniorkeys = await adminHelper.getAllseniors();
+  res.render("admin/all-keys", { admin: true, layout: "admin", juniorkeys, seniorkeys, administator });
 });
 
 ///////ADD key/////////////////////                                         
@@ -424,6 +424,8 @@ router.post("/add-junior", async function (req, res) {
     qObj.d_day = d_day;
     qObj.status = data.status;
     qObj.questions = questions;
+    qObj.key = data.key;
+
   }
 
   adminHelper.addjunior(qObj, (id) => {
@@ -452,6 +454,55 @@ router.post("/edit-junior/:id", verifySignedIn, function (req, res) {
     res.redirect("/admin/all-juniors");
   });
 });
+
+
+
+
+///////EDIT junior/////////////////////                                         
+router.get("/edit-junior-key/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let juniorId = req.params.id;
+  let junior = await adminHelper.getjuniorDetails(juniorId);
+  let dayId = req.params.id;
+  let days = await adminHelper.getAlldays(dayId);
+  console.log(junior);
+  res.render("admin/junior/edit-junior-key", { admin: true, layout: "admin", junior, administator, days });
+});
+
+///////EDIT junior/////////////////////                                         
+router.post("/edit-junior-key/:id", verifySignedIn, function (req, res) {
+  let juniorId = req.params.id;
+  adminHelper.updatejuniorkey(juniorId, req.body).then(() => {
+    // Removed image handling section
+    res.redirect("/admin/all-keys");
+  });
+});
+
+
+
+
+
+
+///////EDIT senior/////////////////////                                         
+router.get("/edit-senior-key/:id", verifySignedIn, async function (req, res) {
+  let administator = req.session.admin;
+  let seniorId = req.params.id;
+  let senior = await adminHelper.getseniorDetails(seniorId);
+  let dayId = req.params.id;
+  let days = await adminHelper.getAlldays(dayId);
+  console.log(senior);
+  res.render("admin/senior/edit-senior-key", { admin: true, layout: "admin", senior, administator, days });
+});
+
+///////EDIT senior/////////////////////                                         
+router.post("/edit-senior-key/:id", verifySignedIn, function (req, res) {
+  let seniorId = req.params.id;
+  adminHelper.updateseniorkey(seniorId, req.body).then(() => {
+    // Removed image handling section
+    res.redirect("/admin/all-keys");
+  });
+});
+
 
 
 ///////DELETE junior/////////////////////                                         
@@ -510,6 +561,8 @@ router.post("/add-senior", async function (req, res) {
     qObj.d_day = d_day;
     qObj.status = data.status;
     qObj.questions = questions;
+    qObj.key = data.key;
+
   }
 
   adminHelper.addsenior(qObj, (id) => {

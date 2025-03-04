@@ -1,0 +1,82 @@
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Answer Key of {{senior.day}}</h5>
+                        <hr>
+
+                        <!-- General Form Elements -->
+                        <form action="/admin/edit-senior-key/{{senior._id}}" enctype="multipart/form-data"
+                            method="POST">
+                            <input type="hidden" name="date" id="datetime">
+
+
+                            <label for="key" class="mb-2">Answer Key</label>
+                            <select class="form-select" name="key" aria-label="Default select example" required>
+                                <option value="enable" {{#if (eq2 senior.key "enable" )}}selected{{/if}}>Enable</option>
+                                <option value="disable" {{#if (eq2 senior.key "disable" )}}selected{{/if}}>Disable
+                                </option>
+                            </select>
+
+                            <br>
+                            <button type="submit" class="btn btn-primary w-25">Submit</button>
+                            <a href="/admin/all-keys" class="btn btn-dark w-25">Cancel</a>
+
+                        </form><!-- End General Form Elements -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script>
+    function viewImage(event) {
+        document.getElementById("imgView").src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        generateRandomString();
+    });
+
+    function generateRandomString() {
+        // Define the set of characters you want to include
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+        // Generate a random 4-letter string
+        let randomString = '';
+        for (let i = 0; i < 4; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            randomString += characters.charAt(randomIndex);
+        }
+
+        // Set the value of the input field
+        document.getElementById('hello').value = randomString;
+
+        // Log the generated string to the console (optional)
+        console.log('Generated String:', randomString);
+    }
+</script>
+
+
+<script>
+    // Get current date and time
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = ((now.getHours() + 11) % 12 + 1).toString().padStart(2, '0'); // Convert to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+    // Set default value to current date and time in MM/DD/YYYY format
+    const defaultDateTime = `${month}/${day}/${year}T${hours}:${minutes}`;
+    document.getElementById('datetime').value = defaultDateTime;
+</script>

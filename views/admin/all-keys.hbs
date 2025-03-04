@@ -15,21 +15,16 @@
     </div><!-- End Page Title -->
 
     <section class="section">
-        <a href="/admin/add-key" class="btn btn-dark mb-4 ">+ Add Day</a>
+        {{!-- <a href="/admin/add-key" class="btn btn-dark mb-4 ">+ Add Day</a> --}}
         <div class="row">
-            <div class="col-lg-12">
-
-                <div class="card">
+            <div class="col-lg-6">
+                <div class="card p-3">
                     <div class="card-body">
-
-                        {{!-- <a href="/admin/remove-all-users"
-                            onclick="return confirm('Are You Sure to Remove All Users ?')"
-                            class="btn btn-danger mb-1 mt-3">Remove All Users</a> --}}
-                        <!-- Table with stripped rows -->
-                        <table class="table datatable table-bordered table-striped table-hover">
+                        <h5>Junior Answer Keys</h5>
+                        <br>
+                        <table class="table      table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Day</th>
                                     <th>Status</th>
                                     <th>Manage</th>
@@ -37,17 +32,57 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each keys}}
+                                {{#each juniorkeys}}
                                 <tr>
-                                    <td>#0{{incremented @index}}</td>
                                     <td>{{this.day}}</td>
-                                    <td>{{this.status}}</td>
-                                    <td>
-                                        {{!-- <a href="/admin/delete-day/{{this._id}}" class="btn btn-danger"
-                                            onclick="return confirm('Are You Sure to Delete {{this.day}} ?')"><i
-                                                class="bi bi-trash3"></i></a> --}}
+                                    <td style="color: {{#if (eq2 this.key 'enable')}}green{{else}}red{{/if}};">
+                                        {{this.key}}
+                                    </td>
 
-                                        <a href="/admin/edit-key/{{this._id}}" class="btn btn-primary"><i
+                                    <td>
+
+                                        <a href="/admin/edit-junior-key/{{this._id}}" class="btn btn-primary"><i
+                                                class="bi bi-pen"></i></a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="card p-3">
+
+                    <div class="card-body">
+                        <h5>Senior Answer Keys</h5>
+                        <br>
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Day</th>
+                                    <th>Status</th>
+                                    <th>Manage</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each seniorkeys}}
+                                <tr>
+                                    <td>{{this.day}}</td>
+                                    <td style="color: {{#if (eq2 this.key 'enable')}}green{{else}}red{{/if}};">
+                                        {{this.key}}
+                                    </td>
+
+                                    <td>
+
+                                        <a href="/admin/edit-senior-key/{{this._id}}" class="btn btn-primary"><i
                                                 class="bi bi-pen"></i></a>
                                     </td>
                                 </tr>

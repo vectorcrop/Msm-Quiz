@@ -572,6 +572,40 @@ module.exports = {
     });
   },
 
+
+
+  getAlljuniorsKeys: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let juniors = await db
+          .get()
+          .collection(collections.JUNIOR_COLLECTION)
+          .find({ key: "enable" })
+          .toArray();
+        resolve(juniors);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+
+  getAllseniorsKeys: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let seniors = await db
+          .get()
+          .collection(collections.SENIOR_COLLECTION)
+          .find({ key: "enable" })
+          .toArray();
+        resolve(seniors);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
+
+
   ///////ADD senior/////////////////////                                         
   addsenior: (senior, callback) => {
     console.log(senior);
@@ -749,6 +783,8 @@ module.exports = {
         });
     });
   },
+
+
   //sen
   updatesenior: (seniorId, seniorDetails) => {
     return new Promise((resolve, reject) => {
@@ -818,6 +854,54 @@ module.exports = {
         });
     });
   },
+
+
+
+
+
+  ///////UPDATE junior KEY/////////////////////                                            
+  updatejuniorkey: (juniorId, juniorDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.JUNIOR_COLLECTION)
+        .updateOne(
+          { _id: new objectId(juniorId) }, // Ensure correct ID format
+          { $set: { key: juniorDetails.key } } // Only update "key"
+        )
+        .then((response) => {
+          if (response.modifiedCount > 0) {
+            resolve({ status: true, message: "Key updated successfully" });
+          } else {
+            resolve({ status: false, message: "No document updated" });
+          }
+        })
+        .catch((error) => reject(error)); // Handle errors properly
+    });
+  },
+
+
+
+  ///////UPDATE senior KEY/////////////////////                                            
+  updateseniorkey: (seniorId, seniorDetails) => {
+    return new Promise((resolve, reject) => {
+      db.get()
+        .collection(collections.SENIOR_COLLECTION)
+        .updateOne(
+          { _id: new objectId(seniorId) }, // Ensure correct ID format
+          { $set: { key: seniorDetails.key } } // Only update "key"
+        )
+        .then((response) => {
+          if (response.modifiedCount > 0) {
+            resolve({ status: true, message: "Key updated successfully" });
+          } else {
+            resolve({ status: false, message: "No document updated" });
+          }
+        })
+        .catch((error) => reject(error)); // Handle errors properly
+    });
+  },
+
+
 
   ///////DELETE ALL junior/////////////////////                                            
   deleteAlljuniors: () => {

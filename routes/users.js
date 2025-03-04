@@ -75,24 +75,38 @@ router.get("/answers", function (req, res, next) {
 });
 
 
+
 router.get("/jn", async function (req, res) {
-  let dayId = req.params.id;
-  let keyId = req.params.id;
-  let juniorId = req.params.id;
-  // let juniors = await adminHelper.getAlljuniors(juniorId);
-  let days = await adminHelper.getAlldays(dayId);
-  let keys = await adminHelper.getAllkeys(keyId);
-  adminHelper.getAllJuniorExceptLast().then((juniors) => {
-    console.log(juniors, "juniorsjuniorsjuniorsjuniors")
-    res.render("users/jn", { admin: false, juniors, keys, days });
-  });
+  let juniors = await adminHelper.getAlljuniorsKeys();
+  res.render("users/jn", { admin: false, juniors, });
 });
 
-router.get("/sn", function (req, res) {
-  adminHelper.getAllSeniorsExceptLast().then((seniors) => {
-    res.render("users/sn", { admin: false, seniors });
-  });
+router.get("/sn", async function (req, res) {
+  let seniors = await adminHelper.getAllseniorsKeys();
+  res.render("users/sn", { admin: false, seniors, });
 });
+
+
+
+// router.get("/jn", async function (req, res) {
+//   let dayId = req.params.id;
+//   let keyId = req.params.id;
+//   let juniorId = req.params.id;
+//   let days = await adminHelper.getAlldays(dayId);
+//   let keys = await adminHelper.getAllkeys(keyId);
+//   adminHelper.getAllJuniorExceptLast().then((juniors) => {
+//     console.log(juniors, "juniorsjuniorsjuniorsjuniors")
+//     res.render("users/jn", { admin: false, juniors, keys, days });
+//   });
+// });
+
+
+
+// router.get("/sn", function (req, res) {
+//   adminHelper.getAllSeniorsExceptLast().then((seniors) => {
+//     res.render("users/sn", { admin: false, seniors });
+//   });
+// });
 
 
 router.get("/profile", verifySignedIn, function (req, res, next) {
