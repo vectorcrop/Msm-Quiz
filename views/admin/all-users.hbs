@@ -72,50 +72,53 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <a href="/admin/remove-all-users" onclick="return confirm('Are You Sure to Remove All Users ?')"
-                            class="btn btn-danger mb-1 mt-3">Remove All Users</a>
+                        {{!-- <a href="/admin/remove-all-users"
+                            onclick="return confirm('Are You Sure to Remove All Users ?')"
+                            class="btn btn-danger mb-1 mt-3">Remove All Users</a> --}}
                         <!-- Table with stripped rows -->
-                        <table class="table datatable table-bordered table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Username</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Phone Number</th>
-                                    <th>User Type</th>
-                                    <th>Zone</th>
-                                    <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
-                                    <th>Manage</th>
+                        <div class="table-responsive">
+                            <table class="table datatable border table-bordered table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Username</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        <th>User Type</th>
+                                        <th>Zone</th>
+                                        <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
+                                        <th>Manage</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{#each users}}
-                                <tr>
-                                    <td>#0{{incremented @index}}</td>
-                                    <td>{{this.Fname}}{{this.Lname}}</td>
-                                    <td>{{this.Fname}}</td>
-                                    <td>{{this.Lname}}</td>
-                                    <td>{{this.Mobile}}</td>
-                                    <td>{{this.type}}</td>
-                                    <td>{{this.zone}}</td>
-                                    <td>{{this.date}}</td>
-                                    {{!-- <td>{{this.Password}}</td> --}}
-                                    <td><a href="/admin/remove-user/{{this._id}}" class="btn btn-danger mb-2"
-                                            onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
-                                                class="bi bi-trash3"></i></a>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each users}}
+                                    <tr>
+                                        <td>#0{{incremented @index}}</td>
+                                        <td>{{this.Fname}}{{this.Lname}}</td>
+                                        <td>{{this.Fname}}</td>
+                                        <td>{{this.Lname}}</td>
+                                        <td>{{this.Mobile}}</td>
+                                        <td>{{this.type}}</td>
+                                        <td>{{this.zone}}</td>
+                                        <td>{{this.date}}</td>
+                                        {{!-- <td>{{this.Password}}</td> --}}
+                                        <td><a href="/admin/remove-user/{{this._id}}" class="btn btn-danger mb-2"
+                                                onclick="return confirm('Are You Sure to Delete {{this.Name}} ?')"><i
+                                                    class="bi bi-trash3"></i></a>
 
-                                        <a class="btn btn-dark" target="_blank"
-                                            href="https://wa.me/{{this.Mobile}}?text=Hi {{this.Fname}}...%0AAssalamu%20Alikkum%0A%0AYour%20Username%3A%20{{this.Fname}}{{this.Lname}}%0AYour%20Phone%3A%20{{this.Mobile}}%0AAnd join this group for more details : %0A    https://chat.whatsapp.com/GdWDhKdPtfMBqBJmXMzFki"><i
-                                                class="bi bi-send"></i></a>
+                                            <a class="btn btn-dark" target="_blank"
+                                                href="https://wa.me/{{this.Mobile}}?text=Hi {{this.Fname}}...%0AAssalamu%20Alikkum%0A%0AYour%20Username%3A%20{{this.Fname}}{{this.Lname}}%0AYour%20Phone%3A%20{{this.Mobile}}%0AAnd join this group for more details : %0A    https://chat.whatsapp.com/GdWDhKdPtfMBqBJmXMzFki"><i
+                                                    class="bi bi-send"></i></a>
 
-                                    </td>
-                                </tr>
-                                {{/each}}
+                                        </td>
+                                    </tr>
+                                    {{/each}}
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- End Table with stripped rows -->
 
                     </div>

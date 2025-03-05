@@ -47,8 +47,8 @@
             Master</a>
     </center>
     <br>
-    <button id="submitBtn" class="btn btn-lg btn-primary w-100 text-center mb-3">Submit
-        Answers</button>
+    <button id="submitBtn" class="btn btn-lg btn-primary w-100 text-center mb-3">Submit Answers</button>
+
     <a href="/home" class="btn btn-lg btn-danger w-100 text-center">Back to home</a>
 
     <br><br><br>
@@ -147,6 +147,14 @@
 
     const submitBtn = document.getElementById('submitBtn');
     submitBtn.addEventListener('click', function () {
+
+        let confirmSubmit = confirm("Are you sure you want to submit your answers?");
+
+        if (!confirmSubmit) {
+            event.preventDefault(); // Prevent submission if user cancels
+            return;
+        }
+
         // Send answers to the server (you can customize this part)
         if (answers.length >= 1 && answers.length <= 5) {
             let ss = document.getElementById('ssno').value;
